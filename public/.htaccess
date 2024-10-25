@@ -1,8 +1,4 @@
 <IfModule mod_rewrite.c>
-    <IfModule mod_negotiation.c>
-        Options -MultiViews -Indexes
-    </IfModule>
-
     RewriteEngine On
 
     # Handle Authorization Header
@@ -18,10 +14,7 @@
     RewriteCond %{REQUEST_FILENAME} !-d
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteRule ^ index.php [L]
-</IfModule>
 
-<IfModule mod_rewrite.c>
-    RewriteEngine On
-    RewriteRule ^(.*)$ public/$1 [L]
+    # Optional: Uncomment the line below if you need to redirect all to public
+    # RewriteRule ^(.*)$ public/$1 [L]
 </IfModule>
-
