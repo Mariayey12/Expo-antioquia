@@ -1,0 +1,451 @@
+body {
+    font-family: 'Berlin Sans FB', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f0f0f0;
+}
+
+.container {
+    max-width: 1100px;
+    margin: 20px auto;
+}
+
+.navbar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /* Centrar el navbar */
+    background-color: #333;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.navbar-logo img {
+    height: 50px;
+}
+
+.navbar-toggle {
+    display: none;
+    /* Ocultar en vista de escritorio */
+}
+
+.navbar-items {
+    display: flex;
+}
+
+.navbar-link {
+    color: white;
+    padding: 10px 15px;
+    text-decoration: none;
+    transition: background-color 0.3s;
+}
+
+.navbar-link:hover {
+    background-color: #444;
+}
+
+.navbar-extras {
+    display: flex;
+    justify-content: flex-end;
+    /* Alinear a la derecha */
+    align-items: center;
+    margin-top: 10px;
+}
+
+.btn-language,
+.navbar-cart,
+.btn-login {
+    background-color: #c8ff00;
+    /* Color para los botones */
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-left: 10px;
+    /* Espacio entre los botones */
+}
+
+.btn-language:hover,
+.navbar-cart:hover,
+.btn-login:hover {
+    background-color: #0056b3;
+    /* Color más oscuro al pasar el mouse */
+}
+
+.menu {
+    display: flex;
+    /* Mostrar los elementos del menú en línea */
+    justify-content: center;
+    /* Centrar el menú */
+    margin-top: 10px;
+    /* Espacio entre el navbar y el menú */
+}
+
+.menu-item {
+    position: relative;
+    /* Necesario para el posicionamiento del submenu */
+    color: #333;
+    padding: 10px 15px;
+    text-decoration: none;
+    margin: 0 10px;
+    /* Espaciado entre items */
+    cursor: pointer;
+    background-color: white;
+    border: 1px solid #ccc;
+    /* Borde alrededor de los elementos del menú */
+    border-radius: 5px;
+    /* Bordes redondeados */
+    transition: background-color 0.3s;
+    /* Transición suave */
+}
+
+.submenu {
+    display: none;
+    /* Ocultar el submenu inicialmente */
+    background-color: white;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+    position: absolute;
+    /* Colocarlo debajo del item del menú */
+    left: 0;
+    /* Alinear al lado izquierdo */
+    top: 100%;
+    /* Colocar el submenu justo debajo del menú */
+    margin-top: 5px;
+    /* Espacio entre el menú y el submenu */
+    transition: max-height 0.3s ease-in-out;
+    /* Efecto de transición */
+}
+
+.submenu-item {
+    display: block;
+    /* Mostrar cada item del submenu en bloque */
+    padding: 10px 15px;
+    text-decoration: none;
+    color: #333;
+}
+
+.submenu-item:hover {
+    background-color: #f0f0f0;
+    /* Cambiar color al pasar el mouse sobre el submenu */
+}
+
+.menu-item {
+    position: relative;
+    cursor: pointer;
+    transition: transform 0.1s ease, box-shadow 0.1s ease;
+}
+
+.menu-item:active {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+.submenu {
+    display: none;
+    position: absolute;
+    left: 0;
+    top: 100%;
+    background-color: white;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+    z-index: 1;
+    /* Asegura que el submenú esté por encima de otros elementos */
+}
+
+.menu-item:hover .submenu {
+    display: block;
+    /* Muestra el submenú al pasar el mouse */
+}
+
+
+/* Estilo general */
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f9;
+    margin: 0;
+    padding: 0;
+    color: #333;
+}
+
+
+/* Logo y título principal */
+
+.logo-section {
+    margin: 50px 0;
+}
+
+.logo {
+    width: 150px;
+    height: auto;
+    animation: rotate3D 5s infinite;
+    transition: transform 0.5s ease;
+}
+
+h1 {
+    font-size: 3rem;
+    text-shadow: 3px 3px 5px rgba(0, 0, 0, 0.2);
+    color: #1e90ff;
+    transform: translateZ(50px);
+    transition: transform 0.3s ease;
+}
+
+.logo-section:hover h1 {
+    transform: translateZ(100px);
+}
+
+
+/* Buscador */
+
+.search-bar {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin: 30px 0;
+}
+
+.search-input,
+.location-input {
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.1);
+    transform: translateZ(20px);
+}
+
+.btn-search {
+    background-color: #1e90ff;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+    cursor: pointer;
+    transform: translateZ(20px);
+    transition: transform 0.3s ease;
+}
+
+.btn-search:hover {
+    transform: translateZ(50px);
+}
+
+
+/* ¿Qué estás buscando? */
+
+.what-are-you-looking-for h2 {
+    font-size: 2.5rem;
+    color: rgb(175, 255, 71);
+    text-shadow: 3px 3px 8px rgba(0, 0, 0, 0.2);
+    margin-bottom: 30px;
+}
+
+
+/* Galería */
+
+.gallery h2 {
+    font-size: 2.5rem;
+    margin: 40px 0;
+    text-shadow: 3px 3px 10px rgba(0, 0, 0, 0.2);
+}
+
+.gallery img {
+    width: 100%;
+    height: auto;
+    box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.3);
+    transition: transform 0.3s ease;
+}
+
+.gallery img:hover {
+    transform: scale(1.05) translateZ(50px);
+}
+
+
+/* Sitios más populares */
+
+.popular-sites h2 {
+    font-size: 2.5rem;
+    margin: 40px 0;
+    text-shadow: 3px 3px 10px rgba(0, 0, 0, 0.2);
+}
+
+.card {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease;
+    transform-style: preserve-3d;
+    font-size: 2.5rem;
+    margin: 40px 0;
+    text-shadow: 3px 3px 10px rgba(0, 0, 0, 0.2);
+}
+
+.card:hover {
+    transform: translateZ(50px) rotateY(10deg);
+}
+
+.card img {
+    width: 100%;
+    height: auto;
+    border-bottom: 1px solid #ddd;
+}
+
+.card-body {
+    padding: 15px;
+    background-color: #fff;
+}
+
+.card-title {
+    font-size: 1.5rem;
+    color: #333;
+}
+
+.card-text {
+    font-size: 1rem;
+    color: #666;
+}
+
+.popular-sites {
+    margin: 20px 0;
+}
+
+.carousel-inner {
+    display: flex;
+}
+
+.carousel-item img {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease;
+}
+
+.carousel-item:hover img {
+    transform: rotateY(180deg) scale(1.1);
+}
+
+.carousel-item {
+    flex: 0 0 auto;
+    width: 100%;
+    transition: transform 0.5s ease;
+}
+
+.carousel-control-prev,
+.carousel-control-next {
+    background-color: rgba(0, 0, 0, 0.3);
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+}
+
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+    filter: invert(1);
+}
+
+
+/* Cómo funciona */
+
+.how-it-works {
+    padding: 40px 0;
+    background-color: #f7f7f7;
+    transform-style: preserve-3d;
+    perspective: 1000px;
+}
+
+.how-it-works h2 {
+    font-size: 2.5rem;
+    text-shadow: 3px 3px 8px rgba(0, 0, 0, 0.2);
+}
+
+.how-it-works p {
+    font-size: 1.2rem;
+    color: #555;
+    transition: transform 0.3s ease;
+}
+
+.how-it-works:hover p {
+    transform: translateZ(50px) rotateX(15deg);
+}
+
+
+/* Más galería */
+
+.more-gallery h2 {
+    font-size: 2.5rem;
+    margin: 40px 0;
+    text-shadow: 3px 3px 10px rgba(0, 0, 0, 0.2);
+}
+
+.more-gallery img {
+    width: 100%;
+    height: auto;
+    box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.3);
+    transition: transform 0.3s ease;
+}
+
+.more-gallery img:hover {
+    transform: scale(1.05) translateZ(50px);
+}
+
+
+/* Sobre Nosotros */
+
+.about-us h2 {
+    font-size: 2.5rem;
+    text-shadow: 3px 3px 10px rgba(0, 0, 0, 0.2);
+    margin-bottom: 30px;
+}
+
+.about-us p {
+    font-size: 1.2rem;
+    color: #555;
+    transform: translateZ(30px);
+}
+
+
+/* Footer */
+
+.footer {
+    background-color: #1e90ff;
+    padding: 20px;
+    color: white;
+    text-align: center;
+}
+
+.footer-links a {
+    color: white;
+    text-decoration: none;
+    margin: 0 10px;
+    transition: transform 0.3s ease;
+}
+
+.footer-links a:hover {
+    transform: translateZ(20px);
+    color: #ff6347;
+}
+
+
+/* Efecto de rotación 3D */
+
+@keyframes rotate3D {
+    0% {
+        transform: rotateY(0deg);
+    }
+    100% {
+        transform: rotateY(360deg);
+    }
+}
+
+
+/* Efecto de rotación 3D */
+
+@keyframes rotate3D {
+    0% {
+        transform: rotateY(0deg);
+    }
+    100% {
+        transform: rotateY(360deg);
+    }
+}
