@@ -30,6 +30,12 @@ class Culture extends Model
     ];
 
     // Relaciones
+    
+     // Definición de la relación con Artesania
+    public function artesanias()
+    {
+        return $this->belongsToMany(Artesania::class, 'artesania_cultura', 'cultura_id', 'artesanias_id');
+    }
     public function eventos()
     {
         return $this->hasMany(Evento::class);

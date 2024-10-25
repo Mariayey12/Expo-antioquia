@@ -23,7 +23,11 @@ class Handicraf extends Model
         'artist',
         'contact_info',
     ];
-
+// Definición de la relación con Cultura
+    public function culturas()
+    {
+        return $this->belongsToMany(Cultura::class, 'artesania_cultura', 'artesanias_id', 'cultura_id');
+    }
     // Relaciones (si aplica)
     public function eventos()
     {
