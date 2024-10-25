@@ -6,10 +6,8 @@
             "Usuario\\ExpoAntioquia\\": "src/"
         }
     },
-    "authors": [
-        {
-            "name": "Maria Martinez"
-        }
-    ],
+    "authors": [{
+        "name": "Maria Martinez"
+    }],
     "require": {}
 }
