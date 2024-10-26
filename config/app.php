@@ -3,6 +3,9 @@
 use Illuminate\Support\Facades\Facade;
 use Illuminate\Support\ServiceProvider;
 
+
+
+
 return [
 
     /*
@@ -154,9 +157,15 @@ return [
     | this array to grant expanded functionality to your applications.
     |
     */
+// En config/app.php (si no está agregado)
+'providers' => 
+    // Otros service providers...
+    Laravel\Sanctum\SanctumServiceProvider::class,
+
 
     'providers' => ServiceProvider::defaultProviders()->merge([
         /*
+        
          * Package Service Providers...
          */
 
