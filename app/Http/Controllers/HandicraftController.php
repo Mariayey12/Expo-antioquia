@@ -2,19 +2,19 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Handicraf;
+use App\Models\Handicraft;
 use Illuminate\Http\Request;
 
-class HandicrafController extends Controller
+class HandicraftController extends Controller
 {
     public function index()
     {
-        return Handicraf::all();
+        return Handicraft::all();
     }
 
     public function show($id)
     {
-        return Handicraf::findOrFail($id);
+        return Handicraft::findOrFail($id);
     }
 
     public function store(Request $request)
@@ -25,20 +25,20 @@ class HandicrafController extends Controller
             // Otros campos necesarios
         ]);
 
-        return Handicraf::create($request->all());
+        return Handicraft::create($request->all());
     }
 
     public function update(Request $request, $id)
     {
-        $handicraf = Handicraf::findOrFail($id);
+        $handicraf = Handicraft::findOrFail($id);
         $handicraf->update($request->all());
 
-        return $handicraf;
+        return $handicraft;
     }
 
     public function destroy($id)
     {
-        $handicraf = Handicraf::findOrFail($id);
+        $handicraf = Handicraft::findOrFail($id);
         $handicraf->delete();
 
         return response()->noContent();
