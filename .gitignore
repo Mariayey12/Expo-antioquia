@@ -5,6 +5,8 @@
 /public/storage
 /storage/*.key
 /vendor
+.heroku/
+.profile.d/
 .env
 .env.backup
 .env.production
