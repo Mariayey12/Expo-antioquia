@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('reservations', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('user_id'); // ID del usuario que realiza la reserva
+            $table->unsignedBigInteger('usuario_id'); // ID del usuario que realiza la reserva
             $table->unsignedBigInteger('service_id'); // ID del servicio reservado
             $table->date('fecha_reserva'); // Fecha de la reserva
             $table->time('hora_reserva'); // Hora de la reserva
@@ -23,10 +23,11 @@ return new class extends Migration
             $table->timestamps();
 
             // Definir las claves foráneas
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-            $table->foreign('services_id')->references('id')->on('services')->onDelete('cascade');
+            $table->foreign('usuario_id')->references('id')->on('users')->onDelete('cascade'); // Referencia a la tabla users
+            $table->foreign('service_id')->references('id')->on('services')->onDelete('cascade'); // Referencia a la tabla services
         });
     }
+
     /**
      * Reverse the migrations.
      */
@@ -35,3 +36,4 @@ return new class extends Migration
         Schema::dropIfExists('reservations');
     }
 };
+
