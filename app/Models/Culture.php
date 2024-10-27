@@ -9,7 +9,7 @@ class Culture extends Model
 {
     use HasFactory;
 
-    protected $table = 'cultura';
+    protected $table = 'culture';
 
     protected $fillable = [
         'name',
@@ -34,7 +34,7 @@ class Culture extends Model
      // Definición de la relación con Artesania
     public function artesanias()
     {
-        return $this->belongsToMany(Artesania::class, 'artesania_cultura', 'cultura_id', 'artesanias_id');
+        return $this->belongsToMany(Handicraft::class, 'artesania_cultura', 'cultura_id', 'artesanias_id');
     }
     public function eventos()
     {

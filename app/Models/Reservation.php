@@ -13,7 +13,7 @@ class Reservation extends Model
      * Los atributos que son asignables en masa.
      *
      * @var array<int, string>
-     */
+     */ protected $table = 'reservations';
     protected $fillable = [
         'usuario_id',
         'servicio_id',

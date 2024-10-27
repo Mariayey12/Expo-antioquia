@@ -9,7 +9,7 @@ class Evento extends Model
 {
     use HasFactory;
 
-    protected $table = 'evento';
+    protected $table = 'events';
 
     protected $fillable = [
         'name',
@@ -26,6 +26,6 @@ class Evento extends Model
     // Relaciones (si aplica)
     public function cultura()
     {
-        return $this->belongsTo(Cultura::class);
+        return $this->belongsTo(Culture::class);
     }
 }

@@ -8,7 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class Hotel extends Model
 {
     use HasFactory;
-
+    protected $table = 'hotels';
+    // Campos que se pueden asignar de forma masiva
     protected $fillable = [
         'name',
         'address',
@@ -27,13 +28,16 @@ class Hotel extends Model
         'category',
     ];
 
+    // Relación con lugares de relajación
     public function relaxationPlaces()
     {
         return $this->hasMany(RelaxationPlace::class);
     }
 
+    // Relación con lugares turísticos
     public function touristPlaces()
     {
         return $this->hasMany(TouristPlace::class);
     }
 }
+
