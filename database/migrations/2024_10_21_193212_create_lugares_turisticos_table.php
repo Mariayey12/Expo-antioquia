@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('lugares_turisticos', function (Blueprint $table) {
+        Schema::create('tourist-places', function (Blueprint $table) {
             $table->id();
             $table->string('name'); // Nombre del lugar turístico
             $table->text('description'); // Descripción del lugar
@@ -32,6 +32,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('lugares_turisticos');
+        Schema::dropIfExists('tourist-places');
     }
 };

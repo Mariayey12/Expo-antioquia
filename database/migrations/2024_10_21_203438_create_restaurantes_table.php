@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('restaurantes', function (Blueprint $table) {
+        Schema::create('restaurants', function (Blueprint $table) {
             $table->id();
             $table->string('name'); // Nombre del restaurante o café
             $table->text('description'); // Descripción detallada del lugar
@@ -38,7 +38,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('restaurantes');
+        Schema::dropIfExists('restaurants');
     }
 };
 

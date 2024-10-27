@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('reservas', function (Blueprint $table) {
+        Schema::create('reservations', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('usuario_id'); // ID del usuario que realiza la reserva
             $table->unsignedBigInteger('servicio_id'); // ID del servicio reservado
@@ -21,7 +21,7 @@ return new class extends Migration
             $table->string('estado')->default('pendiente'); // Estado de la reserva (pendiente, confirmada, cancelada, etc.)
             $table->text('notas')->nullable(); // Notas adicionales sobre la reserva
             $table->timestamps();
-            
+
             // Definir las claves foráneas
             $table->foreign('usuario_id')->references('id')->on('usuarios')->onDelete('cascade');
             $table->foreign('servicio_id')->references('id')->on('servicios')->onDelete('cascade');
@@ -33,7 +33,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('reservas');
+        Schema::dropIfExists('reservations');
     }
 };
-

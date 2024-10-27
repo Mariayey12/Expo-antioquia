@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('gastronomia', function (Blueprint $table) {
+        Schema::create('gastronomy', function (Blueprint $table) {
             $table->id();
             $table->string('name'); // Nombre del lugar o plato típico
             $table->text('description'); // Descripción detallada
@@ -31,6 +31,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('gastronomia');
+        Schema::dropIfExists('gastronomy');
     }
 };

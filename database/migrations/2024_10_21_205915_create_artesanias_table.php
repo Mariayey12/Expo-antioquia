@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('artesanias', function (Blueprint $table) {
+        Schema::create('handicrafts', function (Blueprint $table) {
             $table->id();
             $table->string('name'); // Nombre de la artesanía
             $table->text('description'); // Descripción detallada de la artesanía
@@ -32,6 +32,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('artesanias');
+        Schema::dropIfExists('handicrafts');
     }
 };

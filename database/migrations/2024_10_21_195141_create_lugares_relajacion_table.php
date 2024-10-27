@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('lugares_relajacion', function (Blueprint $table) {
+        Schema::create('relaxation-places', function (Blueprint $table) {
             $table->id();
             $table->string('name'); // Nombre del lugar de relajación
             $table->text('description'); // Descripción del lugar
@@ -38,6 +38,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('lugares_relajacion');
+        Schema::dropIfExists('relaxation-places');
     }
 };

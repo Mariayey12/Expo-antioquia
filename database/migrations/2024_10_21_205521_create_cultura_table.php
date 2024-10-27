@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('cultura', function (Blueprint $table) {
+        Schema::create('culture', function (Blueprint $table) {
             $table->id();
             $table->string('name'); // Nombre del evento o manifestación cultural
             $table->text('description'); // Descripción detallada
@@ -37,6 +37,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('cultura');
+        Schema::dropIfExists('culture');
     }
 };

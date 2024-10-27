@@ -64,10 +64,10 @@ Route::apiResource('restaurants', RestaurantController::class);
 Route::apiResource('gastronomy', GastronomyController::class);
 
 // Rutas para eventos
-Route::apiResource('eventos', EventoController::class); // Corrige el nombre si es necesario
+Route::apiResource('events', EventoController::class); // Corrige el nombre si es necesario
 
 // Rutas para comercios
-Route::apiResource('comercios', ComerceController::class);
+Route::apiResource('comerces', ComerceController::class);
 
 // Rutas para servicios
 Route::apiResource('services', ServiceController::class);
