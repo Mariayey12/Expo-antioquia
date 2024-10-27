@@ -37,10 +37,10 @@ Route::apiResource('places', PlaceController::class);
 Route::apiResource('hotels', HotelController::class);
 
 // Rutas para lugares turísticos
-Route::apiResource('tourist-places', TouristPlaceController::class);
+Route::apiResource('tourist_places', TouristPlaceController::class);
 
 // Rutas para lugares de relajación
-Route::apiResource('relaxation-places', RelaxationPlaceController::class);
+Route::apiResource('relaxation_places', RelaxationPlaceController::class);
 
 // Rutas para reservas
 Route::apiResource('reservations', ReservationController::class);
