@@ -25,7 +25,7 @@ return new class extends Migration
             $table->string('category')->default('default_value'); // Categoría (no nullable)
             $table->decimal('average_price', 8, 2)->nullable();
             $table->json('services'); // Servicios ofrecidos en formato JSON (no nullable)
-            $table->time('closing_time'); // Hora de cierre (no nullable)
+            $table->time('closing_time')->nullable(); // Hora de cierre (no nullable)
             $table->string('price_range'); // Rango de precios (no nullable)
             $table->string('contact_number'); // Número de contacto (no nullable)
             $table->string('email'); // Correo electrónico (no nullable)
