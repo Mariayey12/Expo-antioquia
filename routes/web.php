@@ -1,11 +1,11 @@
-<?php 
+<?php
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\ReservationController;
 use App\Http\Controllers\ServiceController;
-use App\Http\Controllers\CommerceController;
+use App\Http\Controllers\ComerceController;
 use App\Http\Controllers\HandicraftController; // Controlador para artesanías
 use App\Http\Controllers\CultureController; // Controlador para cultura
 use App\Http\Controllers\GastronomyController;
@@ -13,6 +13,7 @@ use App\Http\Controllers\RestaurantController;
 use App\Http\Controllers\HotelController;
 use App\Http\Controllers\RelaxationPlaceController;
 use App\Http\Controllers\TouristPlaceController;
+use App\Http\Controllers\PlaceController;
 
 /*
 |---------------------------------------------------------------------------
@@ -24,6 +25,9 @@ use App\Http\Controllers\TouristPlaceController;
 | asignarán al grupo de middleware "web". ¡Haz algo genial!
 |
 */
+// Rutas para lugares
+
+Route::apiResource('places', PlaceController::class);
 
 // Rutas para hoteles
 Route::apiResource('hoteles', HotelController::class);
@@ -52,8 +56,9 @@ Route::resource('reservas', ReservationController::class); // Rutas de reservas
 // Rutas para servicios
 Route::resource('servicios', ServiceController::class); // Rutas de servicios
 
+
 // Rutas para comercios
-Route::resource('comercios', CommerceController::class); // Rutas de comercios
+Route::apiResource('comercios', ComerceController::class);
 
 // Rutas para gastronomía
 Route::apiResource('gastronomia', GastronomyController::class); // Rutas de gastronomía
@@ -65,4 +70,3 @@ Route::apiResource('restaurantes', RestaurantController::class); // Rutas de res
 Route::get('/', function () {
     return view('welcome'); // Vista de bienvenida
 });
-
