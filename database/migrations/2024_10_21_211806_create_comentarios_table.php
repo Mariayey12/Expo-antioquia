@@ -13,15 +13,15 @@ return new class extends Migration
     {
         Schema::create('comments', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('usuario_id'); // ID del usuario que hace el comentario
-            $table->unsignedBigInteger('servicio_id')->nullable(); // ID del servicio comentado (opcional)
+            $table->unsignedBigInteger('user_id'); // ID del usuario que hace el comentario
+            $table->unsignedBigInteger('services_id')->nullable(); // ID del servicio comentado (opcional)
             $table->text('contenido'); // Contenido del comentario
             $table->integer('calificacion')->nullable(); // Calificación (opcional)
             $table->timestamps();
 
             // Definir las claves foráneas
-            $table->foreign('usuario_id')->references('id')->on('usuarios')->onDelete('cascade');
-            $table->foreign('servicio_id')->references('id')->on('servicios')->onDelete('cascade');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('services_id')->references('id')->on('services')->onDelete('cascade');
         });
     }
 

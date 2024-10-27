@@ -34,7 +34,29 @@ namespace Database\Seeders;
         'city' => 'Medellín',
         'created_at' => now(),
         'updated_at' => now()
-    ],
+    ],[
+            'name' => 'Hotel Intercontinental Medellín',
+            'description' => 'Hotel lujoso con vistas panorámicas de la ciudad.',
+            'location' => 'Antoquia',
+            'climate' => 'Nublado',
+            'image_url' => 'https://www.intercontinental.com/images/hotel1.jpg',
+            'video_url' => 'https://www.youtube.com/watch?v=example',
+            'google_maps' => 'https://www.google.com/maps/place/Hotel+Intercontinental',
+            'category' => 'Hotel', // Asegúrate de que esta columna tenga un valor
+            'latitude' => 6.25,
+            'longitude' => -75.574,
+            'services' => json_encode(["piscina", "gimnasio", "spa"]), // Asegúrate de codificarlo si es necesario
+            'price_per_night' => 200,
+            'phone_number' => '0345678901',
+            'email' => 'info@intercontinental.com',
+            'website' => 'https://www.intercontinental.com',
+            'capacity' => 150,
+            'rating' => 5,
+            'address' => 'Calle 1 # 2-3',
+            'city' => 'Medellín',
+            'created_at' => now(),
+            'updated_at' => now()
+        ],
 
     // Mejores Lugares Turísticos Parques hoteles centro de relajacon spas centro de bienestar 
                 [

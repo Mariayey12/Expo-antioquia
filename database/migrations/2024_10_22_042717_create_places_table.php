@@ -18,8 +18,7 @@ class CreatePlacesTable extends Migration
             $table->string('video_url'); // URL del video (no nullable)
             $table->string('google_maps'); // URL de Google Maps (no nullable)
             $table->string('category')->default('default_value'); // Categoría (no nullable)
-            $table->json('categories'); // Múltiples categorías en formato JSON (no nullable)
-            $table->decimal('average_price', 8, 2); // Precio promedio (no nullable)
+            $table->decimal('average_price', 8, 2)->nullable();
             $table->timestamps(); // Timestamps para created_at y updated_at
             $table->json('services'); // Servicios ofrecidos en formato JSON (no nullable)
             $table->time('opening_time'); // Hora de apertura (no nullable)
@@ -50,6 +49,13 @@ class CreatePlacesTable extends Migration
             $table->decimal('price', 8, 2); // Precio (no nullable)
             $table->float('cost'); // Costo (no nullable)
             $table->string('duration'); // Duración (no nullable)
+            
+$table->string('category_name')->nullable();
+
+// En tu migración para la tabla "places"
+
+$table->string('categories')->default('default_value'); // según lo que necesites
+
         });
     }
 
