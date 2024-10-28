@@ -29,6 +29,8 @@ use App\Http\Controllers\CultureController;
 use App\Http\Controllers\RestaurantController;
 use App\Http\Controllers\GastronomyController;
 use App\Http\Controllers\EventoController; // Asegúrate de que este nombre esté correcto
+// Rutas para usuarios
+Route::apiResource('users', UserController::class);
 
 // Rutas para lugares
 Route::apiResource('places', PlaceController::class);
@@ -47,9 +49,6 @@ Route::apiResource('reservations', ReservationController::class);
 
 // Rutas para comentarios
 Route::apiResource('comments', CommentController::class);
-
-// Rutas para usuarios
-Route::apiResource('users', UserController::class);
 
 // Rutas para artesanías
 Route::apiResource('handicrafts', HandicraftController::class);

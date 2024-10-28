@@ -15,8 +15,8 @@ class Reservation extends Model
      * @var array<int, string>
      */ protected $table = 'reservations';
     protected $fillable = [
-        'usuario_id',
-        'servicio_id',
+        'user_id',
+        'service_id',
         'fecha_reserva',
         'hora_reserva',
         'cantidad_personas',
