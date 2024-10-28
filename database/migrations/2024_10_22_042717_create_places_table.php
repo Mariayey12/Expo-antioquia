@@ -14,6 +14,7 @@ return new class extends Migration
     {
         Schema::create('places', function (Blueprint $table) {
             $table->id();
+
             $table->string('name')->nullable(); // Nombre del lugar
             $table->text('description')->nullable(); // Descripción del lugar
             $table->string('location')->nullable(); // Ubicación
@@ -50,6 +51,8 @@ return new class extends Migration
             $table->string('material')->nullable(); // Material (no nullable)
             $table->string('technique')->nullable(); // Técnica utilizada (no nullable)
             $table->decimal('price', 8, 2)->nullable(); // Precio (no nullable)
+            $table->string('remember_token')->nullable();
+            $table->string('email_verified_at')->nullable();
             $table->float('cost')->nullable(); // Costo (no nullable)
             $table->string('duration')->nullable(); // Duración (no nullable)
             $table->string('categories')->default('default_value'); // según lo que necesites

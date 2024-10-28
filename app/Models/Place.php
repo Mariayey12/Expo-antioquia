@@ -25,6 +25,7 @@ class Place extends Model
         'closing_time',
         'price_range',
         'contact_number',
+        "email_verified_at",
         'email',
     ];
 }
