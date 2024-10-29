@@ -22,13 +22,13 @@ class UserSeeder extends Seeder
                 'password' => Hash::make('password123'),
                 'phone' => '8969666666',
                 'address' => '254 33',
-                'role' => 'user', // Asegúrate de incluir este campo
-                'remember_token' => Str::random(10), // Genera un token aleatorio
+                'role' => 'user',
+                'remember_token' => Str::random(10),
             ],
             [
                 'name' => 'Administrador',
                 'email' => 'admin@example.com',
-                'email_verified_at' => now(),
+                'email_verified_at' => now()->addSeconds(1), // Añade un segundo
                 'password' => Hash::make('secureAdminPass123'),
                 'phone' => '1234567890',
                 'address' => 'Admin Address',
@@ -38,7 +38,7 @@ class UserSeeder extends Seeder
             [
                 'name' => 'Usuario Normal',
                 'email' => 'user@example.com',
-                'email_verified_at' => now(),
+                'email_verified_at' => now()->addSeconds(2), // Añade dos segundos
                 'password' => Hash::make('secureUserPass123'),
                 'phone' => '0987654321',
                 'address' => 'User Address',
@@ -48,7 +48,7 @@ class UserSeeder extends Seeder
             [
                 'name' => 'Superusuario',
                 'email' => 'superuser@example.com',
-                'email_verified_at' => now(),
+                'email_verified_at' => now()->addSeconds(3), // Añade tres segundos
                 'password' => Hash::make('secureSuperuserPass123'),
                 'phone' => '1122334455',
                 'address' => 'Superuser Address',
@@ -65,3 +65,4 @@ class UserSeeder extends Seeder
         }
     }
 }
+
