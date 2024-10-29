@@ -15,12 +15,12 @@ return new class extends Migration
             $table->id();
             $table->string('name'); // Nombre obligatorio, no nulo
             $table->string('email')->unique(); // Email único
-            $table->timestamp('email_verified_at')->disable(); // Verificación de correo no es obligatoria
+            $table->timestamp('email_verified_at')->nullable(); // Verificación de correo opcional
             $table->string('password'); // Contraseña encriptada obligatoria
             $table->string('phone')->nullable(); // Teléfono opcional
             $table->string('address')->nullable(); // Dirección opcional
-            $table->enum('role', ['user', 'admin', 'superuser'])->default('user'); // Rol obligatorio, sin nulos
-            $table->string('remember_token')->nullable();
+            $table->enum('role', ['user', 'admin', 'superuser'])->default('user'); // Rol obligatorio
+            $table->rememberToken()->nullable(); // Token de "recordar usuario" opcional
             $table->timestamps();
         });
     }
@@ -33,4 +33,5 @@ return new class extends Migration
         Schema::dropIfExists('users');
     }
 };
+
 
