@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
 
 class UserSeeder extends Seeder
 {
@@ -17,14 +18,13 @@ class UserSeeder extends Seeder
             [
                 'name' => 'Maria Helenn Moron',
                 'email' => 'mmbhhsa.33@gmail.com',
-                'email_verified_at' => now(), // Cambiado a not null
-                'password' => Hash::make('password123'), // Usando Hash para cifrar la contraseña
-                'phone' => '8969666666', // Tratando el teléfono como string
+                'email_verified_at' => now(),
+                'password' => Hash::make('password123'),
+                'phone' => '8969666666',
                 'address' => '254 33',
-                'remember_token' => now(), // Cambiado a null, no es necesario inicialmente
-
+                'role' => 'user', // Asegúrate de incluir este campo
+                'remember_token' => Str::random(10), // Genera un token aleatorio
             ],
-
             [
                 'name' => 'Administrador',
                 'email' => 'admin@example.com',
@@ -33,7 +33,7 @@ class UserSeeder extends Seeder
                 'phone' => '1234567890',
                 'address' => 'Admin Address',
                 'role' => 'admin',
-                'remember_token' => now(),
+                'remember_token' => Str::random(10),
             ],
             [
                 'name' => 'Usuario Normal',
@@ -43,7 +43,7 @@ class UserSeeder extends Seeder
                 'phone' => '0987654321',
                 'address' => 'User Address',
                 'role' => 'user',
-                'remember_token' => now(),
+                'remember_token' => Str::random(10),
             ],
             [
                 'name' => 'Superusuario',
@@ -53,14 +53,13 @@ class UserSeeder extends Seeder
                 'phone' => '1122334455',
                 'address' => 'Superuser Address',
                 'role' => 'superuser',
-                'remember_token' => now(),
+                'remember_token' => Str::random(10),
             ],
-
         ];
 
         foreach ($users as $user) {
             User::updateOrCreate(
-                ['email' => $user['email']], // Evita duplicados por correo
+                ['email' => $user['email']],
                 $user
             );
         }
