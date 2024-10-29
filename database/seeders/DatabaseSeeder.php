@@ -2,7 +2,9 @@
 
 namespace Database\Seeders;
 
-// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\Handicraf;
+use App\Models\Reservation;
+use App\Models\TouristPlace;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -10,23 +12,24 @@ class DatabaseSeeder extends Seeder
     /**
      * Seed the application's database.
      */
-
-
-
-
-
-
-
     public function run(): void
     {
-        // \App\Models\User::factory(10)->create();
+        // Llama a cada seeder en el orden adecuado.
+        // Es recomendable que los seeders que contienen claves foráneas se ejecuten después de sus dependencias.
 
-        // \App\Models\User::factory()->create([
-        //     'name' => 'Test User',
-        //     'email' => 'test@example.com',
-        // ]);
-    // Llama a tu PlaceSeeder
-    
-    $this->call(CommentSeeder::class);
+        $this->call([
+            CultureSeeder::class, // Carga de Cultura
+            EventSeeder::class, // Carga de Eventos
+            UserSeeder::class,        // Carga de usuarios
+            ServiceSeeder::class,     // Carga de servicios
+            HotelSeeder::class,       // Carga de lugares
+            CommentSeeder::class,     // Carga de comentarios
+            ReservationSeeder::class, // Carga de Cultura
+            TouristPlaceSeeder::class, // Carga de Turismo
+            GastronomySeeder::class, // Carga de Gastronomia
+            HandicraftSeeder::class, // Carga de Artesania
+            ReservationSeeder::class, // Carga de reservas
+        ]);
     }
 }
+
