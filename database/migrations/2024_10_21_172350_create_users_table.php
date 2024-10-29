@@ -13,12 +13,13 @@ return new class extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('email')->unique();
-            $table->timestamp('email_verified_at')->nullable(); // Cambiado a timestamp y nullable
-            $table->string('password');
-            $table->string('phone')->nullable();
-            $table->string('address')->nullable();
+            $table->string('name'); // Nombre obligatorio, no nulo
+            $table->string('email')->unique(); // Email único
+            $table->timestamp('email_verified_at')->disable(); // Verificación de correo no es obligatoria
+            $table->string('password'); // Contraseña encriptada obligatoria
+            $table->string('phone')->nullable(); // Teléfono opcional
+            $table->string('address')->nullable(); // Dirección opcional
+            $table->enum('role', ['user', 'admin', 'superuser'])->default('user'); // Rol obligatorio, sin nulos
             $table->string('remember_token')->nullable();
             $table->timestamps();
         });
@@ -32,3 +33,4 @@ return new class extends Migration
         Schema::dropIfExists('users');
     }
 };
+
