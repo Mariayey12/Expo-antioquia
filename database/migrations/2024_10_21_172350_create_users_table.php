@@ -6,25 +6,23 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    public function up()
-    {
-        if (!Schema::hasTable('users')) {
-            Schema::create('users', function (Blueprint $table) {
-                $table->id();
-                $table->string('name');
-                $table->string('email')->unique();
-                $table->string('email_verified_at')->nullable();
-                $table->string('password');
-                $table->string('phone')->nullable();
-                $table->string('address')->nullable();
-                $table->string('remember_token')->nullable();
-                $table->timestamps();
-            });
-        }
-    } /**
+    /**
      * Run the migrations.
      */
-   
+    public function up()
+    {
+        Schema::create('users', function (Blueprint $table) {
+            $table->id();
+            $table->string('name');
+            $table->string('email')->unique();
+            $table->timestamp('email_verified_at')->nullable(); // Cambiado a timestamp y nullable
+            $table->string('password');
+            $table->string('phone')->nullable();
+            $table->string('address')->nullable();
+            $table->string('remember_token')->nullable();
+            $table->timestamps();
+        });
+    }
 
     /**
      * Reverse the migrations.
@@ -34,7 +32,3 @@ return new class extends Migration
         Schema::dropIfExists('users');
     }
 };
-
-
-
-
