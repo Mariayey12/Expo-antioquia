@@ -17,12 +17,12 @@ class UserSeeder extends Seeder
             [
                 'name' => 'Maria Helenn Moron',
                 'email' => 'mmbhhsa.33@gmail.com',
-                'email_verified_at' => null, // Cambiado a null
+                'email_verified_at' => now(), // Cambiado a not null
                 'password' => Hash::make('password123'), // Usando Hash para cifrar la contraseña
                 'phone' => '8969666666', // Tratando el teléfono como string
                 'address' => '254 33',
-                'remember_token' => null, // Cambiado a null, no es necesario inicialmente
-                
+                'remember_token' => now(), // Cambiado a null, no es necesario inicialmente
+
             ],
 
             [
@@ -33,7 +33,7 @@ class UserSeeder extends Seeder
                 'phone' => '1234567890',
                 'address' => 'Admin Address',
                 'role' => 'admin',
-                'remember_token' => null,
+                'remember_token' => now(),
             ],
             [
                 'name' => 'Usuario Normal',
@@ -43,7 +43,7 @@ class UserSeeder extends Seeder
                 'phone' => '0987654321',
                 'address' => 'User Address',
                 'role' => 'user',
-                'remember_token' => null,
+                'remember_token' => now(),
             ],
             [
                 'name' => 'Superusuario',
@@ -53,9 +53,9 @@ class UserSeeder extends Seeder
                 'phone' => '1122334455',
                 'address' => 'Superuser Address',
                 'role' => 'superuser',
-                'remember_token' => null,
+                'remember_token' => now(),
             ],
-            
+
         ];
 
         foreach ($users as $user) {
@@ -66,5 +66,3 @@ class UserSeeder extends Seeder
         }
     }
 }
-
-    
