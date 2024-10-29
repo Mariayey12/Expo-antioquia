@@ -26,6 +26,7 @@ class DatabaseSeeder extends Seeder
         //     'email' => 'test@example.com',
         // ]);
     // Llama a tu PlaceSeeder
-    $this->call(PlaceSeeder::class);
+    
+    $this->call(CommentSeeder::class);
     }
 }

@@ -8,13 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class Comment extends Model
 {
     use HasFactory;
+
     protected $table = 'comments';
 
-    /**
-     * Los atributos que son asignables en masa.
-     *
-     * @var array<int, string>
-     */
     protected $fillable = [
         'user_id',
         'service_id',
@@ -28,16 +24,16 @@ class Comment extends Model
      */
     public function user()
     {
-        return $this->belongsTo(User::class, 'usuario_id');
+        return $this->belongsTo(User::class, 'user_id');
     }
 
     /**
      * Relación con el modelo Service.
      * Un comentario pertenece a un servicio.
      */
-    public function servicio()
+    public function service()
     {
-        return $this->belongsTo(Service::class, 'servicio_id');
+        return $this->belongsTo(Service::class, 'service_id');
     }
 }
 

@@ -9,11 +9,10 @@ class Reservation extends Model
 {
     use HasFactory;
 
-    /**
-     * Los atributos que son asignables en masa.
-     *
-     * @var array<int, string>
-     */ protected $table = 'reservations';
+    // Nombre de la tabla
+    protected $table = 'reservations';
+
+    // Atributos asignables en masa
     protected $fillable = [
         'user_id',
         'service_id',
@@ -30,15 +29,15 @@ class Reservation extends Model
      */
     public function user()
     {
-        return $this->belongsTo(User::class, 'usuario_id');
+        return $this->belongsTo(User::class, 'user_id');
     }
 
     /**
-     * Relación con el modelo Servicio.
-     * Una reserva pertenece a un servicio.
+     * Relación con el modelo Service.
+     * Una reserva está asociada a un servicio.
      */
-    public function servicio()
+    public function service()
     {
-        return $this->belongsTo(Service::class, 'servicio_id');
+        return $this->belongsTo(Service::class, 'service_id');
     }
 }
