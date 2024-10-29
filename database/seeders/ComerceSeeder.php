@@ -6,17 +6,15 @@ use App\Models\Comerce;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
-    class ComerceSeeder extends Seeder
+class ComerceSeeder extends Seeder
+{
+    /**
+     * Run the database seeds.
+     */
+    public function run(): void
     {
-        /**
-         * Run the database seeds.
-         */
-        public function run(): void
-        {
-    
-
-            $comerces = [  
-                [   
+        $comerces = [
+            [
                 'name' => 'Centro Comercial El Tesoro',
                 'description' => 'Centro comercial con diversas tiendas y entretenimiento.',
                 'location' => 'Medellín',
@@ -31,7 +29,6 @@ use Illuminate\Database\Seeder;
                 'categories' => json_encode(['centro comercial', 'entretenimiento']),
             ],
             [
-                
                 'name' => 'La 70',
                 'description' => 'Zona de comercio y entretenimiento con una variedad de tiendas y restaurantes.',
                 'location' => 'Medellín',
@@ -46,7 +43,6 @@ use Illuminate\Database\Seeder;
                 'categories' => json_encode(['zona comercial', 'entretenimiento']),
             ],
             [
-                
                 'name' => 'Centro Comercial Santafé',
                 'description' => 'Uno de los centros comerciales más grandes de Medellín con múltiples opciones de compras.',
                 'location' => 'Medellín',
@@ -61,7 +57,6 @@ use Illuminate\Database\Seeder;
                 'categories' => json_encode(['centro comercial', 'compras']),
             ],
             [
-            
                 'name' => 'Plaza Mayor',
                 'description' => 'Centro de exposiciones y convenciones con tiendas y servicios.',
                 'location' => 'Medellín',
@@ -76,7 +71,6 @@ use Illuminate\Database\Seeder;
                 'categories' => json_encode(['exposiciones', 'servicios']),
             ],
             [
-                
                 'name' => 'Mercado del Rio',
                 'description' => 'Un espacio gastronómico con opciones de comida local e internacional.',
                 'location' => 'Medellín',
@@ -91,7 +85,6 @@ use Illuminate\Database\Seeder;
                 'categories' => json_encode(['gastronomía', 'comida']),
             ],
             [
-                
                 'name' => 'La Playa Centro Comercial',
                 'description' => 'Centro comercial que ofrece una variedad de tiendas y servicios.',
                 'location' => 'Medellín',
@@ -106,7 +99,6 @@ use Illuminate\Database\Seeder;
                 'categories' => json_encode(['centro comercial', 'compras']),
             ],
             [
-                
                 'name' => 'El Tesoro Parque Comercial',
                 'description' => 'Centro comercial con vista panorámica y tiendas exclusivas.',
                 'location' => 'Medellín',
@@ -121,7 +113,6 @@ use Illuminate\Database\Seeder;
                 'categories' => json_encode(['centro comercial', 'tiendas exclusivas']),
             ],
             [
-                
                 'name' => 'Centro Comercial Oviedo',
                 'description' => 'Espacio comercial con una variedad de opciones de entretenimiento y compras.',
                 'location' => 'Medellín',
@@ -136,7 +127,6 @@ use Illuminate\Database\Seeder;
                 'categories' => json_encode(['centro comercial', 'entretenimiento']),
             ],
             [
-                
                 'name' => 'La 33',
                 'description' => 'Área de comercio local con tiendas de ropa, comida y más.',
                 'location' => 'Medellín',
@@ -151,7 +141,6 @@ use Illuminate\Database\Seeder;
                 'categories' => json_encode(['comercio local', 'tiendas']),
             ],
             [
-                
                 'name' => 'Centro Comercial Premium Plaza',
                 'description' => 'Centro comercial moderno con opciones de entretenimiento y compras.',
                 'location' => 'Medellín',
@@ -161,12 +150,11 @@ use Illuminate\Database\Seeder;
                 'google_maps' => 'https://www.google.com/maps/place/Centro+Comercial+Premium+Plaza',
                 'category' => 'commerce',
                 'contact_number' => '(604) 012 3456',
-                'email' => 'info@premiumplaza.com.co',
+                'email' => 'info@premiumplaza.com',
                 'website' => 'https://www.premiumplaza.com.co',
                 'categories' => json_encode(['centro comercial', 'entretenimiento']),
             ],
             [
-                
                 'name' => 'Mall Plaza',
                 'description' => 'Centro comercial con una gran variedad de tiendas y actividades familiares.',
                 'location' => 'Medellín',
@@ -175,18 +163,26 @@ use Illuminate\Database\Seeder;
                 'video_url' => 'https://www.youtube.com/watch?v=example51',
                 'google_maps' => 'https://www.google.com/maps/place/Mall+Plaza',
                 'category' => 'commerce',
-                'contact_number' => '(604) 123 4567',
+                'contact_number' => '(604) 123 4568',
                 'email' => 'info@mallplaza.com.co',
                 'website' => 'https://www.mallplaza.com.co',
-                'categories' => json_encode(['centro comercial', 'actividades familiares'])
+                'categories' => json_encode(['centro comercial', 'familias']),
             ],
         ];
 
-            foreach ($comerces as $comerce) {
-                Comerce::create($comerce);
+        foreach ($comerces as $comerce) {
+            // Validar que todos los campos requeridos no sean nulos
+            if (
+                empty($comerce['name']) || empty($comerce['description']) || empty($comerce['location']) ||
+                empty($comerce['climate']) || empty($comerce['image_url']) || empty($comerce['video_url']) ||
+                empty($comerce['google_maps']) || empty($comerce['category']) ||
+                empty($comerce['contact_number']) || empty($comerce['email']) ||
+                empty($comerce['website']) || empty($comerce['categories'])
+            ) {
+                continue; // Saltar este registro si falta algún dato
             }
-                
 
+            Comerce::create($comerce);
         }
+    }
 }
-
