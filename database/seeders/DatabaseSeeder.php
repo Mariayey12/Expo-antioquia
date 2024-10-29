@@ -2,9 +2,6 @@
 
 namespace Database\Seeders;
 
-use App\Models\Handicraf;
-use App\Models\Reservation;
-use App\Models\TouristPlace;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -14,22 +11,22 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // Llama a cada seeder en el orden adecuado.
-        // Es recomendable que los seeders que contienen claves foráneas se ejecuten después de sus dependencias.
-
+        // Llama a cada seeder en el orden adecuado para evitar problemas de dependencias de claves foráneas.
+        
         $this->call([
-            CultureSeeder::class, // Carga de Cultura
-            EventSeeder::class, // Carga de Eventos
-            UserSeeder::class,        // Carga de usuarios
-            ServiceSeeder::class,     // Carga de servicios
-            HotelSeeder::class,       // Carga de lugares
-            CommentSeeder::class,     // Carga de comentarios
-            ReservationSeeder::class, // Carga de Cultura
-            TouristPlaceSeeder::class, // Carga de Turismo
-            GastronomySeeder::class, // Carga de Gastronomia
-            HandicraftSeeder::class, // Carga de Artesania
-            ReservationSeeder::class, // Carga de reservas
+            UserSeeder::class,            // Cargar Usuarios
+            ServiceSeeder::class,         // Cargar Servicios (para Comentarios y Reservas)
+            ComerceSeeder::class,         // Cargar Comercios
+            CultureSeeder::class,         // Cargar Cultura
+            EventSeeder::class,           // Cargar Eventos
+            GastronomySeeder::class,      // Cargar Gastronomía
+            HandicraftSeeder::class,      // Cargar Artesanía
+            HotelSeeder::class,           // Cargar Hoteles
+            TouristPlaceSeeder::class,    // Cargar Lugares Turísticos
+            RestaurantSeeder::class,      // Cargar Restaurantes
+            RelationPlaceSeeder::class,   // Cargar Lugares de Relajación
+            ReservationSeeder::class,     // Cargar Reservas (después de Usuarios y Servicios)
+            CommentSeeder::class,         // Cargar Comentarios (después de Usuarios y Servicios)
         ]);
     }
 }
-
