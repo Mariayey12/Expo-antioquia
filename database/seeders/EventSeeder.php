@@ -180,10 +180,16 @@ class EventSeeder extends Seeder
             'latitude' => 5.0703,
             'longitude' => -75.5138,
             'category' => 'event'
-        ],
-        ];
+        ],];
+       foreach ($events as $evento) {
+            // Asegurarse de que no haya valores nulos en los campos opcionales
+            $evento['climate'] = $evento['climate'] ?? 'N/A';
+            $evento['image_url'] = $evento['image_url'] ?? 'https://via.placeholder.com/150';
+            $evento['video_url'] = $evento['video_url'] ?? 'https://www.youtube.com/';
+            $evento['google_maps'] = $evento['google_maps'] ?? 'https://www.google.com/maps';
+            $evento['latitude'] = $evento['latitude'] ?? 0.00000000;
+            $evento['longitude'] = $evento['longitude'] ?? 0.00000000;
 
-        foreach ($events as $evento) {
             Evento::create($evento);
         }
     }
