@@ -11,9 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('services', function (Blueprint $table) {
+        Schema::table('comerces', function (Blueprint $table) {
+            $table->string('category')->nullable();
             //
-            $table->string('video_url')->nullable();
         });
     }
 
@@ -22,8 +22,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('services', function (Blueprint $table) {
-            $table->dropColumn('video_url');
+        Schema::table('comerces', function (Blueprint $table) {
             //
         });
     }

@@ -10,6 +10,8 @@ return new class extends Migration
      * Run the migrations.
      */
     public function up(): void
+    
+    
     {
         Schema::create('services', function (Blueprint $table) {
             $table->id();
@@ -25,9 +27,14 @@ return new class extends Migration
             $table->date('available_from')->nullable(); // Fecha desde la cual está disponible
             $table->date('available_until')->nullable(); // Fecha hasta la cual está disponible
             $table->string('contact_info')->nullable(); // Información de contacto para más detalles
+            $table->string('google_maps')->nullable(); // URL de Google Maps
+            $table->string('video_url')->nullable(); // URL del video
             $table->timestamps();
         });
+    
     }
+
+
 
     /**
      * Reverse the migrations.
