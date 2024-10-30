@@ -173,9 +173,13 @@ class ComerceSeeder extends Seeder
         foreach ($comerces as $comerce) {
             // Validar que todos los campos requeridos no sean nulos
             if (
-                empty($comerce['name']) || empty($comerce['description']) || empty($comerce['location']) ||
-                empty($comerce['climate']) || empty($comerce['image_url']) || empty($comerce['video_url']) ||
-                empty($comerce['google_maps']) || empty($comerce['category']) ||
+                empty($comerce['name']) || empty($comerce['description']) ||
+                 empty($comerce['location']) ||
+                empty($comerce['climate']) || empty($comerce['image_url']) || 
+                empty($comerce['video_url']) ||
+                empty($comerce['name']) || empty($comerce['description']) ||
+                empty($comerce['climate']) ||
+                empty($comerce['google_maps']) || empty($comerce['category']) || 
                 empty($comerce['contact_number']) || empty($comerce['email']) ||
                 empty($comerce['website']) || empty($comerce['categories'])
             ) {

@@ -21,6 +21,7 @@ return new class extends Migration
             $table->string('website')->nullable(); // URL del sitio web
             $table->json('categories')->nullable(); // Categorías del comercio en formato JSON
             $table->string('image_url')->nullable(); // URL de una imagen del comercio
+          
             $table->timestamps();
         });
     }
