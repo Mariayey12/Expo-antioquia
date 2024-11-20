@@ -1,48 +1,36 @@
 <?php
+namespace Database\Seeders;
 
-use Illuminate\Database\Migrations\Migration;
-use Illuminate\Database\Schema\Blueprint;
-use Illuminate\Support\Facades\Schema;
+use Illuminate\Database\Seeder;
+use App\Models\Anuncio;
 
-class CreateNewAdsTable extends Migration  // Cambia el nombre de la clase aquí si es necesario
+class AdsTableSeeder extends Seeder
 {
     /**
-     * Run the migrations.
+     * Run the database seeds.
      *
      * @return void
      */
-    public function up()
+    public function run()
     {
-        Schema::create('ads', function (Blueprint $table) {
-            $table->id(); // ID principal
-            $table->string('area'); // Área o región del anuncio
-            $table->string('categoria'); // Categoría del anuncio
-            $table->string('provincia')->nullable(); // Provincia (opcional)
-            $table->string('localidad')->nullable(); // Localidad (opcional)
-            $table->string('direccion')->nullable(); // Dirección (opcional)
-            $table->string('cod_postal')->nullable(); // Código postal (opcional)
-            $table->string('titulo'); // Título del anuncio
-            $table->text('contenido')->nullable(); // Contenido o descripción del anuncio
-            $table->decimal('precio', 10, 2)->nullable(); // Precio del anuncio (opcional)
-            $table->string('autor')->nullable(); // Autor del anuncio (opcional)
-            $table->string('imagen_url')->nullable(); // URL de la imagen (opcional)
-            $table->string('link_externo')->nullable(); // Enlace externo (opcional)
-            $table->string('nombre')->nullable(); // Nombre del contacto
-            $table->string('email')->nullable(); // Email de contacto
-            $table->string('telefono')->nullable(); // Teléfono de contacto
-            $table->boolean('acepto_condiciones')->default(false); // Confirmación de términos
-            $table->date('fecha_publicacion')->nullable(); // Fecha de publicación
-            $table->timestamps(); // created_at y updated_at
-        });
-    }
-
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
-    public function down()
-    {
-        Schema::dropIfExists('ads');
+        Ads::create([
+            'area' => 'Antioquia',
+            'categoria' => 'Gastronomía',
+            'provincia' => 'Medellín',
+            'localidad' => 'El Poblado',
+            'direccion' => 'Calle Ficticia #123',
+            'cod_postal' => '050010',
+            'titulo' => 'Deliciosa comida típica antioqueña',
+            'contenido' => 'Anuncio sobre un restaurante típico de la región.',
+            'precio' => 25000.00,
+            'autor' => 'Juan Pérez',
+            'imagen_url' => 'http://example.com/imagen.jpg',
+            'link_externo' => 'http://example.com',
+            'nombre' => 'Juan Pérez',
+            'email' => 'juanperez@email.com',
+            'telefono' => '3001234567',
+            'acepto_condiciones' => true,
+            'fecha_publicacion' => '2024-11-19',
+        ]);
     }
 }

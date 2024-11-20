@@ -29,6 +29,10 @@ use App\Http\Controllers\CultureController;
 use App\Http\Controllers\RestaurantController;
 use App\Http\Controllers\GastronomyController;
 use App\Http\Controllers\EventoController; // Asegúrate de que este nombre esté correcto
+use App\Http\Controllers\AnuncioController;
+// Rutas para anuncios
+Route::resource('anuncios', AnuncioController::class);  // Rutas para todas las operaciones CRUD
+
 // Rutas para usuarios
 Route::apiResource('users', UserController::class);
 

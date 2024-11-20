@@ -8,23 +8,22 @@ class DatabaseSeeder extends Seeder
 {
     /**
      * Seed the application's database.
+     *
+     * @return void
      */
-
-
-
-
-
-
-
     public function run(): void
     {
-        // \App\Models\User::factory(10)->create();
-
-        // \App\Models\User::factory()->create([
-        //     'name' => 'Test User',
-        //     'email' => 'test@example.com',
-        // ]);
-    // Llama a tu PlaceSeeder
-    $this->call(PlaceSeeder::class);
+        // Llama a los seeders de las tablas específicas
+        $this->call([
+            AdsTableSeeder::class,
+            PlacesTableSeeder::class,
+            HotelsTableSeeder::class,
+            RestaurantsTableSeeder::class,
+            TouristPlacesTableSeeder::class,
+            RelaxationPlacesTableSeeder::class,
+            CommentsTableSeeder::class,
+            UsersTableSeeder::class,
+            ReservationsTableSeeder::class,
+        ]);
     }
 }
