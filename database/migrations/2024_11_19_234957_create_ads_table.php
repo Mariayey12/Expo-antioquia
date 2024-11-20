@@ -1,9 +1,10 @@
 <?php
+
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateAnunciosTable extends Migration
+class CreateNewAdsTable extends Migration  // Cambia el nombre de la clase aquí si es necesario
 {
     /**
      * Run the migrations.
@@ -12,7 +13,7 @@ class CreateAnunciosTable extends Migration
      */
     public function up()
     {
-        Schema::create('anuncios', function (Blueprint $table) {
+        Schema::create('ads', function (Blueprint $table) {
             $table->id(); // ID principal
             $table->string('area'); // Área o región del anuncio
             $table->string('categoria'); // Categoría del anuncio
@@ -42,6 +43,6 @@ class CreateAnunciosTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('anuncios');
+        Schema::dropIfExists('ads');
     }
 }

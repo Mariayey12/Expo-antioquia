@@ -18,15 +18,16 @@ return new class extends Migration
             $table->date('fecha_reserva'); // Fecha de la reserva
             $table->time('hora_reserva'); // Hora de la reserva
             $table->integer('cantidad_personas')->nullable(); // Cantidad de personas para la reserva
-            $table->string('estado')->default('pendiente'); // Estado de la reserva (pendiente, confirmada, cancelada, etc.)
+            $table->string('estado')->default('pendiente'); // Estado de la reserva
             $table->text('notas')->nullable(); // Notas adicionales sobre la reserva
             $table->timestamps();
 
-            // Definir las claves foráneas
+            // Claves foráneas
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-            $table->foreign('services_id')->references('id')->on('services')->onDelete('cascade');
+            $table->foreign('service_id')->references('id')->on('services')->onDelete('cascade');
         });
     }
+
     /**
      * Reverse the migrations.
      */
@@ -35,3 +36,4 @@ return new class extends Migration
         Schema::dropIfExists('reservations');
     }
 };
+
