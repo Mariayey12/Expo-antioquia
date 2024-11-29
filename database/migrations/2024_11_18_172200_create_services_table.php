@@ -38,8 +38,7 @@ return new class extends Migration
             // Relación polimórfica
             $table->morphs('serviceable'); // Crea las columnas `serviceable_id` y `serviceable_type`
 
-            // Relación con la tabla 'places' (si es necesario)
-            $table->foreignId('place_id')->constrained();
+
         });
     }
 
