@@ -69,16 +69,6 @@ class UsersTableSeeder extends Seeder
          // Crear más usuarios con datos aleatorios
          User::factory()->count(8)->create();
 
-         // Crear un administrador asociado al usuario si es necesario
-         $admin = Admin::factory()->create([
-             'permissions' => 'manage_users,view_reports',
-             'department' => 'IT',
-             'notes' => 'Administrador del sistema principal',
-         ]);
-
-         // Si la relación entre User y Admin es polimórfica, hacemos la asociación
-         $user->userable()->associate($admin);
-         $user->save();
 
         foreach ($users as $userData) {
             User::create($userData);
