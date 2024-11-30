@@ -28,8 +28,7 @@ class AdminsTableSeeder extends Seeder
 
         // Crear más administradores con datos aleatorios
         Admin::factory()->count(8)->create(); // Puedes ajustar el número según necesites
-        $user->userable()->associate($admin);
-        $user->save();
+
         }
     }
 

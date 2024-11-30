@@ -52,8 +52,8 @@ class UsersTableSeeder extends Seeder
                 'email_verified_at' => Carbon::now(),
                 'role' => 'usuario',
                 'remember_token' => Str::random(10),
-                'userable_type' => User::class,   // Usamos el tipo de relación correcto
-                'userable_id' => null,            // Dejamos el ID de User como null
+                'userable_type' => null,  // No tiene un modelo relacionado
+                'userable_id' => null,    // No tiene ID
             ],
         ];
 
@@ -61,9 +61,11 @@ class UsersTableSeeder extends Seeder
         foreach ($users as $userData) {
             $user = User::create($userData);
 
-            // Asociar el usuario al modelo polimórfico
-            $user->userable()->associate($user->userable_type::find($userData['userable_id']));
-            $user->save();
+            // Asociar el usuario al modelo polimórfico si es necesario
+            if ($user->userable_type && $user->userable_id) {
+                $user->userable()->associate($user->userable_type::find($user->userable_id));
+                $user->save();
+            }
         }
 
         echo "Usuarios insertados exitosamente.\n";
