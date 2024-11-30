@@ -1,8 +1,10 @@
 <?php
+namespace Database\Seeders;
 
+use Illuminate\Database\Seeder;
+use App\Models\User;
 use App\Models\Admin;
 use App\Models\Provider;
-use App\Models\User;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Hash;
 use Carbon\Carbon;
@@ -11,10 +13,9 @@ class UsersTableSeeder extends Seeder
 {
     public function run()
     {
-        // Crear administradores, proveedores y usuarios de forma dinámica
+        // Crear administradores y proveedores con factory
         $admin = Admin::factory()->create();
-        $proveedor = Provider::factory()->create();
-        $usuario = User::factory()->create();
+        $provider = Provider::factory()->create();
 
         // Crear usuarios con relaciones polimórficas
         $users = [
@@ -25,13 +26,10 @@ class UsersTableSeeder extends Seeder
                 'phone' => '3001234567',
                 'address' => 'Calle 123 #45-67, Medellín',
                 'email_verified_at' => Carbon::now(),
-                'profile_picture' => null,
                 'role' => 'administrador',
                 'remember_token' => Str::random(10),
-                'userable_type' => 'App\Models\Admin', // Aquí se especifica el tipo de modelo correctamente
-                'userable_id' => $admin->id, // Usamos el ID dinámico del Admin
-                'created_at' => Carbon::now(),
-                'updated_at' => Carbon::now(),
+                'userable_type' => Admin::class, // Usamos el tipo de relación correcto
+                'userable_id' => $admin->id,    // Usamos el ID del Admin
             ],
             [
                 'name' => 'Carlos García',
@@ -40,13 +38,10 @@ class UsersTableSeeder extends Seeder
                 'phone' => '3209876543',
                 'address' => 'Avenida 1 #23-45, Cali',
                 'email_verified_at' => Carbon::now(),
-                'profile_picture' => null,
                 'role' => 'proveedor',
                 'remember_token' => Str::random(10),
-                'userable_type' => 'App\Models\Provider', // Aquí se especifica el tipo de modelo correctamente
-                'userable_id' => $proveedor->id, // Usamos el ID dinámico del Proveedor
-                'created_at' => Carbon::now(),
-                'updated_at' => Carbon::now(),
+                'userable_type' => Provider::class, // Usamos el tipo de relación correcto
+                'userable_id' => $provider->id,    // Usamos el ID del Provider
             ],
             [
                 'name' => 'Ana Torres',
@@ -55,23 +50,20 @@ class UsersTableSeeder extends Seeder
                 'phone' => '3051237890',
                 'address' => 'Diagonal 12 #34-56, Cartagena',
                 'email_verified_at' => Carbon::now(),
-                'profile_picture' => null,
                 'role' => 'usuario',
                 'remember_token' => Str::random(10),
-                'userable_type' => 'App\Models\User', // Aquí se especifica el tipo de modelo correctamente
-                'userable_id' => $usuario->id, // Usamos el ID dinámico del Usuario
-                'created_at' => Carbon::now(),
-                'updated_at' => Carbon::now(),
+                'userable_type' => User::class,   // Usamos el tipo de relación correcto
+                'userable_id' => null,            // Dejamos el ID de User como null
             ],
         ];
 
-
-         // Crear más usuarios con datos aleatorios
-         User::factory()->count(8)->create();
-
-
+        // Crear los usuarios
         foreach ($users as $userData) {
-            User::create($userData);
+            $user = User::create($userData);
+
+            // Asociar el usuario al modelo polimórfico
+            $user->userable()->associate($user->userable_type::find($userData['userable_id']));
+            $user->save();
         }
 
         echo "Usuarios insertados exitosamente.\n";
