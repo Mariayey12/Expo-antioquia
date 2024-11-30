@@ -87,6 +87,10 @@ class UsersTableSeeder extends Seeder
             ],
         ];
 
+        // Insertar los usuarios creados con relaciones polimórficas
+        foreach ($users as $userData) {
+            User::create($userData);
+        }
 
 
 
