@@ -1,5 +1,8 @@
 <?php
 
+namespace Database\Seeders;
+
+use Illuminate\Database\Seeder; // Asegúrate de importar la clase Seeder
 use App\Models\Admin;
 use App\Models\Provider;
 use App\Models\User;

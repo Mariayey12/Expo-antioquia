@@ -25,6 +25,11 @@ class ProviderTableSeeder extends Seeder
             'name' => 'Proveedor User',
             'email' => 'proveedoruser@example.com',
             'password' => bcrypt('password'),
+            'phone' => '1234567890',
+            'address' => '123 Main St',
+            'company_name' => 'Proveedor S.A.',
+            'services' => 'Consultoría, Soporte Técnico3',
+
         ]);
 // Crear más administradores con datos aleatorios
 Admin::factory()->count(8)->create(); // Puedes ajustar el número según necesites
