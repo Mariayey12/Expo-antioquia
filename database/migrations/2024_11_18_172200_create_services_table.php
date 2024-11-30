@@ -34,8 +34,7 @@ return new class extends Migration
 
             // Relación polimórfica
             $table->nullableMorphs('serviceable'); // Esta línea agrega las columnas `serviceable_id` y `serviceable_type`
-            $table->morphs('serviceable'); // Relación con otros modelos$table->foreignId('place_id')->constrained('places')->onDelete('cascade');
-            $table->foreignId('place_id')->constrained('places')->onDelete('cascade');
+
 
 
 

@@ -12,24 +12,19 @@ class AdminsTableSeeder extends Seeder
     public function run()
     {
         // Administradores a insertar
-        $admins = [
-            [
 
-                'permissions' => 'manage_users,view_reports',
-                'department' => 'IT',
-                'notes' => 'Administrador del sistema principal',
-                'created_at' => Carbon::now(),
-                'updated_at' => Carbon::now(),
-            ],
-            [
+         // Crear administradores con factory
+         Admin::factory()->create([
+            'permissions' => 'manage_users,view_reports',
+            'department' => 'IT',
+            'notes' => 'Administrador del sistema principal',
+        ]);
 
-                'permissions' => 'manage_admins,view_reports',
-                'department' => 'Customer Service',
-                'notes' => 'Administrador del servicios a clientes',
-                'created_at' => Carbon::now(),
-                'updated_at' => Carbon::now(),
-            ],
-        ];
+        Admin::factory()->create([
+            'permissions' => 'manage_admins,view_reports',
+            'department' => 'Customer Service',
+            'notes' => 'Administrador de servicios a clientes',
+        ]);
 
         // Insertar administradores relacionados con usuarios
         foreach ($admins as $adminData) {
@@ -44,3 +39,5 @@ class AdminsTableSeeder extends Seeder
         }
     }
 }
+
+

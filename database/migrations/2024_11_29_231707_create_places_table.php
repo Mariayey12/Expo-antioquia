@@ -34,10 +34,14 @@ class CreatePlacesTable extends Migration
             $table->date('event_date')->nullable(); // Fecha del evento
             $table->json('activities')->nullable(); // Actividades
             $table->integer('duration_days')->nullable(); // Duración en días
+            $table->string('artists')->nullable(); // Artistas
+            $table->string('artist')->nullable(); // Artista
             $table->decimal('latitude', 10, 6)->default(0.0); // Latitud
             $table->decimal('longitude', 10, 6)->default(0.0); // Longitud
             $table->string('provider_name')->nullable(); // Nombre del proveedor
             $table->string('contact_info')->nullable(); // Información de contacto
+            $table->string('material')->nullable(); // Material
+            $table->string('technique')->nullable(); // Técnica
             $table->decimal('price', 8, 2); // Precio del servicio
             $table->float('cost')->nullable(); // Costo
             $table->string('services')->nullable(); // Servicios

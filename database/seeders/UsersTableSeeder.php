@@ -3,16 +3,23 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
+use App\Models\Admin;
+use App\Models\Proveedor;
+use App\Models\User;
 use Carbon\Carbon;
 
 class UsersTableSeeder extends Seeder
 {
     public function run()
     {
-        // Definimos los usuarios en un arreglo
+        // Crear administradores, proveedores y usuarios de forma dinámica
+        $admin = Admin::factory()->create();
+        $proveedor = Proveedor::factory()->create();
+        $usuario = User::factory()->create();
+
+        // Crear usuarios con relaciones polimórficas
         $users = [
             [
                 'name' => 'Juan Pérez',
@@ -21,26 +28,11 @@ class UsersTableSeeder extends Seeder
                 'phone' => '3001234567',
                 'address' => 'Calle 123 #45-67, Medellín',
                 'email_verified_at' => Carbon::now(),
-                'profile_picture' => null, // Puede ser nulo
-                'role' => 'administrador', // Rol del usuario
+                'profile_picture' => null,
+                'role' => 'administrador',
                 'remember_token' => Str::random(10),
-                'userable_type' => 'App\Models\Admin', // Definimos el tipo de modelo relacionado
-                'userable_id' => 1, // Usamos el ID del modelo relacionado (puede ser cualquier ID válido de Admin)
-                'created_at' => Carbon::now(),
-                'updated_at' => Carbon::now(),
-            ],
-            [
-                'name' => 'María López',
-                'email' => 'maria@example.com',
-                'password' => Hash::make('password123'),
-                'phone' => '3107654321',
-                'address' => 'Carrera 7 #89-10, Bogotá',
-                'email_verified_at' => Carbon::now(),
-                'profile_picture' => null, // Puede ser nulo
-                'role' => 'usuario', // Rol del usuario
-                'remember_token' => Str::random(10),
-                'userable_type' => 'App\Models\User', // Definimos el tipo de modelo relacionado
-                'userable_id' => 2, // Usamos el ID del modelo relacionado (puede ser cualquier ID válido de Usuario)
+                'userable_type' => 'App\Models\Admin',
+                'userable_id' => $admin->id, // Usamos el ID dinámico del Admin
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
             ],
@@ -51,11 +43,11 @@ class UsersTableSeeder extends Seeder
                 'phone' => '3209876543',
                 'address' => 'Avenida 1 #23-45, Cali',
                 'email_verified_at' => Carbon::now(),
-                'profile_picture' => null, // Puede ser nulo
-                'role' => 'proveedor', // Rol del usuario
+                'profile_picture' => null,
+                'role' => 'proveedor',
                 'remember_token' => Str::random(10),
-                'userable_type' => 'App\Models\Proveedor', // Definimos el tipo de modelo relacionado
-                'userable_id' => 3, // Usamos el ID del modelo relacionado (puede ser cualquier ID válido de Proveedor)
+                'userable_type' => 'App\Models\Proveedor',
+                'userable_id' => $proveedor->id, // Usamos el ID dinámico del Proveedor
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
             ],
@@ -66,26 +58,11 @@ class UsersTableSeeder extends Seeder
                 'phone' => '3051237890',
                 'address' => 'Diagonal 12 #34-56, Cartagena',
                 'email_verified_at' => Carbon::now(),
-                'profile_picture' => null, // Puede ser nulo
-                'role' => 'usuario', // Rol del usuario
+                'profile_picture' => null,
+                'role' => 'usuario',
                 'remember_token' => Str::random(10),
-                'userable_type' => 'App\Models\User', // Definimos el tipo de modelo relacionado
-                'userable_id' => 4, // Usamos el ID del modelo relacionado (puede ser cualquier ID válido de Usuario)
-                'created_at' => Carbon::now(),
-                'updated_at' => Carbon::now(),
-            ],
-            [
-                'name' => 'Luis Ramírez',
-                'email' => 'luis@example.com',
-                'password' => Hash::make('password123'),
-                'phone' => '3154567890',
-                'address' => 'Transversal 45 #67-89, Barranquilla',
-                'email_verified_at' => Carbon::now(),
-                'profile_picture' => null, // Puede ser nulo
-                'role' => 'proveedor', // Rol del usuario
-                'remember_token' => Str::random(10),
-                'userable_type' => 'App\Models\Proveedor', // Definimos el tipo de modelo relacionado
-                'userable_id' => 5, // Usamos el ID del modelo relacionado (puede ser cualquier ID válido de Proveedor)
+                'userable_type' => 'App\Models\User',
+                'userable_id' => $usuario->id, // Usamos el ID dinámico de Usuario
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
             ],
