@@ -17,6 +17,7 @@ class ProviderTableSeeder extends Seeder
             'phone' => '1234567890',
             'address' => '123 Main St',
             'company_name' => 'Proveedor S.A.',
+            'password' => bcrypt('defaultpassword'),
              'contact_person'=> null,
             'services' => 'Consultoría, Soporte Técnico',
         ]);
@@ -25,7 +26,7 @@ class ProviderTableSeeder extends Seeder
         $user = User::create([
             'name' => 'Proveedor User',
             'email' => 'proveedoruser@example.com',
-            'password' => null,
+            'password' => bcrypt('defaultpassword'),
             'phone' => '1234567890',
             'address' => '123 Main St',
             'company_name' => 'Proveedor S.A.',
