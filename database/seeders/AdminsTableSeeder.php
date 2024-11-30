@@ -8,50 +8,57 @@ use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 
-class AdminsTableSeeder extends Seeder
+class AdminSeeder extends Seeder
 {
     public function run()
     {
-        // Datos para la tabla 'admins'
+        // Datos de administradores a insertar
         $admins = [
             [
-                'permissions' => 'manage_users,view_reports',
-                'department' => 'IT',
-                'notes' => 'Administrador del sistema principal',
-            ],
-            [
-                'permissions' => 'manage_services,view_statistics',
-                'department' => 'Customer Support',
-                'notes' => 'Responsable de soporte al cliente',
-            ],
-        ];
-
-        foreach ($admins as $key => $adminData) {
-            // Crear un registro en la tabla 'admins'
-            $admin = Admin::create($adminData);
-
-            // Crear un usuario para el administrador
-            $user = User::create([
-                'name' => 'Admin ' . ($key + 1), // Nombre dinámico para el usuario
-                'email' => 'admin' . ($key + 1) . '@example.com',
-                'password' => Hash::make('password123'),
-                'phone' => '300000000' . ($key + 1),
-                'address' => 'Calle Principal #' . ($key + 1) . ' Medellín',
-                'email_verified_at' => Carbon::now(),
-                'profile_picture' => null, // Puede ser nulo
-                'role' => 'administrador', // Rol del usuario
-                'remember_token' => Str::random(10),
+                'name' => 'Admin 1',
+                'email' => 'admin1@example.com',
+                'password' => bcrypt('password123'),
+                'phone' => '3000000001',
+                'address' => 'Calle Principal #1 Medellín',
+                'role' => 'administrador',
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
+            ],
+            [
+                'name' => 'Admin 2',
+                'email' => 'admin2@example.com',
+                'password' => bcrypt('password123'),
+                'phone' => '3000000002',
+                'address' => 'Calle Secundaria #2 Medellín',
+                'role' => 'administrador',
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
+            ],
+            // Agrega más administradores si es necesario
+        ];
+
+        // Insertar en la tabla 'users' primero
+        foreach ($admins as $admin) {
+            $user = User::create([
+                'name' => $admin['name'],
+                'email' => $admin['email'],
+                'password' => $admin['password'],
+                'phone' => $admin['phone'],
+                'address' => $admin['address'],
+                'role' => $admin['role'],
+                'created_at' => $admin['created_at'],
+                'updated_at' => $admin['updated_at'],
             ]);
 
-            // Establecer los valores de la relación polimórfica
-            $user->userable_type = Admin::class;  // Corregido: Usar el nombre de clase correcto 'Admin'
-            $user->userable_id = $admin->id;     // Establecer el ID del administrador
-            $user->save();  // Guardar los cambios en la tabla 'users'
+            // Insertar el administrador asociado en la tabla 'admins'
+            Admin::create([
+                'user_id' => $user->id,
+                'permissions' => 'all', // Puedes ajustar los permisos como desees
+                'department' => 'General', // Ajustar según el departamento del admin
+                'notes' => 'Administrador de alto nivel',
+            ]);
         }
-
-        echo "Administradores y usuarios asociados insertados exitosamente.\n";
     }
 }

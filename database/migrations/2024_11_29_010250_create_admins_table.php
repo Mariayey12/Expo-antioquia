@@ -10,10 +10,14 @@ return new class extends Migration
     {
         Schema::create('admins', function (Blueprint $table) {
             $table->id();
-            $table->string('permissions')->nullable(); // Permisos específicos
-            $table->string('department')->nullable();  // Departamento del
-            $table->string('notes')->nullable();       // Notas adicionales sobre el administrador
-            $table->timestamps(); // Marcas de tiempo
+            $table->string('permissions')->nullable();
+            $table->string('department')->nullable();
+            $table->string('notes')->nullable();
+
+            // Relación polimórfica: estos dos campos se generarán automáticamente con morphs()
+            $table->morphs('userable'); // Crea 'userable_id' y 'userable_type'
+
+            $table->timestamps();
         });
     }
 
@@ -22,4 +26,3 @@ return new class extends Migration
         Schema::dropIfExists('admins');
     }
 };
-
