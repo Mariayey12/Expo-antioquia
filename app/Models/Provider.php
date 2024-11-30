@@ -20,9 +20,12 @@ class Provider extends Model
         'services',
     ];
 
-    // Relación polimórfica con User
-    public function user()
-    {
-        return $this->morphOne(User::class, 'userable');
-    }
+
+
+    // En el modelo Proveedor
+public function users()
+{
+    return $this->morphMany(User::class, 'userable');
+}
+
 }

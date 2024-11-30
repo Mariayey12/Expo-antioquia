@@ -69,6 +69,24 @@ class UsersTableSeeder extends Seeder
             ],
         ];
 
+        foreach ($users as $userData) {
+            // Validación para evitar campos nulos en la relación userable
+            if (is_null($userData['userable_type']) || is_null($userData['userable_id'])) {
+                throw new \Exception("Los campos 'userable_type' o 'userable_id' no pueden ser nulos para el usuario '{$userData['name']}'");
+            }
+
+            // Validación para evitar otros campos nulos
+            foreach ($userData as $key => $value) {
+                if (is_null($value)) {
+                    throw new \Exception("El campo '{$key}' no puede ser nulo para el usuario '{$userData['name']}'");
+                }
+            }
+
+            // Crear el usuario si no hay campos nulos
+            User::create($userData);
+        }
+
+
         // Insertar los usuarios en la base de datos
         DB::table('users')->insert($users);
 

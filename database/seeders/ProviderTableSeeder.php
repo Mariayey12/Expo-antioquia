@@ -6,7 +6,7 @@ use Illuminate\Database\Seeder;
 use App\Models\Provider;
 use App\Models\User;
 
-class ProviderSeeder extends Seeder
+class ProviderTableSeeder extends Seeder
 {
     public function run()
     {
