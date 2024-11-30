@@ -3,12 +3,13 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Str;
 use App\Models\Admin;
-use App\Models\Proveedor;
 use App\Models\User;
+use App\Models\Provider;
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Hash;
 use Carbon\Carbon;
+use DB;
 
 class UsersTableSeeder extends Seeder
 {
@@ -16,7 +17,7 @@ class UsersTableSeeder extends Seeder
     {
         // Crear administradores, proveedores y usuarios de forma dinámica
         $admin = Admin::factory()->create();
-        $proveedor = Proveedor::factory()->create();
+        $proveedor = Provider::factory()->create();
         $usuario = User::factory()->create();
 
         // Crear usuarios con relaciones polimórficas

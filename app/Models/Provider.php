@@ -5,11 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Proveedor extends Model
+class Provider extends Model
 {
-
     use HasFactory;
 
+    // Campos que se pueden asignar masivamente
     protected $fillable = [
         'name',
         'email',
@@ -19,10 +19,9 @@ class Proveedor extends Model
         'services',
     ];
 
-    // Polymorphic relation to User
+    // Relación polimórfica con User
     public function user()
     {
         return $this->morphOne(User::class, 'userable');
     }
 }
-

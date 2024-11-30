@@ -3,37 +3,33 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use App\Models\Provider;
-use Carbon\Carbon;
+use App\Models\Admin;
 
-class ProvidersTableSeeder extends Seeder
+class AdminsTableSeeder extends Seeder
 {
     public function run()
     {
-        // Crear proveedores con datos ficticios usando factory
-        Provider::factory()->create([
-            'name' => 'Proveedor 1',
-            'email' => 'proveedor1@example.com',
-            'phone' => '1234567890',
-            'address' => 'Calle Falsa 123, Ciudad 1',
-            'company_name' => 'Compañía A',
-            'services' => 'Transporte, Logística',
-            'created_at' => Carbon::now(),
-            'updated_at' => Carbon::now(),
+        // Crear 1 administrador con datos personalizados
+        Admin::factory()->create([
+            'permissions' => 'manage_users,view_reports',
+            'department' => 'IT',
+            'notes' => 'Administrador del sistema principal',
         ]);
 
-        Provider::factory()->create([
-            'name' => 'Proveedor 2',
-            'email' => 'proveedor2@example.com',
-            'phone' => '0987654321',
-            'address' => 'Calle Real 456, Ciudad 2',
-            'company_name' => 'Compañía B',
-            'services' => 'Catering, Eventos',
-            'created_at' => Carbon::now(),
-            'updated_at' => Carbon::now(),
+        // Crear 1 administrador con datos personalizados
+        Admin::factory()->create([
+            'permissions' => 'manage_admins,view_reports',
+            'department' => 'Customer Service',
+            'notes' => 'Administrador de servicios a clientes',
         ]);
+        // Relacionar el usuario con el proveedor mediante la relación polimórfica
+        $user->userable()->associate($provider);
+        $user->save();
 
-        // Crear múltiples proveedores con un loop o más factories
-        Provider::factory(5)->create();
+        // Crear más administradores con datos aleatorios
+        Admin::factory()->count(8)->create(); // Puedes ajustar el número según necesites
     }
 }
+
+
+

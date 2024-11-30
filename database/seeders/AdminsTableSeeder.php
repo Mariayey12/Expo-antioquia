@@ -26,7 +26,8 @@ class AdminsTableSeeder extends Seeder
             'notes' => 'Administrador de servicios a clientes',
         ]);
 
-
+        // Crear más administradores con datos aleatorios
+        Admin::factory()->count(8)->create(); // Puedes ajustar el número según necesites
         }
     }
 
