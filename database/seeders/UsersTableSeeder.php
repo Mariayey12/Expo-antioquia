@@ -87,10 +87,7 @@ class UsersTableSeeder extends Seeder
             ],
         ];
 
-        // Insertar los usuarios creados con relaciones polimórficas
-        foreach ($users as $userData) {
-            User::create($userData);
-        }
+
 
         // Crear más administradores con datos aleatorios
         User::factory()->count(8)->create(); // Puedes ajustar el número según necesites
