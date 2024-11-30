@@ -2,38 +2,37 @@
 
 namespace Database\Factories;
 
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 
-/**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\User>
- */
 class UserFactory extends Factory
 {
-    /**
-     * The current password being used by the factory.
-     */
-    protected static ?string $password;
+    protected $model = User::class;
 
     /**
-     * Define the model's default state.
-     *
-     * @return array<string, mixed>
+     * Define el estado predeterminado del modelo.
      */
     public function definition(): array
     {
         return [
-            'name' => fake()->name(),
-            'email' => fake()->unique()->safeEmail(),
+            'name' => $this->faker->name(),
+            'email' => $this->faker->unique()->safeEmail(),
             'email_verified_at' => now(),
-            'password' => static::$password ??= Hash::make('password'),
+            'password' => Hash::make('password'), // Contraseña predeterminada encriptada
+            'phone' => $this->faker->optional()->phoneNumber(), // Teléfono opcional
+            'address' => $this->faker->optional()->address(), // Dirección opcional
+            'profile_picture' => $this->faker->optional()->imageUrl(100, 100, 'people', true, 'Perfil'), // Imagen opcional
+            'role' => $this->faker->randomElement(['administrador', 'usuario', 'proveedor']), // Roles predefinidos
+            'userable_type' => null, // Inicialmente null, se define al asignar el modelo polimórfico
+            'userable_id' => null, // Inicialmente null, se define al asignar el modelo polimórfico
             'remember_token' => Str::random(10),
         ];
     }
 
     /**
-     * Indicate that the model's email address should be unverified.
+     * Estado para usuarios no verificados.
      */
     public function unverified(): static
     {
@@ -42,3 +41,4 @@ class UserFactory extends Factory
         ]);
     }
 }
+

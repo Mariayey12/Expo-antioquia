@@ -24,6 +24,7 @@ use App\Http\Controllers\RelaxationPlaceController;
 use App\Http\Controllers\ReservationController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\UserController;
+
 use App\Http\Controllers\HandicraftController;
 use App\Http\Controllers\CultureController;
 use App\Http\Controllers\RestaurantController;
@@ -34,8 +35,7 @@ use App\Http\Controllers\AnuncioController;
 Route::resource('anuncios', AnuncioController::class);  // Rutas para todas las operaciones CRUD
 
 // Rutas para usuarios
-Route::apiResource('users', UserController::class);
-
+Route::resource('users', UserController::class);
 // Rutas para lugares
 Route::apiResource('places', PlaceController::class);
 
