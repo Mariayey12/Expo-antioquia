@@ -20,10 +20,18 @@ use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\PlaceController;
 use App\Http\Controllers\UserController;
 
-
+use App\Http\Controllers\AdminController;
+use App\Http\Controllers\ProviderController; // Agregar controlador para proveedor
 
 // Rutas para usuarios
 Route::resource('users', UserController::class);
+
+// Rutas para administradores
+Route::apiResource('admins', AdminController::class); // Rutas para administrar administradores
+
+// Rutas para proveedores
+Route::apiResource('providers', ProviderController::class); // Rutas para gestionar proveedores
+
 // Rutas para lugares
 Route::apiResource('places', PlaceController::class);
 

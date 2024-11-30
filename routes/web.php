@@ -2,18 +2,11 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
-use App\Http\Controllers\CommentController;
-use App\Http\Controllers\ReservationController;
 use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\ComerceController;
-use App\Http\Controllers\HandicraftController; // Controlador para artesanías
-use App\Http\Controllers\CultureController; // Controlador para cultura
-use App\Http\Controllers\GastronomyController;
-use App\Http\Controllers\RestaurantController;
-use App\Http\Controllers\HotelController;
-use App\Http\Controllers\RelaxationPlaceController;
-use App\Http\Controllers\TouristPlaceController;
 use App\Http\Controllers\PlaceController;
+use App\Http\Controllers\AdminController;
+use App\Http\Controllers\ProviderController; // Agregar controlador para proveedor
 
 /*
 |---------------------------------------------------------------------------
@@ -25,46 +18,25 @@ use App\Http\Controllers\PlaceController;
 | asignarán al grupo de middleware "web". ¡Haz algo genial!
 |
 */
+
+
+// Rutas para usuarios (si es necesario en la web)
+Route::resource('users', UserController::class);
+
+// Rutas para administradores
+Route::resource('admins', AdminController::class);
+
+// Rutas para proveedores
+Route::resource('providers', ProviderController::class); // Si quieres que se pueda gestionar desde la web
+
 // Rutas para lugares
-
-Route::apiResource('places', PlaceController::class);
-
-// Rutas para hoteles
-Route::apiResource('hoteles', HotelController::class);
-
-// Rutas para cultura
-Route::apiResource('cultura', CultureController::class);
-
-// Rutas para artesanías
-Route::apiResource('artesanias', HandicraftController::class);
-
-// Rutas para lugares de relajación
-Route::apiResource('lugares-relajacion', RelaxationPlaceController::class);
-
-// Rutas para lugares turísticos
-Route::apiResource('lugares-turisticos', TouristPlaceController::class);
-
-// Rutas para usuarios
-Route::resource('usuarios', UserController::class); // Rutas de usuarios
-
-// Rutas para comentarios
-Route::resource('comentarios', CommentController::class); // Rutas de comentarios
-
-// Rutas para reservas
-Route::resource('reservas', ReservationController::class); // Rutas de reservas
+Route::resource('places', PlaceController::class);
 
 // Rutas para servicios
-Route::resource('servicios', ServiceController::class); // Rutas de servicios
-
+Route::resource('services', ServiceController::class);
 
 // Rutas para comercios
-Route::apiResource('comercios', ComerceController::class);
-
-// Rutas para gastronomía
-Route::apiResource('gastronomia', GastronomyController::class); // Rutas de gastronomía
-
-// Rutas para restaurantes
-Route::apiResource('restaurantes', RestaurantController::class); // Rutas de restaurantes
+Route::resource('comerces', ComerceController::class);
 
 // Ruta principal (inicio)
 Route::get('/', function () {
