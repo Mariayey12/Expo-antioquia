@@ -31,8 +31,8 @@ class UsersTableSeeder extends Seeder
                 'profile_picture' => null,
                 'role' => 'administrador',
                 'remember_token' => Str::random(10),
-                'userable_type' => 'App\Models\Admin', // Aquí se especifica el tipo de modelo correctamente
-                'userable_id' => $admin->id, // Usamos el ID dinámico del Admin
+                'userable_type' => 'App\Models\Admin', // Relación polimórfica con Admin
+                'userable_id' => $admin->id, // ID dinámico del Admin
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
             ],
@@ -46,8 +46,8 @@ class UsersTableSeeder extends Seeder
                 'profile_picture' => null,
                 'role' => 'proveedor',
                 'remember_token' => Str::random(10),
-                'userable_type' => 'App\Models\Provider', // Aquí se especifica el tipo de modelo correctamente
-                'userable_id' => $proveedor->id, // Usamos el ID dinámico del Proveedor
+                'userable_type' => 'App\Models\Provider', // Relación polimórfica con Provider
+                'userable_id' => $proveedor->id, // ID dinámico del Provider
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
             ],
@@ -61,19 +61,20 @@ class UsersTableSeeder extends Seeder
                 'profile_picture' => null,
                 'role' => 'usuario',
                 'remember_token' => Str::random(10),
-                'userable_type' => 'App\Models\User', // Aquí se especifica el tipo de modelo correctamente
-                'userable_id' => $usuario->id, // Usamos el ID dinámico del Usuario
+                'userable_type' => 'App\Models\User', // Relación polimórfica con User
+                'userable_id' => $usuario->id, // ID dinámico del Usuario
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
             ],
         ];
- // Crear más administradores con datos aleatorios
- User::factory()->count(8)->create(); // Puedes ajustar el número según necesites
- $user->userable()->associate($user);
-        $user->save();
+
+        // Crear los usuarios con los datos definidos
         foreach ($users as $userData) {
             User::create($userData);
         }
+
+        // Crear más administradores con datos aleatorios si es necesario
+        User::factory()->count(8)->create();
 
         echo "Usuarios insertados exitosamente.\n";
     }

@@ -17,8 +17,7 @@ class ProviderTableSeeder extends Seeder
             'phone' => '1234567890',
             'address' => '123 Main St',
             'company_name' => 'Proveedor S.A.',
-            'password' => null,
-             'contact_person'=> null,
+            'contact_person' => null,
             'services' => 'Consultoría, Soporte Técnico',
         ]);
 
@@ -26,18 +25,14 @@ class ProviderTableSeeder extends Seeder
         $user = User::create([
             'name' => 'Proveedor User',
             'email' => 'proveedoruser@example.com',
-            'password' => null,
-            'phone' => '1234567890',
-            'address' => '123 Main St',
-            'company_name' => 'Proveedor S.A.',
-            'services' => 'Consultoría, Soporte Técnico3',
-            'contact_person' => null,
-
+            'password' => bcrypt('password123'), // Ajusta si no usas contraseñas
         ]);
-// Crear más administradores con datos aleatorios
-Provider::factory()->count(8)->create(); // Puedes ajustar el número según necesites
+
         // Relacionar el usuario con el proveedor mediante la relación polimórfica
         $user->userable()->associate($provider);
         $user->save();
+
+        // Crear más proveedores con datos aleatorios
+        Provider::factory()->count(8)->create();
     }
 }
