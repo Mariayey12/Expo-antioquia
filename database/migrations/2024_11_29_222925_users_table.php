@@ -15,6 +15,7 @@ return new class extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('company_name')->nullable(); // O usa 'string' si la columna es de tipo texto
             $table->string('password');
+            $table->string('comtact_person')->nullable(); // O usa 'string' si la columna es de tipo texto
             $table->string('phone')->nullable(); // Teléfono opcional
             $table->string('address')->nullable(); // Dirección opcional
             $table->string('profile_picture')->nullable(); // Foto de perfil
