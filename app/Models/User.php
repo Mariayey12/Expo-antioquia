@@ -11,19 +11,25 @@ class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
 
+    protected $table = 'users';
+
     /**
-     * The attributes that are mass assignable.
+     * Atributos asignables en masa.
      *
      * @var array<int, string>
-     */ protected $table = 'users';
+     */
     protected $fillable = [
         'name',
         'email',
         'password',
+        'phone',
+        'address',
+        'profile_picture',
+        'role',
     ];
 
     /**
-     * The attributes that should be hidden for serialization.
+     * Atributos ocultos en serializaciones.
      *
      * @var array<int, string>
      */
@@ -33,7 +39,7 @@ class User extends Authenticatable
     ];
 
     /**
-     * The attributes that should be cast.
+     * Atributos que deben ser casteados.
      *
      * @var array<string, string>
      */
@@ -59,4 +65,14 @@ class User extends Authenticatable
     {
         return $this->hasMany(Reservation::class, 'usuario_id');
     }
+
+    /**
+     * Relación polimórfica.
+     * Un usuario puede ser de diferentes tipos (administrador, proveedor, etc.).
+     */
+    public function userable()
+    {
+        return $this->morphTo();
+    }
 }
+
