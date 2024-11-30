@@ -17,6 +17,7 @@ class ProviderTableSeeder extends Seeder
             'phone' => '1234567890',
             'address' => '123 Main St',
             'company_name' => 'Proveedor S.A.',
+             'contact_person'=> '78585658887',
             'services' => 'Consultoría, Soporte Técnico',
         ]);
 
@@ -29,6 +30,7 @@ class ProviderTableSeeder extends Seeder
             'address' => '123 Main St',
             'company_name' => 'Proveedor S.A.',
             'services' => 'Consultoría, Soporte Técnico3',
+            'contact_person'=> '7858565867543',
 
         ]);
 // Crear más administradores con datos aleatorios
