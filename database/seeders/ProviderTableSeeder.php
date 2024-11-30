@@ -28,11 +28,10 @@ class ProviderTableSeeder extends Seeder
             'password' => bcrypt('password123'), // Ajusta si no usas contraseñas
         ]);
 
-        // Relacionar el usuario con el proveedor mediante la relación polimórfica
-        $user->userable()->associate($provider);
-        $user->save();
+         // Crear más proveedores con datos aleatorios
+         Provider::factory()->count(8)->create();
+        }
 
-        // Crear más proveedores con datos aleatorios
-        Provider::factory()->count(8)->create();
-    }
+
+
 }
