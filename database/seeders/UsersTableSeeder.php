@@ -29,7 +29,7 @@ class UsersTableSeeder extends Seeder
                 'phone' => '3001234567',
                 'address' => 'Calle 123 #45-67, Medellín',
                 'email_verified_at' => Carbon::now(),
-                'profile_picture' => null,
+                'profile_picture' => 'default-profile-pic.jpg', // Asignar imagen predeterminada
                 'role' => 'administrador',
                 'remember_token' => Str::random(10),
                 'userable_type' => 'App\Models\Admin',
@@ -44,7 +44,7 @@ class UsersTableSeeder extends Seeder
                 'phone' => '3209876543',
                 'address' => 'Avenida 1 #23-45, Cali',
                 'email_verified_at' => Carbon::now(),
-                'profile_picture' => null,
+                'profile_picture' => 'default-profile-pic.jpg', // Asignar imagen predeterminada
                 'role' => 'proveedor',
                 'remember_token' => Str::random(10),
                 'userable_type' => 'App\Models\Provider',
@@ -59,7 +59,7 @@ class UsersTableSeeder extends Seeder
                 'phone' => '3051237890',
                 'address' => 'Diagonal 12 #34-56, Cartagena',
                 'email_verified_at' => Carbon::now(),
-                'profile_picture' => null,
+                'profile_picture' => 'default-profile-pic.jpg', // Asignar imagen predeterminada
                 'role' => 'usuario',
                 'remember_token' => Str::random(10),
                 'userable_type' => 'App\Models\User',
