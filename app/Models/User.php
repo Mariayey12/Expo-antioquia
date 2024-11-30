@@ -54,7 +54,7 @@ class User extends Authenticatable
      */
     public function comentarios()
     {
-        return $this->hasMany(Comment::class, 'user_id');
+        return $this->hasMany(Comment::class, 'usuario_id');
     }
 
     /**
@@ -63,7 +63,7 @@ class User extends Authenticatable
      */
     public function reservas()
     {
-        return $this->hasMany(Reservation::class, 'user_id');
+        return $this->hasMany(Reservation::class, 'usuario_id');
     }
 
     /**
