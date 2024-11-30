@@ -14,8 +14,7 @@ return new class extends Migration
             $table->string('department')->nullable();
             $table->string('notes')->nullable();
 
-            // Relación polimórfica: estos dos campos se generarán automáticamente con morphs()
-            $table->morphs('userable'); // Crea 'userable_id' y 'userable_type'
+
 
             $table->timestamps();
         });
