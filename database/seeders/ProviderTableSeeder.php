@@ -35,7 +35,7 @@ class ProviderTableSeeder extends Seeder
 
         ]);
 // Crear más administradores con datos aleatorios
-Admin::factory()->count(8)->create(); // Puedes ajustar el número según necesites
+Provider::factory()->count(8)->create(); // Puedes ajustar el número según necesites
         // Relacionar el usuario con el proveedor mediante la relación polimórfica
         $user->userable()->associate($provider);
         $user->save();
