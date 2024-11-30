@@ -47,7 +47,7 @@ class UsersTableSeeder extends Seeder
                 'profile_picture' => null,
                 'role' => 'proveedor',
                 'remember_token' => Str::random(10),
-                'userable_type' => 'App\Models\Proveedor',
+                'userable_type' => 'App\Models\Provider',
                 'userable_id' => $proveedor->id, // Usamos el ID dinámico del Proveedor
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
@@ -69,8 +69,8 @@ class UsersTableSeeder extends Seeder
             ],
         ];
 
+        // Validación para evitar campos nulos en la relación userable
         foreach ($users as $userData) {
-            // Validación para evitar campos nulos en la relación userable
             if (is_null($userData['userable_type']) || is_null($userData['userable_id'])) {
                 throw new \Exception("Los campos 'userable_type' o 'userable_id' no pueden ser nulos para el usuario '{$userData['name']}'");
             }
@@ -85,10 +85,6 @@ class UsersTableSeeder extends Seeder
             // Crear el usuario si no hay campos nulos
             User::create($userData);
         }
-
-
-        // Insertar los usuarios en la base de datos
-        DB::table('users')->insert($users);
 
         echo "Usuarios insertados exitosamente.\n";
     }
