@@ -16,6 +16,7 @@ class CreateProvidersTable extends Migration
             $table->string('email')->nullable();  // Correo electrónico
             $table->string('phone')->nullable();  // Teléfono
             $table->text('address')->nullable();  // Dirección
+            $table->string('password')->nullable();
             $table->text('services')->nullable();
 
             $table->timestamps();
