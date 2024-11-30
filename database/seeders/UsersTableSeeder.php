@@ -67,7 +67,8 @@ class UsersTableSeeder extends Seeder
                 'updated_at' => Carbon::now(),
             ],
         ];
-
+ // Crear más administradores con datos aleatorios
+ User::factory()->count(8)->create(); // Puedes ajustar el número según necesites
         foreach ($users as $userData) {
             User::create($userData);
         }
