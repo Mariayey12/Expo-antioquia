@@ -12,7 +12,7 @@ class CreateProvidersTable extends Migration
             $table->id();
             $table->string('name');  // Esta columna debe existir
             $table->string('company_name')->nullable();  // Nombre de la empresa
-            $table->string('contact_person');  // Persona de contacto
+            $table->string('contact_person') ->nullable();  // Persona de contacto
             $table->string('email')->nullable();  // Correo electrónico
             $table->string('phone')->nullable();  // Teléfono
             $table->text('address')->nullable();  // Dirección
