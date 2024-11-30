@@ -8,6 +8,7 @@ class DatabaseSeeder extends Seeder
 {
     /**
      * Seed the application's database.
+<<<<<<< HEAD
      */
     public function run(): void
     {
@@ -17,6 +18,24 @@ class DatabaseSeeder extends Seeder
             AdminsTableSeeder::class,
             UserTableSeeder::class,            // Cargar Usuarios
 
+=======
+     *
+     * @return void
+     */
+    public function run(): void
+    {
+        // Llama a los seeders de las tablas específicas
+        $this->call([
+            AdsTableSeeder::class,
+            PlacesTableSeeder::class,
+            HotelsTableSeeder::class,
+            RestaurantsTableSeeder::class,
+            TouristPlacesTableSeeder::class,
+            RelaxationPlacesTableSeeder::class,
+            CommentsTableSeeder::class,
+            UsersTableSeeder::class,
+            ReservationsTableSeeder::class,
+>>>>>>> 4a670564dbc1255949373c17bdc87cdc0df3f020
         ]);
     }
 }

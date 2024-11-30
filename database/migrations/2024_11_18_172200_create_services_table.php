@@ -10,8 +10,11 @@ return new class extends Migration
      * Run the migrations.
      */
     public function up(): void
+    
+    
     {
         Schema::create('services', function (Blueprint $table) {
+<<<<<<< HEAD
             $table->id(); // ID del servicio
             $table->string('name'); // Nombre del servicio (obligatorio)
             $table->text('description')->nullable(); // Descripción del servicio (opcional)
@@ -38,8 +41,29 @@ return new class extends Migration
             // Relación polimórfica
             $table->morphs('serviceable'); // Relación con otros modelos
 
+=======
+            $table->id();
+            $table->string('name'); // Nombre del servicio
+            $table->text('description')->nullable(); // Descripción del servicio
+            $table->decimal('cost', 10, 2)->nullable(); // Costo del servicio
+            $table->string('duration')->nullable(); // Duración del servicio
+            $table->string('category')->nullable(); // Categoría del servicio
+            $table->string('image_url')->nullable(); // URL de una imagen del servicio
+            $table->string('provider_name')->nullable(); // Nombre del proveedor del servicio
+            $table->string('location')->nullable(); // Ubicación donde se ofrece el servicio
+            $table->boolean('is_available')->default(true); // Estado de disponibilidad del servicio
+            $table->date('available_from')->nullable(); // Fecha desde la cual está disponible
+            $table->date('available_until')->nullable(); // Fecha hasta la cual está disponible
+            $table->string('contact_info')->nullable(); // Información de contacto para más detalles
+            $table->string('google_maps')->nullable(); // URL de Google Maps
+            $table->string('video_url')->nullable(); // URL del video
+            $table->timestamps();
+>>>>>>> 4a670564dbc1255949373c17bdc87cdc0df3f020
         });
+    
     }
+
+
 
     /**
      * Reverse the migrations.
