@@ -8,34 +8,16 @@ class DatabaseSeeder extends Seeder
 {
     /**
      * Seed the application's database.
-<<<<<<< HEAD
      */
     public function run(): void
     {
-        // Llama a cada seeder en el orden adecuado para evitar problemas de dependencias de claves foráneas.
-
+        // Llama a los seeders de las tablas específicas en el orden adecuado
         $this->call([
-            AdminsTableSeeder::class,
-            UserTableSeeder::class,            // Cargar Usuarios
+            AdminsTableSeeder::class,          // Seeder para administradores
+            ProviderTableSeeder::class,
+            UsersTableSeeder::class,           // Seeder para usuarios
+            PlacesTableSeeder::class,          // Seeder para lugares
 
-=======
-     *
-     * @return void
-     */
-    public function run(): void
-    {
-        // Llama a los seeders de las tablas específicas
-        $this->call([
-            AdsTableSeeder::class,
-            PlacesTableSeeder::class,
-            HotelsTableSeeder::class,
-            RestaurantsTableSeeder::class,
-            TouristPlacesTableSeeder::class,
-            RelaxationPlacesTableSeeder::class,
-            CommentsTableSeeder::class,
-            UsersTableSeeder::class,
-            ReservationsTableSeeder::class,
->>>>>>> 4a670564dbc1255949373c17bdc87cdc0df3f020
         ]);
     }
 }

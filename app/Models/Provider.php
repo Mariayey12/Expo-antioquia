@@ -7,11 +7,16 @@ use Illuminate\Database\Eloquent\Model;
 
 class Proveedor extends Model
 {
+
     use HasFactory;
 
     protected $fillable = [
-        'company_name',  // example field
-        'contact_person',  // example field
+        'name',
+        'email',
+        'phone',
+        'address',
+        'company_name',
+        'services',
     ];
 
     // Polymorphic relation to User
@@ -20,3 +25,4 @@ class Proveedor extends Model
         return $this->morphOne(User::class, 'userable');
     }
 }
+
