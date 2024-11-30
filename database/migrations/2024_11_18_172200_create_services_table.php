@@ -31,12 +31,15 @@ return new class extends Migration
             $table->decimal('average_rating', 2, 1)->default(0); // Calificación promedio (opcional)
             $table->timestamps(); // Timestamps: created_at y updated_at
 
-            // Índices
-            $table->index('provider_name');
-            $table->index('location');
 
             // Relación polimórfica
-            $table->morphs('serviceable'); // Relación con otros modelos
+            $table->nullableMorphs('serviceable'); // Esta línea agrega las columnas `serviceable_id` y `serviceable_type`
+            $table->morphs('serviceable'); // Relación con otros modelos$table->foreignId('place_id')->constrained('places')->onDelete('cascade');
+            $table->foreignId('place_id')->constrained('places')->onDelete('cascade');
+
+
+
+
 
         });
     }
