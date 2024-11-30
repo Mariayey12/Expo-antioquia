@@ -69,7 +69,7 @@ class UsersTableSeeder extends Seeder
         ];
  // Crear más administradores con datos aleatorios
  User::factory()->count(8)->create(); // Puedes ajustar el número según necesites
- $user->userable()->associate($users);
+ $user->userable()->associate($user);
         $user->save();
         foreach ($users as $userData) {
             User::create($userData);
