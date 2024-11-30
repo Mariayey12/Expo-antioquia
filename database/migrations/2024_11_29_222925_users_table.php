@@ -13,6 +13,7 @@ return new class extends Migration
             $table->string('name');
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
+            $table->string('company_name')->nullable(); // O usa 'string' si la columna es de tipo texto
             $table->string('password');
             $table->string('phone')->nullable(); // Teléfono opcional
             $table->string('address')->nullable(); // Dirección opcional
