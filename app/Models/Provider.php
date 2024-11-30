@@ -17,7 +17,7 @@ class Provider extends Model
         'phone',
         'address',
         'company_name',
-        'services',
+
     ];
 
 
