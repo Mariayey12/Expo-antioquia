@@ -98,7 +98,7 @@ class PlacesTableSeeder extends Seeder
                 'reviews_count' => 120,
                 'categorizable_type' => 'hotel',
                 'categorizable_id' => 1, // Asocia el hotel con una categoría
-                'placeable_type' => 'hotel',
+                'placeable_type' => 'App\Models\Category',
                 'placeable_id' => 1, // Asocia el hotel con otro tipo de lugar si es necesario
                 'created_at' => now(),
                 'updated_at' => now(),
@@ -125,6 +125,8 @@ class PlacesTableSeeder extends Seeder
                 'status' => 't', // Asumiendo que 't' significa activo
                 'is_active' => true, // Asumiendo que el valor booleano representa si está activo
                 'is_deleted' => false, // Suposición sobre el campo para manejar eliminación lógica
+                'placeable_type' => 'App\Models\Category',
+                'placeable_id' => 2, // Asocia el hotel con otro tipo de lugar si es necesario
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
