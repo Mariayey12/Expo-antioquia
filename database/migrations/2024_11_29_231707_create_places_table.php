@@ -1,60 +1,67 @@
 <?php
 
-namespace Database\Factories;
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
-use Illuminate\Database\Eloquent\Factories\Factory;
-
-class PlaceFactory extends Factory
+class CreatePlacesTable extends Migration
 {
-    protected $model = \App\Models\Place::class;
-
-    public function definition()
+    public function up()
     {
-        // Simular modelos relacionados
-        $categorizableTypes = [
-            \App\Models\Category::class, // Cambia esto según tus modelos reales
-            \App\Models\Event::class,
-        ];
+        Schema::create('places', function (Blueprint $table) {
+            $table->id();
+            $table->string('name'); // Nombre del lugar
+            $table->text('description'); // Descripción del lugar
+            $table->string('location'); // Ubicación del lugar
+            $table->string('image_url'); // URL de la imagen del lugar
+            $table->string('video_url'); // URL de un video relacionado
+            $table->string('google_maps'); // URL de Google Maps
+            $table->decimal('average_price', 8, 2)->nullable(); // Precio promedio
+            $table->time('opening_time'); // Hora de apertura
+            $table->time('closing_time'); // Hora de cierre
+            $table->string('price_range'); // Rango de precios
+            $table->string('contact_number'); // Número de contacto
+            $table->string('email'); // Correo electrónico
+            $table->string('address')->nullable(); // Dirección
+            $table->string('city'); // Ciudad
+            $table->integer('price_per_night'); // Precio por noche
+            $table->string('phone_number'); // Teléfono
+            $table->double('rating', 8, 2); // Calificación
+            $table->string('website')->nullable(); // Página web
+            $table->integer('capacity'); // Capacidad
+            $table->json('menu')->nullable(); // Menú
+            $table->date('date')->nullable(); // Fecha del lugar
+            $table->date('event_date')->nullable(); // Fecha del evento
+            $table->json('activities')->nullable(); // Actividades
+            $table->integer('duration_days')->nullable(); // Duración en días
+            $table->string('artists')->nullable(); // Artistas
+            $table->string('artist')->nullable(); // Artista
+            $table->decimal('latitude', 10, 6)->default(0.0); // Latitud
+            $table->decimal('longitude', 10, 6)->default(0.0); // Longitud
+            $table->string('provider_name')->nullable(); // Nombre del proveedor
+            $table->string('contact_info')->nullable(); // Información de contacto
+            $table->string('material')->nullable(); // Material
+            $table->string('technique')->nullable(); // Técnica
+            $table->decimal('price', 8, 2); // Precio del servicio
+            $table->float('cost')->nullable(); // Costo
+            $table->string('services')->nullable(); // Servicios
+            $table->string('duration')->nullable(); // Duración del evento
+            $table->boolean('is_active')->default(true); // Estado de actividad
+            $table->json('opening_days')->nullable(); // Días de apertura
+            $table->boolean('is_featured')->default(false); // Si es destacado
+            $table->boolean('has_parking')->default(false); // Si tiene estacionamiento
+            $table->boolean('is_renovated')->default(false); // Si ha sido renovado
+            $table->date('last_renovation_date')->nullable(); // Fecha de la última renovación
+            $table->string('price_range_category')->nullable(); // Categoría de rango de precios
+            $table->integer('reviews_count')->default(0); // Número de reseñas
+            $table->morphs('categorizable'); // Relación polimórfica con categorías
+            $table->morphs('placeable'); // Relación polimórfica con otros modelos
+            $table->timestamps(); // Fechas de creación y actualización
+        });
+    }
 
-        $placeableTypes = [
-            \App\Models\Hotel::class, // Cambia esto según tus modelos reales
-            \App\Models\Restaurant::class,
-        ];
-
-        return [
-            'name' => $this->faker->company,
-            'description' => $this->faker->paragraph,
-            'location' => $this->faker->address,
-            'image_url' => $this->faker->imageUrl(640, 480, 'places'),
-            'video_url' => $this->faker->url,
-            'google_maps' => $this->faker->url,
-            'average_price' => $this->faker->randomFloat(2, 10, 100),
-            'opening_time' => $this->faker->time('H:i:s'),
-            'closing_time' => $this->faker->time('H:i:s'),
-            'price_range' => $this->faker->randomElement(['$', '$$', '$$$']),
-            'contact_number' => $this->faker->phoneNumber,
-            'email' => $this->faker->unique()->safeEmail,
-            'address' => $this->faker->streetAddress,
-            'city' => $this->faker->city,
-            'price_per_night' => $this->faker->numberBetween(50, 500),
-            'phone_number' => $this->faker->phoneNumber,
-            'rating' => $this->faker->randomFloat(2, 1, 5),
-            'website' => $this->faker->url,
-            'capacity' => $this->faker->numberBetween(10, 500),
-            'menu' => json_encode($this->faker->randomElements(['Pizza', 'Burger', 'Sushi'], 3)),
-            'date' => $this->faker->date(),
-            'event_date' => $this->faker->date(),
-            'activities' => json_encode($this->faker->randomElements(['Hiking', 'Swimming', 'Dancing'], 2)),
-            'duration_days' => $this->faker->numberBetween(1, 10),
-            'latitude' => $this->faker->latitude,
-            'longitude' => $this->faker->longitude,
-            'price' => $this->faker->randomFloat(2, 10, 500),
-            'is_active' => $this->faker->boolean,
-            'opening_days' => json_encode($this->faker->randomElements(['Monday', 'Tuesday', 'Wednesday'], 2)),
-            'categorizable_type' => $this->faker->randomElement($categorizableTypes),
-            'categorizable_id' => $this->faker->numberBetween(1, 10), // Debe corresponder a un ID válido
-            'placeable_type' => $this->faker->randomElement($placeableTypes),
-            'placeable_id' => $this->faker->numberBetween(1, 10), // Debe corresponder a un ID válido
-        ];
+    public function down()
+    {
+        Schema::dropIfExists('places');
     }
 }

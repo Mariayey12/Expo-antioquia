@@ -10,6 +10,17 @@ class PlaceFactory extends Factory
 
     public function definition()
     {
+        // Simular modelos relacionados
+        $categorizableTypes = [
+            \App\Models\Category::class, // Cambia esto según tus modelos reales
+            \App\Models\Event::class,
+        ];
+
+        $placeableTypes = [
+            \App\Models\Hotel::class, // Cambia esto según tus modelos reales
+            \App\Models\Restaurant::class,
+        ];
+
         return [
             'name' => $this->faker->company,
             'description' => $this->faker->paragraph,
@@ -30,31 +41,20 @@ class PlaceFactory extends Factory
             'rating' => $this->faker->randomFloat(2, 1, 5),
             'website' => $this->faker->url,
             'capacity' => $this->faker->numberBetween(10, 500),
-            'menu' => $this->faker->randomElements(['Pizza', 'Burger', 'Sushi'], 3),
+            'menu' => json_encode($this->faker->randomElements(['Pizza', 'Burger', 'Sushi'], 3)),
             'date' => $this->faker->date(),
             'event_date' => $this->faker->date(),
-            'activities' => $this->faker->randomElements(['Hiking', 'Swimming', 'Dancing'], 2),
+            'activities' => json_encode($this->faker->randomElements(['Hiking', 'Swimming', 'Dancing'], 2)),
             'duration_days' => $this->faker->numberBetween(1, 10),
-            'artists' => $this->faker->name,
-            'artist' => $this->faker->name,
             'latitude' => $this->faker->latitude,
             'longitude' => $this->faker->longitude,
-            'provider_name' => $this->faker->company,
-            'contact_info' => $this->faker->email,
-            'material' => $this->faker->word,
-            'technique' => $this->faker->word,
             'price' => $this->faker->randomFloat(2, 10, 500),
-            'cost' => $this->faker->randomFloat(2, 5, 200),
-            'services' => $this->faker->word,
-            'duration' => $this->faker->randomElement(['1 hour', '2 hours', 'Half day']),
             'is_active' => $this->faker->boolean,
-            'opening_days' => json_encode($this->faker->randomElements(['Monday', 'Tuesday', 'Wednesday', 'Thursday'], 3)),
-            'is_featured' => $this->faker->boolean,
-            'has_parking' => $this->faker->boolean,
-            'is_renovated' => $this->faker->boolean,
-            'last_renovation_date' => $this->faker->date(),
-            'price_range_category' => $this->faker->randomElement(['Budget', 'Standard', 'Luxury']),
-            'reviews_count' => $this->faker->numberBetween(0, 1000),
+            'opening_days' => json_encode($this->faker->randomElements(['Monday', 'Tuesday', 'Wednesday'], 2)),
+            'categorizable_type' => $this->faker->randomElement($categorizableTypes),
+            'categorizable_id' => $this->faker->numberBetween(1, 10), // Debe corresponder a un ID válido
+            'placeable_type' => $this->faker->randomElement($placeableTypes),
+            'placeable_id' => $this->faker->numberBetween(1, 10), // Debe corresponder a un ID válido
         ];
     }
 }
