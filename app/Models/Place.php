@@ -73,29 +73,23 @@ protected $casts = [
 ];
 
     // Relación polimórfica inversa
-    public function services()
-    {
-        return $this->morphMany(Service::class, 'serviceable');
-    }
-    public function categories()
-    {
-        return $this->morphToMany(Category::class, 'categoriables');
-    }
+   // Relación polimórfica: Place con Services
+   public function services()
+   {
+       return $this->morphToMany(Service::class, 'serviceable');
+   }
 
-    public function commerce()
-    {
-        return $this->morphToMany(Commerce::class, 'placeables');
-    }
-     // Relaciones polimórficas
- public function categorizables()
- {
-     return $this->morphTo();
- }
+   // Relación polimórfica: Place con Categories
+   public function categories()
+   {
+       return $this->morphToMany(Category::class, 'categorizable');
+   }
 
- public function placeables()
- {
-     return $this->morphTo();
- }
+   // Relación polimórfica: Place con Commerces
+   public function commerces()
+   {
+       return $this->morphToMany(Commerce::class, 'placeable');
+   }
+
 }
-
 
