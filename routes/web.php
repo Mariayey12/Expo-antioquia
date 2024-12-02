@@ -2,12 +2,13 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
-use App\Http\Controllers\ServiceController;
-use App\Http\Controllers\ComerceController;
 use App\Http\Controllers\PlaceController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ProviderController; // Agregar controlador para proveedor
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\CommerceController;
+use App\Http\Controllers\ServiceController;
+
 
 /*
 |---------------------------------------------------------------------------
@@ -36,9 +37,9 @@ Route::resource('places', PlaceController::class);
 // Rutas para servicios
 Route::resource('services', ServiceController::class);
 
-// Rutas para comercios
-Route::resource('comerces', ComerceController::class);
 
+// Rutas para comercios
+Route::resource('commerces', CommerceController::class);
 // Rutas RESTful para la entidad Category
 Route::apiResource('categories', CategoryController::class);
 
@@ -46,3 +47,5 @@ Route::apiResource('categories', CategoryController::class);
 Route::get('/', function () {
     return view('welcome'); // Vista de bienvenida
 });
+
+
