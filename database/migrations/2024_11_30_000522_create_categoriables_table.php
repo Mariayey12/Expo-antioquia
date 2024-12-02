@@ -11,7 +11,7 @@ class CreateCategoriablesTable extends Migration
     {
         Schema::create('categoriables', function (Blueprint $table) {
             $table->id();
-            $table->morphs('categoriable'); // Crea categoriable_id y categoriable_type
+            $table->morphs('categoriable'); // Ahora se usa 'categoriable' en lugar de 'categorizable'
             $table->foreignId('category_id')->constrained()->onDelete('cascade');
             $table->timestamps();
         });
