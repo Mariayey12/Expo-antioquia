@@ -140,15 +140,15 @@ namespace Database\Seeders;
             ];
 
 
-            foreach ($placesData as $placeData) {
+            foreach ($places as $place) {
                 // Validar que los campos no sean nulos
-                foreach ($placeData as $key => $value) {
+                foreach ($place as $key => $value) {
                     if (is_null($value)) {
-                        throw new \Exception("El campo '{$key}' no puede ser nulo en el lugar '{$placeData['name']}'");
+                        throw new \Exception("El campo '{$key}' no puede ser nulo en el lugar '{$place['name']}'");
                     }
                 }
 
-                $place = Place::create($placeData);
+                $places = Place::create($place);
 
                 // Asociar categorías al lugar
                 $category = Category::where('name', 'Comercio')->first(); // Asegúrate de que la categoría exista
