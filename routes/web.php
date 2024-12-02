@@ -7,6 +7,7 @@ use App\Http\Controllers\ComerceController;
 use App\Http\Controllers\PlaceController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ProviderController; // Agregar controlador para proveedor
+use App\Http\Controllers\CategoryController;
 
 /*
 |---------------------------------------------------------------------------
@@ -37,6 +38,9 @@ Route::resource('services', ServiceController::class);
 
 // Rutas para comercios
 Route::resource('comerces', ComerceController::class);
+
+// Rutas RESTful para la entidad Category
+Route::apiResource('categories', CategoryController::class);
 
 // Ruta principal (inicio)
 Route::get('/', function () {

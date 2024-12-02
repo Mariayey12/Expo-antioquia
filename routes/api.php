@@ -21,6 +21,7 @@ use App\Http\Controllers\PlaceController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ProviderController; // Agregar controlador para proveedor
+use App\Http\Controllers\CategoryController;
 
 // Rutas públicas para usuarios
 Route::resource('users', UserController::class);
@@ -35,6 +36,8 @@ Route::middleware(['auth:sanctum', 'check.provider'])->apiResource('providers', 
 Route::apiResource('places', PlaceController::class);
 Route::apiResource('comerces', ComerceController::class);
 Route::apiResource('services', ServiceController::class);
+// Rutas RESTful para la entidad Category
+Route::apiResource('categories', CategoryController::class);
 
 // Ruta protegida para obtener datos del usuario autenticado
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
@@ -50,3 +53,5 @@ Route::middleware(['auth:sanctum', 'can:access-dashboard'])->get('/dashboard', f
 Route::middleware(['auth:sanctum', 'check.provider'])->get('/provider-area', function () {
     return response()->json(['message' => 'Área exclusiva para proveedores']);
 });
+
+
