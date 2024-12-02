@@ -17,6 +17,8 @@ class PlacesTableSeeder extends Seeder
      */
     public function run(): void
     {
+          // Crear 10 categorías aleatorias
+          Category::factory(10)->create();
         // Crear categorías iniciales con nombre y descripción
         $categories = [
             ['name' => 'Comercio', 'description' => 'Espacios dedicados a la venta de bienes y servicios.'],
@@ -26,6 +28,7 @@ class PlacesTableSeeder extends Seeder
             ['name' => 'Bienestar', 'description' => 'Espacios enfocados en la salud física y mental.'],
             ['name' => 'Salud', 'description' => 'Servicios relacionados con el cuidado médico.'],
         ];
+
 
         foreach ($categories as $categoryData) {
             // Validar que los campos no sean nulos
@@ -38,6 +41,9 @@ class PlacesTableSeeder extends Seeder
             // Crear categoría si no existe
             Category::firstOrCreate($categoryData);
         }
+
+         // Crear 10 lugares aleatorios y asociarles categorías y servicios
+  $places = Place::factory(10)->create();
 
         // Crear lugares
         $places = [
@@ -140,6 +146,11 @@ class PlacesTableSeeder extends Seeder
                 $place->categories()->attach($category->id);
             }
 
+                 // Crear servicios aleatorios para cada lugar
+        foreach ($places as $place) {
+            Service::factory(3)->create(['serviceable_id' => $place->id]);
+        }
+
             // Crear servicios relacionados con el lugar
             $services = [
                 [
@@ -164,6 +175,7 @@ class PlacesTableSeeder extends Seeder
                 ],
             ];
 
+
             foreach ($services as $serviceData) {
                 // Validar campos no nulos en los servicios
                 foreach ($serviceData as $key => $value) {
@@ -175,7 +187,8 @@ class PlacesTableSeeder extends Seeder
                 Service::create($serviceData);
             }
         }
-
+ // Crear 5 comercios aleatorios
+ Commerce::factory(5)->create();
         // Crear comercios
         $commerces = [
             [
