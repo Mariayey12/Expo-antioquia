@@ -74,6 +74,10 @@ class User extends Authenticatable
     {
         return $this->morphTo();
     }
+    public function places()
+{
+    return $this->morphToMany(Place::class, 'userable');
+}
 
 }
 
