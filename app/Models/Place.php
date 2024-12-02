@@ -82,7 +82,7 @@ protected $casts = [
    // Relación polimórfica: Place con Categories
    public function categories()
    {
-       return $this->morphToMany(Category::class, 'categorizable');
+       return $this->morphToMany(Category::class, 'categoriable');
    }
 
    // Relación polimórfica: Place con Commerces

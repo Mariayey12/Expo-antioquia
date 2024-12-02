@@ -31,12 +31,12 @@ class Commerce extends Model
 
     public function categories()
     {
-        return $this->morphToMany(Category::class, 'categoriables');
+        return $this->morphToMany(Category::class, 'categoriable');
     }
 
     public function places()
     {
-        return $this->morphToMany(Place::class, 'placeables');
+        return $this->morphToMany(Place::class, 'placeable');
     }
     /**
      * Relación polimórfica.
