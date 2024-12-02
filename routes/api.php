@@ -15,13 +15,14 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\ComerceController;
-use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\PlaceController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ProviderController; // Agregar controlador para proveedor
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\CommerceController;
+use App\Http\Controllers\ServiceController;
+
 
 // Rutas públicas para usuarios
 Route::resource('users', UserController::class);
@@ -34,10 +35,12 @@ Route::middleware(['auth:sanctum', 'check.provider'])->apiResource('providers', 
 
 // Rutas públicas para lugares, comercios y servicios
 Route::apiResource('places', PlaceController::class);
-Route::apiResource('comerces', ComerceController::class);
-Route::apiResource('services', ServiceController::class);
+
 // Rutas RESTful para la entidad Category
 Route::apiResource('categories', CategoryController::class);
+Route::apiResource('commerces', CommerceController::class);
+Route::apiResource('services', ServiceController::class);
+
 
 // Ruta protegida para obtener datos del usuario autenticado
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
@@ -53,5 +56,8 @@ Route::middleware(['auth:sanctum', 'can:access-dashboard'])->get('/dashboard', f
 Route::middleware(['auth:sanctum', 'check.provider'])->get('/provider-area', function () {
     return response()->json(['message' => 'Área exclusiva para proveedores']);
 });
+
+
+
 
 
