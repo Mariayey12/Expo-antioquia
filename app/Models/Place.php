@@ -74,57 +74,37 @@ class Place extends Model
         'is_renovated' => 'boolean',
     ];
 
-    // Relaciones
+    // Relación polimórfica con categorías.
+    public function categories()
+    {
+        return $this->morphToMany(Category::class, 'categorizable');
+    }
 
-   // Modelo Place
-public function categories()
-{
-    return $this->morphToMany(Category::class, 'categorizable');
-}
-
-// Relación polimórfica con Category
-public function categorizables()
-{
-    return $this->morphToMany(Category::class, 'categorizable');
-}
-
-
-
-    /**
-     * Relación polimórfica con servicios.
-     */
+    // Relación polimórfica con servicios.
     public function services()
     {
         return $this->morphToMany(Service::class, 'serviceable');
     }
 
-    /**
-     * Relación polimórfica con comercios.
-     */
+    // Relación polimórfica con comercios.
     public function commerces()
     {
         return $this->morphToMany(Commerce::class, 'placeable');
     }
 
-    /**
-     * Relación polimórfica con reseñas (opcional).
-     */
+    // Relación polimórfica con reseñas.
     public function reviews()
     {
         return $this->morphMany(Review::class, 'reviewable');
     }
 
-    /**
-     * Relación uno a muchos con reservas.
-     */
+    // Relación uno a muchos con reservas.
     public function reservations()
     {
         return $this->hasMany(Reservation::class);
     }
 
-    /**
-     * Relación uno a muchos con comentarios.
-     */
+    // Relación uno a muchos con comentarios.
     public function comments()
     {
         return $this->hasMany(Comment::class);
