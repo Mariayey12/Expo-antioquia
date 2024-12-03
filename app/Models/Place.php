@@ -82,6 +82,13 @@ public function categories()
     return $this->morphToMany(Category::class, 'categoriable');
 }
 
+// Place.php
+
+public function categorizable()
+{
+    return $this->morphTo();
+}
+
 
     /**
      * Relación polimórfica con servicios.
