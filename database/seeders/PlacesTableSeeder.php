@@ -100,12 +100,12 @@ namespace Database\Seeders;
                 'is_featured' => true,
                 'has_parking' => true,
                 'is_renovated' => false,
-                'last_renovation_date' => null,
+                'last_renovation_date' => '2023-01-01',
                 'price_range_category' => 'Alta',
                 'reviews_count' => 200,
                 'categorizable_type' => 'App\Models\Category',
                 'categorizable_id' => 1, // Ejemplo de categoría
-                'placeable_type' => 'App\Models\Category',
+                'placeable_type' => 'App\Models\Place',
                 'placeable_id' => 2, // Ejemplo de tipo de lugar
                 'created_at' => now(),
                 'updated_at' => now(),
@@ -152,13 +152,13 @@ namespace Database\Seeders;
                 'is_featured' => true,
                 'has_parking' => true,
                 'is_renovated' => true,
-                'last_renovation_date' => now(),
+                'last_renovation_date' => '2022-06-10',
                 'price_range_category' => 'Alta',
                 'reviews_count' => 250,
                 'categorizable_type' => 'App\Models\Category',
                 'categorizable_id' => 1, // Ejemplo de categoría
-                'placeable_type' => 'App\Models\Category',
-                'placeable_id' => 2, // Ejemplo de tipo de lugar
+                'placeable_type' => 'App\Models\Place',
+                'placeable_id' => 1, // Ejemplo de tipo de lugar
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
