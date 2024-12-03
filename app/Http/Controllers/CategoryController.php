@@ -8,12 +8,12 @@ use Illuminate\Http\Request;
 class CategoryController extends Controller
 {
     /**
-     * Muestra una lista de todas las categorías.
+     * Muestra todas las categorías.
      * Método: GET /categories
      */
     public function index()
     {
-        $categories = Category::all();
+        $categories = Category::all(); // Obtiene todas las categorías
 
         return response()->json([
             'success' => true,
@@ -27,17 +27,18 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
+        // Validación de los datos entrantes
         $validatedData = $request->validate([
             'name' => 'required|string|max:255',
             'description' => 'nullable|string',
         ]);
 
-        $category = Category::create($validatedData);
+        $category = Category::create($validatedData); // Crea la categoría
 
         return response()->json([
             'success' => true,
             'message' => 'Category created successfully!',
-            'data' => $category,
+            'data' => $category
         ], 201);
     }
 
@@ -47,7 +48,7 @@ class CategoryController extends Controller
      */
     public function show($id)
     {
-        $category = Category::find($id);
+        $category = Category::find($id); // Busca la categoría por ID
 
         if (!$category) {
             return response()->json([
@@ -58,7 +59,7 @@ class CategoryController extends Controller
 
         return response()->json([
             'success' => true,
-            'data' => $category,
+            'data' => $category
         ], 200);
     }
 
@@ -68,7 +69,7 @@ class CategoryController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $category = Category::find($id);
+        $category = Category::find($id); // Busca la categoría por ID
 
         if (!$category) {
             return response()->json([
@@ -77,17 +78,18 @@ class CategoryController extends Controller
             ], 404);
         }
 
+        // Validación de los datos entrantes
         $validatedData = $request->validate([
             'name' => 'required|string|max:255',
             'description' => 'nullable|string',
         ]);
 
-        $category->update($validatedData);
+        $category->update($validatedData); // Actualiza la categoría
 
         return response()->json([
             'success' => true,
             'message' => 'Category updated successfully!',
-            'data' => $category,
+            'data' => $category
         ], 200);
     }
 
@@ -97,7 +99,7 @@ class CategoryController extends Controller
      */
     public function destroy($id)
     {
-        $category = Category::find($id);
+        $category = Category::find($id); // Busca la categoría por ID
 
         if (!$category) {
             return response()->json([
@@ -106,11 +108,42 @@ class CategoryController extends Controller
             ], 404);
         }
 
-        $category->delete();
+        $category->delete(); // Elimina la categoría
 
         return response()->json([
             'success' => true,
             'message' => 'Category deleted successfully!',
         ], 200);
     }
+
+    /**
+     * Muestra los lugares asociados a una categoría.
+     * Método: GET /categories/{id}/places
+     */
+    public function showPlaces($id)
+    {
+        $category = Category::findOrFail($id);
+        return response()->json($category->places); // Devuelve los lugares asociados a esa categoría
+    }
+
+    /**
+     * Muestra los servicios asociados a una categoría.
+     * Método: GET /categories/{id}/services
+     */
+    public function showServices($id)
+    {
+        $category = Category::findOrFail($id);
+        return response()->json($category->services); // Devuelve los servicios asociados a esa categoría
+    }
+
+    /**
+     * Muestra los comercios asociados a una categoría.
+     * Método: GET /categories/{id}/commerces
+     */
+    public function showCommerces($id)
+    {
+        $category = Category::findOrFail($id);
+        return response()->json($category->commerces); // Devuelve los comercios asociados a esa categoría
+    }
 }
+
