@@ -55,10 +55,10 @@ namespace Database\Seeders;
                             Category::firstOrCreate($categoryData);
                         }
                     // Crear 10 lugares aleatorios y asociarles categorías y servicios
-        $places = Place::factory(10)->create();
+        $placesData = Place::factory(10)->create();
 
         // Crear lugares
-        $places = [
+        $placesData = [
             [
                 'name' => 'Hotel Intercontinental Medellín',
                 'description' => 'Hotel lujoso con vistas panorámicas de la ciudad.',
@@ -163,24 +163,25 @@ namespace Database\Seeders;
                 'updated_at' => now(),
             ],
         ];
-        foreach ($places as $placeData) {
+        foreach ($placesData as $placeData) {
             // Validar que los campos no sean nulos
-            foreach ($places as $key => $value) {
+            foreach ($placeData as $key => $value) {
                 if (is_null($value)) {
-                    throw new \Exception("El campo '{$key}' no puede ser nulo en el lugar '{$places['name']}'");
+                    throw new \Exception("El campo '{$key}' no puede ser nulo en el lugar '{$placeData['name']}'");
                 }
             }
-            $places = Place::create($placeData);
-            // Asociar categorías al lugar
-            $category = Category::where('name', 'hotel')->first(); // Asegúrate de que la categoría exista
+
+            // Crear el lugar
+            $place = Place::create($placeData);
+
+            // Asociar categorías a los lugares utilizando la relación polimórfica
+            $category = Category::where('name', 'Hoteles')->first(); // Asegúrate de que la categoría exista
             if ($category) {
-                $places->categories()->attach($category->id);
+                // Asociar categoría al lugar
+                $place->categories()->attach($category->id);
             }
-
-
-
-                    }
-                }}
-
+        }
+    }
+}
 
 
