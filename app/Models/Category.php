@@ -20,6 +20,7 @@ class Category extends Model
         return $this->morphedByMany(Place::class, 'categorizable');
     }
 
+
     // Relación polimórfica con Services
     public function services()
     {

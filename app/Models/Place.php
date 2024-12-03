@@ -80,6 +80,8 @@ class Place extends Model
         return $this->morphToMany(Category::class, 'categorizable');
     }
 
+
+
     // Relación polimórfica con servicios.
     public function services()
     {
