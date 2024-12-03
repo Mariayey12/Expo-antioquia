@@ -1,14 +1,14 @@
 <?php
 
-    namespace Database\Seeders;
+namespace Database\Seeders;
 
-            use Illuminate\Database\Seeder;
-            use App\Models\Place;
-            use App\Models\Category;
-            use App\Models\Service;
-            use App\Models\Commerce;
+    use Illuminate\Database\Seeder;
+    use App\Models\Place;
+    use App\Models\Category;
+    use App\Models\Service;
+    use App\Models\Commerce;
 
-            class PlacesTableSeeder extends Seeder
+        class PlacesTableSeeder extends Seeder
             {
                 /**
                  * Run the database seeds.
@@ -25,8 +25,8 @@
 
                         // Asignar categorías a los lugares, servicios y comercios
                         $places = Place::all();
-                        $services = Service::all();
-                        $commerces = Commerce::all();
+                        //$services = Service::all();
+                        //$commerces = Commerce::all();
 
                 $categories = [
                     ['name' => 'Comercio', 'description' => 'Espacios dedicados a la venta de bienes y servicios.'],
