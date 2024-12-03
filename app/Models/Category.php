@@ -31,11 +31,6 @@ class Category extends Model
     {
         return $this->morphedByMany(Commerce::class, 'categoriable');
     }
-    // Category.php
 
-public function places()
-{
-    return $this->morphMany(Place::class, 'categorizable');
-}
 
 }
