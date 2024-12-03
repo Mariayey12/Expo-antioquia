@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -16,24 +17,18 @@ class Category extends Model
     // Relación polimórfica con Places
     public function places()
     {
-        return $this->morphedByMany(Place::class, 'categoriable'); // Cambio aquí
+        return $this->morphedByMany(Place::class, 'categoriable');
     }
 
     // Relación polimórfica con Services
     public function services()
     {
-        return $this->morphedByMany(Service::class, 'categoriable'); // Cambio aquí
+        return $this->morphedByMany(Service::class, 'categoriable');
     }
 
     // Relación polimórfica con Commerce
     public function commerces()
     {
-        return $this->morphedByMany(Commerce::class, 'categoriable'); // Cambio aquí
-    }
-
-    // Relación polimórfica inversa
-    public function categoriables()
-    {
-        return $this->morphTo();
+        return $this->morphedByMany(Commerce::class, 'categoriable');
     }
 }
