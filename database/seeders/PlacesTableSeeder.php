@@ -152,7 +152,7 @@ namespace Database\Seeders;
                 'is_featured' => true,
                 'has_parking' => true,
                 'is_renovated' => true,
-                'last_renovation_date' => '2023-05-01',
+                'last_renovation_date' => now(),
                 'price_range_category' => 'Alta',
                 'reviews_count' => 250,
                 'categorizable_type' => 'App\Models\Category',
