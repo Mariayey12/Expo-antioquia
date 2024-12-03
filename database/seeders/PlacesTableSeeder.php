@@ -134,9 +134,11 @@ namespace Database\Seeders;
                 'address' => 'Calle 1 # 2-3',
                 'city' => 'Medellín',
                 'average_price' => 250, // Definido como no nulo
-                'status' => 't', // Asumiendo que 't' significa activo
+                'status' => 'activo', // Asumiendo que 't' significa activo
                 'is_active' => true, // Asumiendo que el valor booleano representa si está activo
                 'is_deleted' => false, // Suposición sobre el campo para manejar eliminación lógica
+                'categorizable_type' => 'hotel',
+                'categorizable_id' => 2, // Asocia el hotel con una categoría
                 'placeable_type' => 'App\Models\Category',
                 'placeable_id' => 2, // Asocia el hotel con otro tipo de lugar si es necesario
                 'created_at' => now(),
