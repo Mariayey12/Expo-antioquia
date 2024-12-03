@@ -17,20 +17,25 @@ class Category extends Model
     // Relación polimórfica con Places
     public function places()
     {
-        return $this->morphedByMany(Place::class, 'categoriable');
+        return $this->morphedByMany(Place::class, 'categorizable');
+    }
+
+
+     // Relación polimórfica con Category
+    public function categorizables()
+    {
+        return $this->morphToMany(Category::class, 'categorizable');
     }
 
     // Relación polimórfica con Services
     public function services()
     {
-        return $this->morphedByMany(Service::class, 'categoriable');
+        return $this->morphedByMany(Service::class, 'categorizable');
     }
 
     // Relación polimórfica con Commerce
     public function commerces()
     {
-        return $this->morphedByMany(Commerce::class, 'categoriable');
+        return $this->morphedByMany(Commerce::class, 'categorizable');
     }
-
-
 }

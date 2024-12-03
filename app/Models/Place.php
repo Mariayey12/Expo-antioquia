@@ -79,15 +79,15 @@ class Place extends Model
    // Modelo Place
 public function categories()
 {
-    return $this->morphToMany(Category::class, 'categoriable');
+    return $this->morphToMany(Category::class, 'categorizable');
 }
 
-// Place.php
-
-public function categorizable()
+// Relación polimórfica con Category
+public function categorizables()
 {
-    return $this->morphTo();
+    return $this->morphToMany(Category::class, 'categorizable');
 }
+
 
 
     /**
