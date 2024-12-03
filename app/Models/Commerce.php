@@ -34,6 +34,7 @@ class Commerce extends Model
         return $this->morphToMany(Category::class, 'categoriable');
     }
 
+
     public function places()
     {
         return $this->morphToMany(Place::class, 'placeable');

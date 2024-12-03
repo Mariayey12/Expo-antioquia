@@ -21,6 +21,13 @@
                     Category::factory(10)->create();
                     // Crear categorías iniciales con nombre y descripción
 
+                    $categories = Category::all(); // Obtener todas las categorías
+
+                    // Asignar categorías a los lugares, servicios y comercios
+                    $places = Place::all();
+                    $services = Service::all();
+                    $commerces = Commerce::all();
+
             $categories = [
                 ['name' => 'Comercio', 'description' => 'Espacios dedicados a la venta de bienes y servicios.'],
                 ['name' => 'Productos', 'description' => 'Artículos disponibles para compra o venta.'],

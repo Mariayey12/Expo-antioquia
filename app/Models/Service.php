@@ -45,10 +45,13 @@ class Service extends Model
     {
         return $this->morphTo();
     }
-    public function categorizable()
-    {
-        return $this->morphToMany(Category::class, 'categoriable');
-    }
+
+    // Modelo Place
+public function categories()
+{
+    return $this->morphToMany(Category::class, 'categoriable');
+}
+
 }
 
 

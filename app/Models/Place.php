@@ -76,13 +76,12 @@ class Place extends Model
 
     // Relaciones
 
-    /**
-     * Relación muchos a muchos con categorías.
-     */
-    public function categories()
-    {
-        return $this->belongsToMany(Category::class,'categoriable');
-    }
+   // Modelo Place
+public function categories()
+{
+    return $this->morphToMany(Category::class, 'categoriable');
+}
+
 
     /**
      * Relación polimórfica con servicios.
