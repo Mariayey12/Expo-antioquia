@@ -172,13 +172,13 @@ namespace Database\Seeders;
             }
 
             // Crear el lugar
-            $place = Place::create($placeData);
+            $places = Place::create($placeData);
 
             // Asociar categorías a los lugares utilizando la relación polimórfica
             $category = Category::where('name', 'Hoteles')->first(); // Asegúrate de que la categoría exista
             if ($category) {
                 // Asociar categoría al lugar
-                $place->categories()->attach($category->id);
+                $places->categories()->attach($category->id);
             }
         }
     }
