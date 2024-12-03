@@ -32,7 +32,7 @@ class Category extends Model
     }
 
     // Relación polimórfica inversa
-    public function categorizable()
+    public function categoriables()
     {
         return $this->morphTo();
     }
