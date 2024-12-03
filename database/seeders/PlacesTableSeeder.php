@@ -145,16 +145,16 @@ namespace Database\Seeders;
         ];
         foreach ($places as $placeData) {
             // Validar que los campos no sean nulos
-            foreach ($place as $key => $value) {
+            foreach ($places as $key => $value) {
                 if (is_null($value)) {
-                    throw new \Exception("El campo '{$key}' no puede ser nulo en el lugar '{$place['name']}'");
+                    throw new \Exception("El campo '{$key}' no puede ser nulo en el lugar '{$places['name']}'");
                 }
             }
-            $place = Place::create($placeData);
+            $places = Place::create($placeData);
             // Asociar categorías al lugar
             $category = Category::where('name', 'hotel')->first(); // Asegúrate de que la categoría exista
             if ($category) {
-                $place->categories()->attach($category->id);
+                $places->categories()->attach($category->id);
             }
 
 
