@@ -220,7 +220,7 @@ namespace Database\Seeders;
             'status' => 'active',
             'reviews_count' => 45,
             'average_rating' => 4.8,
-            'serviceable_type' => 'App\Models\Place', // Relación con la tabla Places
+            'serviceable_type' => 'App\Models\Category', // Relación con la tabla Places
             'serviceable_id' => 6 ,    // ID del lugar relacionado
                 ],
             ];
