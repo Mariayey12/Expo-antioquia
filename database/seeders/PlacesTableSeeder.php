@@ -20,13 +20,11 @@ namespace Database\Seeders;
                         // Crear 10 categorías aleatorias
                         Category::factory(10)->create();
                         // Crear categorías iniciales con nombre y descripción
-
                         $categories = Category::all(); // Obtener todas las categorías
-
                         // Asignar categorías a los lugares, servicios y comercios
                         $places = Place::all();
                         $services = Service::all();
-                        //$commerces = Commerce::all();
+                        $commerces = Commerce::all();
 
                 $categories = [
                     ['name' => 'Comercio', 'description' => 'Espacios dedicados a la venta de bienes y servicios.'],
@@ -173,7 +171,6 @@ namespace Database\Seeders;
 
             // Crear el lugar
             $places = Place::create($placeData);
-
             // Asociar categorías a los lugares utilizando la relación polimórfica
             $category = Category::where('name', 'Hoteles')->first(); // Asegúrate de que la categoría exista
             if ($category) {
@@ -235,8 +232,49 @@ namespace Database\Seeders;
 
                 Service::create($serviceData);
             }
+        }
+        // Crear comercios
+        $commerces = [
+            [
+                'name' => 'Tienda de Artesanías',
+                'description' => 'Venta de artesanías locales y souvenirs.',
+                'location' => 'Rionegro',
+                'image_url' => 'https://www.artesanias.com/images/commerce1.jpg',
+                'video_url' => 'https://www.youtube.com/watch?v=artesanias',
+                'google_maps' => 'https://www.google.com/maps/place/Tienda+de+Artesanías',
+                'contact_number' => '+57 123 456 7890',
+                'email' => 'artesanias@tienda.com',
+                'website' => 'https://www.tiendadearte.com',
+                'commerciable_type' => 'App\Models\Place', // Relación con la tabla Places
+                'commerciable_id' => 6 ,
 
 
+            ],
+            [
+                    'name' => 'Cafetería Antioqueña',
+                    'description' => 'Cafetería con productos típicos de Antioquia.',
+                    'location' => 'Medellín',
+                    'image_url' => 'https://www.cafeteriaantioquena.com/images/commerce2.jpg',
+                    'video_url' => 'https://www.youtube.com/watch?v=artesanias',
+                    'google_maps' => 'https://www.google.com/maps/place/Tienda+de+Artesanías',
+                    'contact_number' => '+57 123 456 7890',
+                    'email' => 'artesanias@tienda.com',
+                    'website' => 'https://www.tiendadearte.com',
+                    'commerciable_type' => 'App\Models\Place', // Relación con la tabla Places
+                    'commerciable_id' => 3 ,    // ID del lugar relacionado
+
+            ],
+        ];
+       
+        foreach ($commerces as $commerceData) {
+            // Validación para evitar campos nulos
+            foreach ($commerceData as $key => $value) {
+                if (is_null($value)) {
+                    throw new \Exception("El campo '{$key}' no puede ser nulo en el comercio '{$commerceData['name']}'");
+                }
+            }
+
+            Commerce::create($commerceData);
         }
     }
 
