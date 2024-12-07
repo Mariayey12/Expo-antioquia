@@ -25,7 +25,7 @@ namespace Database\Seeders;
 
                         // Asignar categorías a los lugares, servicios y comercios
                         $places = Place::all();
-                        //$services = Service::all();
+                        $services = Service::all();
                         //$commerces = Commerce::all();
 
                 $categories = [
@@ -156,9 +156,9 @@ namespace Database\Seeders;
                 'price_range_category' => 'Alta',
                 'reviews_count' => 250,
                 'categorizable_type' => 'App\Models\Category',
-                'categorizable_id' => 1, // Ejemplo de categoría
+                'categorizable_id' => 2, // Ejemplo de categoría
                 'placeable_type' => 'App\Models\Place',
-                'placeable_id' => 1, // Ejemplo de tipo de lugar
+                'placeable_id' => 3, // Ejemplo de tipo de lugar
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
@@ -180,6 +180,7 @@ namespace Database\Seeders;
                 // Asociar categoría al lugar
                 $places->categories()->attach($category->id);
             }
+
             // Crear servicios relacionados con el lugar
             $services = [
                 [
@@ -200,7 +201,7 @@ namespace Database\Seeders;
             'reviews_count' => 25,
             'average_rating' => 4.5,
             'serviceable_type' => 'App\Models\Place', // Tipo del modelo relacionado
-            'serviceable_id' => $place->id,    // ID del lugar relacionado
+            'serviceable_id' => 4,    // ID del lugar relacionado
                 ],
                 [
                     'name' => 'Masajes Relajantes',
@@ -220,7 +221,7 @@ namespace Database\Seeders;
             'reviews_count' => 45,
             'average_rating' => 4.8,
             'serviceable_type' => 'App\Models\Place', // Relación con la tabla Places
-            'serviceable_id' => $place->id,    // ID del lugar relacionado
+            'serviceable_id' => 6 ,    // ID del lugar relacionado
                 ],
             ];
 
