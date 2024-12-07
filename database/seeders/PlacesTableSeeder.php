@@ -180,8 +180,68 @@ namespace Database\Seeders;
                 // Asociar categoría al lugar
                 $places->categories()->attach($category->id);
             }
+            // Crear servicios relacionados con el lugar
+            $services = [
+                [
+            'name' => 'Transporte Medellín',
+            'description' => 'Servicio de transporte privado con vehículos modernos y cómodos.',
+            'cost' => 10000.00,
+            'duration' => '1 hora',
+            'image_url' => 'https://www.transporte.com/images/service1.jpg',
+            'video_url' => 'https://www.youtube.com/watch?v=Ejemplo',
+            'google_maps' => 'https://goo.gl/maps/ejemplo',
+            'provider_name' => 'Transporte Medellín S.A.',
+            'location' => 'Calle 123 #45-67, Medellín, Antioquia',
+            'is_available' => true,
+            'available_from' => now()->addDays(1), // Disponible desde mañana
+            'available_until' => now()->addMonths(1), // Disponible hasta un mes después
+            'contact_info' => 'info@transporte.com | +57 300 123 4567',
+            'status' => 'active',
+            'reviews_count' => 25,
+            'average_rating' => 4.5,
+            'serviceable_type' => 'App\Models\Place', // Tipo del modelo relacionado
+            'serviceable_id' => $place->id,    // ID del lugar relacionado
+                ],
+                [
+                    'name' => 'Masajes Relajantes',
+            'description' => 'Servicio de masajes en Spa Relax, diseñado para aliviar tensiones y promover la relajación.',
+            'cost' => 50000.00,
+            'duration' => '2 horas',
+            'image_url' => 'https://www.sparelax.com/images/service2.jpg',
+            'video_url' => 'https://www.youtube.com/watch?v=EjemploMasajes',
+            'google_maps' => 'https://goo.gl/maps/ejemploSpaRelax',
+            'provider_name' => 'Spa Relax Medellín',
+            'location' => 'Carrera 45 #12-34, Medellín, Antioquia',
+            'is_available' => true,
+            'available_from' => now()->addDays(2), // Disponible desde dos días después
+            'available_until' => now()->addMonths(3), // Disponible durante tres meses
+            'contact_info' => 'relax@spa.com | +57 310 456 7890',
+            'status' => 'active',
+            'reviews_count' => 45,
+            'average_rating' => 4.8,
+            'serviceable_type' => 'App\Models\Place', // Relación con la tabla Places
+            'serviceable_id' => $place->id,    // ID del lugar relacionado
+                ],
+            ];
+
+            foreach ($services as $serviceData) {
+                // Validar campos no nulos en los servicios
+                foreach ($serviceData as $key => $value) {
+                    if (is_null($value)) {
+                        throw new \Exception("El campo '{$key}' no puede ser nulo en el servicio '{$serviceData['name']}'");
+                    }
+                }
+
+                Service::create($serviceData);
+            }
+
+
         }
     }
+
+
+
 }
+
 
 
