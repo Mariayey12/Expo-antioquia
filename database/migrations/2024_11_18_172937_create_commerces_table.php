@@ -21,15 +21,14 @@ class CreateCommercesTable extends Migration
             $table->string('image_url')->nullable(); // URL de la imagen (opcional)
             $table->string('video_url')->nullable(); // URL del video (opcional)
             $table->string('google_maps')->nullable(); // URL de Google Maps (opcional)
-            $table->string('category'); // Categoría (obligatoria)
             $table->string('contact_number')->nullable(); // Número de contacto (opcional)
             $table->string('email')->unique(); // Correo electrónico (único)
             $table->string('website')->nullable(); // Página web (opcional)
-            $table->json('categories')->nullable(); // Arreglo JSON para categorías (opcional)
 
             // Relación polimórfica
             $table->morphs('commerceable'); // Relación polimórfica, creando 'commerceable_id' y 'commerceable_type'
-
+            $table->morphs('categorizable'); // Relación polimórfica con categorías
+            $table->morphs('placeable'); // Relación polimórfica con otros modelos
             $table->timestamps(); // Timestamps de creación y actualización
         });
     }
