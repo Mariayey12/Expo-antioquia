@@ -18,29 +18,32 @@ class Commerce extends Model
         'image_url',
         'video_url',
         'google_maps',
-        'category',
         'contact_number',
         'email',
         'website',
-        'categories',
+
     ];
 
-    protected $casts = [
-        'categories' => 'array', // Convierte el campo JSON a un arreglo
-    ];
 
+
+    /**
+     * Relación polimórfica para categorías.
+     */
     public function categories()
     {
         return $this->morphToMany(Category::class, 'categorizable');
     }
 
-
+    /**
+     * Relación polimórfica para lugares (Place).
+     */
     public function places()
     {
         return $this->morphToMany(Place::class, 'placeable');
     }
+
     /**
-     * Relación polimórfica.
+     * Relación polimórfica con otro modelo, si es necesario.
      */
     public function commerceable()
     {
