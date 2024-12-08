@@ -283,7 +283,7 @@ $serviceData = Service::factory(10)->create();
 
 
     // Crear comercio si no existe
-Commerce::firstOrCreate($commerceData);
+Commerce::create($commerceData);
     }
 
         }
