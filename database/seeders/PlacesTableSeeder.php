@@ -246,7 +246,7 @@ namespace Database\Seeders;
             'email' => 'artesanias@tienda.com',
             'website' => 'https://www.tiendadearte.com',
             'commerceable_type' => 'App\Models\Category',  // Relación con Category
-            'commerceable_id' => 4,
+            'commerceable_id' => 7,
             'created_at' => now(),
             'updated_at' => now()
         ],
@@ -283,13 +283,13 @@ namespace Database\Seeders;
             }
         }
 
-        /*if ($category) {
+        if ($category) {
             // Supongamos que $place es una instancia de tu modelo Place
             $place = Place::find(1); // Obtén el lugar al que quieres asociar la categoría
 
             // Asociar la categoría al lugar usando la relación polimórfica
             $place->categories()->save($category);  // Esto guardará la categoría asociada al lugar
-        }*/
+        }
     }
 
     Commerce::create($commerceData);
