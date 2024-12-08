@@ -27,7 +27,7 @@ namespace Database\Seeders;
                         $commerces = Commerce::all();
 
                 $categories = [
-                    ['name' => 'Comercio', 'description' => 'Espacios dedicados a la venta de bienes y servicios.'],
+                    ['name' => 'Commerce', 'description' => 'Espacios dedicados a la venta de bienes y servicios.'],
                     ['name' => 'Productos', 'description' => 'Artículos disponibles para compra o venta.'],
                     ['name' => 'Transporte', 'description' => 'Servicios de movilidad para personas y bienes.'],
                     ['name' => 'Relajación', 'description' => 'Lugares para descansar y recargar energías.'],
@@ -278,14 +278,14 @@ namespace Database\Seeders;
                 throw new \Exception("El campo '{$key}' no puede ser nulo en el comercio '{$commerceData['name']}'");
         }
 
-            $category = Category::where('name', 'Commerce')->first(); // Asegúrate de que la categoría exista
+            $category = Category::where('name', 'commerce')->first(); // Asegúrate de que la categoría exista
         if ($category) {
             // Supongamos que $commerce es una instancia de tu modelo Commerce
             $commerce = Commerce::find(1); // Obtén el comercio al que quieres asociar la categoría
 
             // Asociar la categoría al comercio usando la relación polimórfica
             $commerce->categories()->save($category);  // Esto guardará la categoría asociada al comercio
-        }$category = Category::where('name', 'Commerce')->first(); // Asegúrate de que la categoría exista
+        }$category = Category::where('name', 'commerce')->first(); // Asegúrate de que la categoría exista
 
         /*if ($category) {
             // Supongamos que $place es una instancia de tu modelo Place
