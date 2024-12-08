@@ -1,4 +1,5 @@
 <?php
+
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
@@ -7,6 +8,7 @@ use App\Models\Admin;
 use App\Models\Provider;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
 use Carbon\Carbon;
 
 class UsersTableSeeder extends Seeder
@@ -14,8 +16,8 @@ class UsersTableSeeder extends Seeder
     public function run()
     {
         // Crear administradores y proveedores con factory
-        $admin = Admin::factory()->create();
-        $provider = Provider::factory()->create();
+        $admin = Admin::factory()->create(); // Crea un admin
+        $provider = Provider::factory()->create(); // Crea un provider
 
         // Crear usuarios con relaciones polimórficas
         $users = [
@@ -28,8 +30,8 @@ class UsersTableSeeder extends Seeder
                 'email_verified_at' => Carbon::now(),
                 'role' => 'administrador',
                 'remember_token' => Str::random(10),
-                'userable_type' =>  'App\Models\Admin', // Usamos el tipo de relación correcto
-                'userable_id' => 1,    // Usamos el ID del Admin
+                'userable_type' => Admin::class, // Relación con Admin
+                'userable_id' => $admin->id,    // ID del Admin creado
             ],
             [
                 'name' => 'Carlos García',
@@ -40,8 +42,8 @@ class UsersTableSeeder extends Seeder
                 'email_verified_at' => Carbon::now(),
                 'role' => 'proveedor',
                 'remember_token' => Str::random(10),
-                'userable_type' =>   'App\Models\Provider', // Usamos el tipo de relación correcto
-                'userable_id' => 2,    // Usamos el ID del Provider
+                'userable_type' => Provider::class, // Relación con Provider
+                'userable_id' => $provider->id,     // ID del Provider creado
             ],
             [
                 'name' => 'Ana Torres',
@@ -52,39 +54,32 @@ class UsersTableSeeder extends Seeder
                 'email_verified_at' => Carbon::now(),
                 'role' => 'usuario',
                 'remember_token' => Str::random(10),
-                'userable_type' =>   'App\Models\User',  // No tiene un modelo relacionado
-                'userable_id' => 3,    // No tiene ID
+                'userable_type' => null, // Sin relación polimórfica
+                'userable_id' => null,   // Sin ID relacionado
             ],
         ];
 
-        // Crear los usuarios
+        // Insertar usuarios en la base de datos
         foreach ($users as $userData) {
-            $user = User::create($userData);
-            foreach ($users as $userData) {
-                // Verificar que los datos requeridos no sean nulos
-                if (!empty($userData['userable_type']) && !empty($userData['userable_id'])) {
-                    // Crear el usuario
-                    $user = User::create($userData);
+            try {
+                $user = User::create($userData);
 
-                    // Validar que el modelo polimórfico exista antes de asociarlo
+                // Asociar relación polimórfica solo si es válida
+                if (!empty($userData['userable_type']) && !empty($userData['userable_id'])) {
                     $relatedModel = $userData['userable_type']::find($userData['userable_id']);
+
                     if ($relatedModel) {
                         $user->userable()->associate($relatedModel);
                         $user->save();
                     } else {
-                        // Manejar el caso donde el modelo relacionado no exista
                         Log::warning("El modelo relacionado no se encontró: {$userData['userable_type']} con ID {$userData['userable_id']}");
                     }
-                } else {
-                    // Manejar el caso donde los datos sean nulos o incompletos
-                    Log::error("Los datos de userable_type o userable_id son nulos o inválidos", $userData);
                 }
+            } catch (\Exception $e) {
+                Log::error("Error al crear el usuario: {$e->getMessage()}", $userData);
             }
-
-
         }
 
         echo "Usuarios insertados exitosamente.\n";
     }
 }
-
