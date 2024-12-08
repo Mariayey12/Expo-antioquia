@@ -29,7 +29,7 @@ class UsersTableSeeder extends Seeder
                 'role' => 'administrador',
                 'remember_token' => Str::random(10),
                 'userable_type' =>  App\Models\Admin, // Usamos el tipo de relación correcto
-                'userable_id' => 11,    // Usamos el ID del Admin
+                'userable_id' => 15,    // Usamos el ID del Admin
             ],
             [
                 'name' => 'Carlos García',
