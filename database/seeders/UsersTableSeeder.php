@@ -29,7 +29,7 @@ class UsersTableSeeder extends Seeder
                 'role' => 'administrador',
                 'remember_token' => Str::random(10),
                 'userable_type' =>  App\Models\Admin, // Usamos el tipo de relación correcto
-                'userable_id' => 4,    // Usamos el ID del Admin
+                'userable_id' => 1,    // Usamos el ID del Admin
             ],
             [
                 'name' => 'Carlos García',
@@ -41,7 +41,7 @@ class UsersTableSeeder extends Seeder
                 'role' => 'proveedor',
                 'remember_token' => Str::random(10),
                 'userable_type' =>   App\Models\Provider, // Usamos el tipo de relación correcto
-                'userable_id' => 3,    // Usamos el ID del Provider
+                'userable_id' => 2,    // Usamos el ID del Provider
             ],
             [
                 'name' => 'Ana Torres',
@@ -53,7 +53,7 @@ class UsersTableSeeder extends Seeder
                 'role' => 'usuario',
                 'remember_token' => Str::random(10),
                 'userable_type' =>   App\Models\Admin,  // No tiene un modelo relacionado
-                'userable_id' => 5,    // No tiene ID
+                'userable_id' => 3,    // No tiene ID
             ],
         ];
 
