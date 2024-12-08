@@ -235,11 +235,11 @@ $serviceData = Service::factory(10)->create();
             }
         }
         // Crear 10 Comercios aleatorios y asociarles categorías y lugares
-/*$commerceData = Commerce::factory(10)->create();*/
+$commerceData = Commerce::factory(10)->create();
        // Crear comercios
        $commerces = [
         [
-            'name' => 'Keebler Group',
+    'name' => 'Keebler Group',
     'description' => 'Repellat et neque natus voluptas...',
     'location' => '947 Reymundo Rapids, Ryanfurt, RI 13586-3786',
     'image_url' => 'https://via.placeholder.com/640x480.png/003300?text=commerce+qui',
