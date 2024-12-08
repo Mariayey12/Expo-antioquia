@@ -39,11 +39,10 @@ class CommerceController extends Controller
             'image_url' => 'nullable|url',
             'video_url' => 'nullable|url',
             'google_maps' => 'nullable|url',
-            'category' => 'nullable|string',
             'contact_number' => 'nullable|string',
             'email' => 'nullable|email',
             'website' => 'nullable|url',
-            'categories' => 'nullable|array|exists:categories,id', // Validación para categorías
+            
         ]);
 
         $commerce = Commerce::create($validatedData);

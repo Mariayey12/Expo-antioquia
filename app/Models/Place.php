@@ -88,10 +88,13 @@ class Place extends Model
         return $this->morphToMany(Service::class, 'serviceable');
     }
 
-    // Relación polimórfica con comercios.
+    
+    /**
+     * Relación polimórfica inversa para comercios.
+     */
     public function commerces()
     {
-        return $this->morphToMany(Commerce::class, 'placeable');
+        return $this->morphedByMany(Commerce::class, 'placeable');
     }
 
     // Relación polimórfica con reseñas.

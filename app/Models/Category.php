@@ -31,7 +31,9 @@ class Category extends Model
         return $this->morphedByMany(Service::class, 'categorizable');
     }
 
-    // Relación polimórfica con Commerce
+     /**
+     * Relación polimórfica inversa para comercios.
+     */
     public function commerces()
     {
         return $this->morphedByMany(Commerce::class, 'categorizable');
