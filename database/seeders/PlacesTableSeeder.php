@@ -245,7 +245,7 @@ namespace Database\Seeders;
                 'contact_number' => '+57 123 456 7890',
                 'email' => 'artesanias@tienda.com',
                 'website' => 'https://www.tiendadearte.com',
-                'commerciable_type' => 'App\Models\Place', // Relación con la tabla Places
+                'commerciable_type' => 'App\Models\Catefory', // Relación con la tabla Places
                 'commerciable_id' => 6 ,
 
 
@@ -266,31 +266,41 @@ namespace Database\Seeders;
             ],
         ];
 
-        foreach ($commerces as $commerceData) {
-            // Validación para evitar campos nulos
-            foreach ($commerceData as $key => $value) {
-                if (is_null($value)) {
-                    throw new \Exception("El campo '{$key}' no puede ser nulo en el comercio '{$commerceData['name']}'");
-                }
+            foreach ($commerces as $commerceData) {
+                // Validación para evitar campos nulos
+                foreach ($commerceData as $key => $value) {
+                    if (is_null($value)) {
+                        throw new \Exception("El campo '{$key}' no puede ser nulo en el comercio '{$commerceData['name']}'");
+                    }
 
-                $category = Category::where('name', 'Commerce')->first(); // Asegúrate de que la categoría exista
+                    $category = Category::where('name', 'Commerce')->first(); // Asegúrate de que la categoría exista
 
-if ($category) {
-    // Supongamos que $commerce es una instancia de tu modelo Commerce
-    $commerce = Commerce::find(1); // Obtén el comercio al que quieres asociar la categoría
+    if ($category) {
+        // Supongamos que $commerce es una instancia de tu modelo Commerce
+        $commerce = Commerce::find(1); // Obtén el comercio al que quieres asociar la categoría
 
-    // Asociar la categoría al comercio usando la relación polimórfica
-    $commerce->categories()->save($category);  // Esto guardará la categoría asociada al comercio
-}
+        // Asociar la categoría al comercio usando la relación polimórfica
+        $commerce->categories()->save($category);  // Esto guardará la categoría asociada al comercio
+    }$category = Category::where('name', 'Commerce')->first(); // Asegúrate de que la categoría exista
 
-            }
+    if ($category) {
+        // Supongamos que $place es una instancia de tu modelo Place
+        $place = Place::find(1); // Obtén el lugar al que quieres asociar la categoría
 
-            Commerce::create($commerceData);
-        }
+        // Asociar la categoría al lugar usando la relación polimórfica
+        $place->categories()->save($category);  // Esto guardará la categoría asociada al lugar
     }
 
 
-}
+
+                }
+
+                Commerce::create($commerceData);
+            }
+        }
+
+
+    }
 
 
 
