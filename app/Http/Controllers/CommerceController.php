@@ -25,12 +25,12 @@ class CommerceController extends Controller
             'image_url' => 'nullable|url',
             'video_url' => 'nullable|url',
             'google_maps' => 'nullable|url',
-            'contact_number' => 'nullable|string',
+            'contact_number' => 'nullable|string|max:15',
             'email' => 'nullable|email',
             'website' => 'nullable|url',
-            'placeable_id' => 'nullable|integer',  // ID del lugar
+            'placeable_id' => 'nullable|integer|exists:places,id',  // ID del lugar
             'placeable_type' => 'nullable|string',  // Tipo de lugar (Place)
-            'categorizable_id' => 'nullable|integer',  // ID de la categoría
+            'categorizable_id' => 'nullable|integer|exists:categories,id',  // ID de la categoría
             'categorizable_type' => 'nullable|string',  // Tipo de la categoría (Category)
         ]);
 
@@ -47,31 +47,25 @@ class CommerceController extends Controller
             'website' => $validatedData['website'] ?? null,
         ]);
 
-        // Asociar el lugar polimórfico si se especifica
-        if ($request->has('placeable_id') && $request->has('placeable_type')) {
+        // Asociar lugar polimórfico si se especifica
+        if ($request->filled('placeable_id') && $request->filled('placeable_type')) {
             $placeableType = $validatedData['placeable_type'];
-            $placeableId = $validatedData['placeable_id'];
-
-            // Validar si el tipo de lugar es válido
-            if (in_array($placeableType, [Place::class])) {
-                $commerce->places()->attach($placeableId);
+            if ($placeableType === Place::class) {
+                $commerce->places()->attach($validatedData['placeable_id']);
             }
         }
 
-        // Asociar la categoría polimórfica si se especifica
-        if ($request->has('categorizable_id') && $request->has('categorizable_type')) {
+        // Asociar categoría polimórfica si se especifica
+        if ($request->filled('categorizable_id') && $request->filled('categorizable_type')) {
             $categorizableType = $validatedData['categorizable_type'];
-            $categorizableId = $validatedData['categorizable_id'];
-
-            // Validar si el tipo de categoría es válido
-            if (in_array($categorizableType, [Category::class])) {
-                $commerce->categories()->attach($categorizableId);
+            if ($categorizableType === Category::class) {
+                $commerce->categories()->attach($validatedData['categorizable_id']);
             }
         }
 
         return response()->json([
             'message' => 'Commerce created successfully!',
-            'commerce' => $commerce,
+            'commerce' => $commerce->load(['places', 'categories']),
         ], 201);
     }
 
@@ -114,38 +108,37 @@ class CommerceController extends Controller
             'image_url' => 'nullable|url',
             'video_url' => 'nullable|url',
             'google_maps' => 'nullable|url',
-            'contact_number' => 'nullable|string',
+            'contact_number' => 'nullable|string|max:15',
             'email' => 'nullable|email',
             'website' => 'nullable|url',
+            'placeable_id' => 'nullable|integer|exists:places,id',
+            'placeable_type' => 'nullable|string',
+            'categorizable_id' => 'nullable|integer|exists:categories,id',
+            'categorizable_type' => 'nullable|string',
         ]);
 
+        // Actualizar el comercio
         $commerce->update($validatedData);
 
-        // Asociar el lugar polimórfico si se especifica
-        if ($request->has('placeable_id') && $request->has('placeable_type')) {
+        // Actualizar lugar polimórfico si se especifica
+        if ($request->filled('placeable_id') && $request->filled('placeable_type')) {
             $placeableType = $request->placeable_type;
-            $placeableId = $request->placeable_id;
-
-            // Validar si el tipo de lugar es válido
-            if (in_array($placeableType, [Place::class])) {
-                $commerce->places()->sync([$placeableId]);
+            if ($placeableType === Place::class) {
+                $commerce->places()->sync([$request->placeable_id]);
             }
         }
 
-        // Asociar la categoría polimórfica si se especifica
-        if ($request->has('categorizable_id') && $request->has('categorizable_type')) {
+        // Actualizar categoría polimórfica si se especifica
+        if ($request->filled('categorizable_id') && $request->filled('categorizable_type')) {
             $categorizableType = $request->categorizable_type;
-            $categorizableId = $request->categorizable_id;
-
-            // Validar si el tipo de categoría es válido
-            if (in_array($categorizableType, [Category::class])) {
-                $commerce->categories()->sync([$categorizableId]);
+            if ($categorizableType === Category::class) {
+                $commerce->categories()->sync([$request->categorizable_id]);
             }
         }
 
         return response()->json([
             'message' => 'Commerce updated successfully!',
-            'commerce' => $commerce,
+            'commerce' => $commerce->load(['places', 'categories']),
         ]);
     }
 
@@ -157,6 +150,8 @@ class CommerceController extends Controller
      */
     public function destroy(Commerce $commerce)
     {
+        $commerce->places()->detach(); // Eliminar asociaciones con lugares
+        $commerce->categories()->detach(); // Eliminar asociaciones con categorías
         $commerce->delete();
 
         return response()->json([
