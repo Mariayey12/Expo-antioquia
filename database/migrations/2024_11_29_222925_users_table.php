@@ -20,8 +20,8 @@ return new class extends Migration
             $table->string('address')->nullable(); // Dirección opcional
             $table->string('profile_picture')->nullable(); // Foto de perfil
             $table->enum('role', ['administrador', 'usuario', 'proveedor'])->default('usuario'); // Roles predefinidos
-            $table->morphs('userable');// Relación polimórfica
             $table->text('services')->nullable();
+            $table->morphs('userable');// Relación polimórfica
             $table->rememberToken();
             $table->timestamps();
         });
