@@ -23,7 +23,7 @@ class CreateCommercesTable extends Migration
             $table->string('google_maps'); // URL de Google Maps (opcional)
             $table->string('contact_number'); // Número de contacto (opcional)
             $table->string('email');
-            $table->string('website')->nullable(); // Página web (opcional)
+            $table->string('website'); // Página web (opcional)
 
             // Relación polimórfica
             $table->morphs('commerceable'); // Relación polimórfica, creando 'commerceable_id' y 'commerceable_type'
