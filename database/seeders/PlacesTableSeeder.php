@@ -246,7 +246,7 @@ namespace Database\Seeders;
             'email' => 'artesanias@tienda.com',
             'website' => 'https://www.tiendadearte.com',
             'commerceable_type' => 'App\Models\Category',  // Relación con Category
-            'commerceable_id' => 6,
+            'commerceable_id' => 4,
             'created_at' => now(),
             'updated_at' => now()
         ],
@@ -268,15 +268,19 @@ namespace Database\Seeders;
     ];
 
     foreach ($commerces as $commerceData) {
-        // Crear comercio
+        $category = Category::where('name', 'commerce')->first();
         $commerce = Commerce::create($commerceData);
 
-        // Asociar la categoría (asegúrate de que la categoría existe)
-        $category = Category::where('name', 'commerce')->first();  // Asegúrate de que esta categoría existe
         if ($category) {
-            // Asociar la categoría al comercio de forma polimórfica
-            $commerce->categorizable()->associate($category);
-            $commerce->save();
+            $commerce->categories()->save($category);  // Save the category to the commerce
+        }
+
+        // Optionally associate the commerce with a place (if applicable)
+        if ($commerceData['commerceable_type'] === 'App\Models\Place') {
+            $place = Place::find($commerceData['commerceable_id']);
+            if ($place) {
+                $place->commerces()->save($commerce);  // Save the commerce to the place
+            }
         }
 
         /*if ($category) {
@@ -291,7 +295,7 @@ namespace Database\Seeders;
     Commerce::create($commerceData);
         }
     }
-    
+
 
 
 

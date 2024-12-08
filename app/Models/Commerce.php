@@ -31,7 +31,7 @@ class Commerce extends Model
 
     public function categories()
     {
-        return $this->morphToMany(Category::class, 'categoriable');
+        return $this->morphToMany(Category::class, 'categorizable');
     }
 
 

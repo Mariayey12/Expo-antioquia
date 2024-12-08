@@ -24,11 +24,10 @@ class CreateCommercesTable extends Migration
             $table->string('contact_number')->nullable(); // Número de contacto (opcional)
             $table->string('email')->nullable();
             $table->string('website')->nullable(); // Página web (opcional)
-
-            // Relación polimórfica
-            $table->morphs('commerceable'); // Relación polimórfica, creando 'commerceable_id' y 'commerceable_type'
+            $table->morphs('commerceable'); // Relación polimórfica con otros modelos
             $table->morphs('categorizable'); // Relación polimórfica con categorías
-            $table->morphs('placeable'); // Relación polimórfica con otros modelos
+            $table->morphs('placeable'); // Relación polimórfica con lugares
+            // Relación polimórfica
             $table->timestamps(); // Timestamps de creación y actualización
         });
     }

@@ -14,6 +14,10 @@ class Category extends Model
         'description',
     ];
 
+    protected $casts = [
+        'categories' => 'array',
+    ];
+
     // Relación polimórfica con Places
     public function places()
     {
