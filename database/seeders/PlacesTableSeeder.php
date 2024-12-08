@@ -245,8 +245,8 @@ namespace Database\Seeders;
                 'contact_number' => '+57 123 456 7890',
                 'email' => 'artesanias@tienda.com',
                 'website' => 'https://www.tiendadearte.com',
-                'commerciable_type' => 'App\Models\Category', // Relación con la tabla Places
-                'commerciable_id' => 6 ,
+                'commerceable_type' => 'App\Models\Category', // Relación con la tabla Places
+                'commerceable_id' => 6 ,
                 'created_at' => now(),
                 'updated_at' => now()
 
@@ -262,9 +262,11 @@ namespace Database\Seeders;
                     'contact_number' => '+57 123 456 7890',
                     'email' => 'artesanias4@tienda.com',
                     'website' => 'https://www.tiendadearte.com',
-                    'commerciable_type' => 'App\Models\Place', // Relación con la tabla Places
-                    'commerciable_id' => 3 ,
-                    'updated_at' => now()    // ID del lugar relacionado
+                    'commerceable_type' => 'App\Models\Place', // Relación con la tabla Places
+                    'commerceable_id' => 3 ,
+                    'created_at' => now(),
+                    'updated_at' => now()
+
 
             ],
         ];
