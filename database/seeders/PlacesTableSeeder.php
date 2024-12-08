@@ -277,9 +277,9 @@ $serviceData = Service::factory(10)->create();
                 throw new \Exception("El campo '{$key}' no puede ser nulo en el comercio '{$commerceData['name']}'");
             }
         }
-
+        Commerce::create($commerceData);
     }
-    Commerce::create($commerceData);
+
         }
     }
 
