@@ -12,6 +12,7 @@ class CreatePlaceablesTable extends Migration
         Schema::create('placeables', function (Blueprint $table) {
             $table->id();
             $table->morphs('placeable'); // Crea placeable_id y placeable_type
+            $table->foreignId('place_id')->constrained()->onDelete('cascade'); // Llave foránea a la tabla categories
             $table->timestamps();
         });
     }
