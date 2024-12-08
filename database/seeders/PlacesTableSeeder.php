@@ -248,12 +248,10 @@ $serviceData = Service::factory(10)->create();
     'contact_number' => '(678) 228-1891',
     'email' => 'etorphy@example.com',
     'website' => 'http://www.dach.com/fuga-similique-neque-non-assumenda-omnis-mollitia',
-    'commerceable_type' => 'App\Models\Place',  // Relación con Category
-    'commerceable_id' => 6,
     'placeable_id'=> 4,
     'placeable_type'=> 'App\Models\Place',
     'categorizable_id'=> 4,
-    'categorizable_type'=>' App\Models\Category',
+    'categorizable_type'=>'App\Models\Category',
     'created_at' => now(),
     'updated_at' => now()
         ],
