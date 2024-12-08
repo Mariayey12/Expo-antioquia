@@ -34,7 +34,7 @@ class UsersTableSeeder extends Seeder
             [
                 'name' => 'Carlos García',
                 'email' => 'carlos@example.com',
-                'password' => Hash::make('password123'),
+                'password' => Hash::make('password1235'),
                 'phone' => '3209876543',
                 'address' => 'Avenida 1 #23-45, Cali',
                 'email_verified_at' => Carbon::now(),
@@ -46,7 +46,7 @@ class UsersTableSeeder extends Seeder
             [
                 'name' => 'Ana Torres',
                 'email' => 'ana@example.com',
-                'password' => Hash::make('password123'),
+                'password' => Hash::make('password123976'),
                 'phone' => '3051237890',
                 'address' => 'Diagonal 12 #34-56, Cartagena',
                 'email_verified_at' => Carbon::now(),
