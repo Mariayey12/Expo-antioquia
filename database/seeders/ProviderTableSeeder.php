@@ -17,7 +17,7 @@ class ProviderTableSeeder extends Seeder
             'phone' => '1234567890',
             'address' => '123 Main St',
             'company_name' => 'Proveedor S.A.',
-            'contact_person' => null,
+            'contact_person' => '65565657656',
             'services' => 'Consultoría, Soporte Técnico',
         ]);
 

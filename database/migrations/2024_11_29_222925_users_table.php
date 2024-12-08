@@ -12,15 +12,15 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('email')->unique();
-            $table->timestamp('email_verified_at')->nullable();
-            $table->string('company_name')->nullable(); // O usa 'string' si la columna es de tipo texto
+            $table->timestamp('email_verified_at');
+            $table->string('company_name'); // O usa 'string' si la columna es de tipo texto
             $table->string('password');
-            $table->string('comtact_person')->nullable(); // O usa 'string' si la columna es de tipo texto
-            $table->string('phone')->nullable(); // Teléfono opcional
-            $table->string('address')->nullable(); // Dirección opcional
+            $table->string('comtact_person'); // O usa 'string' si la columna es de tipo texto
+            $table->string('phone'); // Teléfono opcional
+            $table->string('address'); // Dirección opcional
             $table->string('profile_picture')->nullable(); // Foto de perfil
             $table->enum('role', ['administrador', 'usuario', 'proveedor'])->default('usuario'); // Roles predefinidos
-            $table->text('services')->nullable();
+            $table->text('services');
             $table->morphs('userable');// Relación polimórfica
             $table->rememberToken();
             $table->timestamps();
