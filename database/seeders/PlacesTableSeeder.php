@@ -201,7 +201,7 @@ namespace Database\Seeders;
             'serviceable_id' => 4,    // ID del lugar relacionado
                 ],
                 [
-                    'name' => 'Masajes Relajantes',
+            'name' => 'Masajes Relajantes',
             'description' => 'Servicio de masajes en Spa Relax, diseñado para aliviar tensiones y promover la relajación.',
             'cost' => 50000.00,
             'duration' => '2 horas',
@@ -246,7 +246,7 @@ namespace Database\Seeders;
             'email' => 'artesanias@tienda.com',
             'website' => 'https://www.tiendadearte.com',
             'commerceable_type' => 'App\Models\Category',  // Relación con Category
-            'commerceable_id' => 7,
+            'commerceable_id' => 4,
             'created_at' => now(),
             'updated_at' => now()
         ],
@@ -268,19 +268,15 @@ namespace Database\Seeders;
     ];
 
     foreach ($commerces as $commerceData) {
-        $category = Category::where('name', 'commerce')->first();
+        // Crear comercio
         $commerce = Commerce::create($commerceData);
 
+        // Asociar la categoría (asegúrate de que la categoría existe)
+        $category = Category::where('name', 'commerce')->first();  // Asegúrate de que esta categoría existe
         if ($category) {
-            $commerce->categories()->save($category);  // Save the category to the commerce
-        }
-
-        // Optionally associate the commerce with a place (if applicable)
-        if ($commerceData['commerceable_type'] === 'App\Models\Place') {
-            $place = Place::find($commerceData['commerceable_id']);
-            if ($place) {
-                $place->commerces()->save($commerce);  // Save the commerce to the place
-            }
+            // Asociar la categoría al comercio de forma polimórfica
+            $commerce->categorizable()->associate($category);
+            $commerce->save();
         }
 
         if ($category) {
