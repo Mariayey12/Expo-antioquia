@@ -3,35 +3,21 @@
 namespace App\Http\Controllers;
 
 use App\Models\Commerce;
+use App\Models\Place;
 use App\Models\Category;
 use Illuminate\Http\Request;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class CommerceController extends Controller
 {
     /**
-     * Muestra una lista de comercios.
-     * API: GET /api/commerces
-     * Web: GET /commerces
-     */
-    public function index(Request $request)
-    {
-        $commerces = Commerce::all();
-
-        if ($request->wantsJson()) {
-            return $this->respondWithSuccess($commerces);
-        }
-
-        return view('commerces.index', compact('commerces'));
-    }
-
-    /**
-     * Almacena un nuevo comercio en la base de datos.
-     * API: POST /api/commerces
-     * Web: POST /commerces
+     * Store a newly created commerce in storage along with its relationships.
+     *
+     * @param \Illuminate\Http\Request $request
+     * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
+        // Validación de los datos de la solicitud
         $validatedData = $request->validate([
             'name' => 'required|string|max:255',
             'description' => 'nullable|string',
@@ -42,135 +28,139 @@ class CommerceController extends Controller
             'contact_number' => 'nullable|string',
             'email' => 'nullable|email',
             'website' => 'nullable|url',
-            
+            'placeable_id' => 'nullable|integer',  // ID del lugar
+            'placeable_type' => 'nullable|string',  // Tipo de lugar (Place)
+            'categorizable_id' => 'nullable|integer',  // ID de la categoría
+            'categorizable_type' => 'nullable|string',  // Tipo de la categoría (Category)
         ]);
 
-        $commerce = Commerce::create($validatedData);
+        // Crear el comercio
+        $commerce = Commerce::create([
+            'name' => $validatedData['name'],
+            'description' => $validatedData['description'] ?? null,
+            'location' => $validatedData['location'] ?? null,
+            'image_url' => $validatedData['image_url'] ?? null,
+            'video_url' => $validatedData['video_url'] ?? null,
+            'google_maps' => $validatedData['google_maps'] ?? null,
+            'contact_number' => $validatedData['contact_number'] ?? null,
+            'email' => $validatedData['email'] ?? null,
+            'website' => $validatedData['website'] ?? null,
+        ]);
 
-        // Si hay categorías, asociarlas al comercio
-        if ($request->has('categories')) {
-            $commerce->categories()->sync($request->categories);
-        }
+        // Asociar el lugar polimórfico si se especifica
+        if ($request->has('placeable_id') && $request->has('placeable_type')) {
+            $placeableType = $validatedData['placeable_type'];
+            $placeableId = $validatedData['placeable_id'];
 
-        if ($request->wantsJson()) {
-            return $this->respondWithSuccess($commerce, 'Commerce created successfully!', 201);
-        }
-
-        return redirect()->route('commerces.index')->with('success', 'Commerce created successfully!');
-    }
-
-    /**
-     * Muestra un comercio específico.
-     * API: GET /api/commerces/{id}
-     * Web: GET /commerces/{id}
-     */
-    public function show(Request $request, $id)
-    {
-        try {
-            $commerce = Commerce::findOrFail($id);
-        } catch (ModelNotFoundException $e) {
-            if ($request->wantsJson()) {
-                return $this->respondWithError('Commerce not found', 404);
+            // Validar si el tipo de lugar es válido
+            if (in_array($placeableType, [Place::class])) {
+                $commerce->places()->attach($placeableId);
             }
-
-            abort(404);
         }
 
-        if ($request->wantsJson()) {
-            return $this->respondWithSuccess($commerce);
+        // Asociar la categoría polimórfica si se especifica
+        if ($request->has('categorizable_id') && $request->has('categorizable_type')) {
+            $categorizableType = $validatedData['categorizable_type'];
+            $categorizableId = $validatedData['categorizable_id'];
+
+            // Validar si el tipo de categoría es válido
+            if (in_array($categorizableType, [Category::class])) {
+                $commerce->categories()->attach($categorizableId);
+            }
         }
 
-        return view('commerces.show', compact('commerce'));
+        return response()->json([
+            'message' => 'Commerce created successfully!',
+            'commerce' => $commerce,
+        ], 201);
     }
 
     /**
-     * Actualiza un comercio.
-     * API: PUT /api/commerces/{id}
-     * Web: PUT /commerces/{id}
+     * Display a listing of the commerces.
+     *
+     * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function index()
     {
-        try {
-            $commerce = Commerce::findOrFail($id);
-        } catch (ModelNotFoundException $e) {
-            return $this->respondWithError('Commerce not found', 404);
-        }
+        $commerces = Commerce::with(['places', 'categories'])->get();
+        return response()->json($commerces);
+    }
 
+    /**
+     * Display the specified commerce.
+     *
+     * @param  \App\Models\Commerce  $commerce
+     * @return \Illuminate\Http\Response
+     */
+    public function show(Commerce $commerce)
+    {
+        $commerce->load(['places', 'categories']);
+        return response()->json($commerce);
+    }
+
+    /**
+     * Update the specified commerce in storage.
+     *
+     * @param \Illuminate\Http\Request $request
+     * @param \App\Models\Commerce $commerce
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, Commerce $commerce)
+    {
         $validatedData = $request->validate([
-            'name' => 'required|string|max:255',
+            'name' => 'sometimes|string|max:255',
             'description' => 'nullable|string',
             'location' => 'nullable|string',
             'image_url' => 'nullable|url',
             'video_url' => 'nullable|url',
             'google_maps' => 'nullable|url',
-            'category' => 'nullable|string',
             'contact_number' => 'nullable|string',
             'email' => 'nullable|email',
             'website' => 'nullable|url',
-            'categories' => 'nullable|array|exists:categories,id', // Validación de categorías
         ]);
 
         $commerce->update($validatedData);
 
-        // Si hay categorías, actualizar las relaciones
-        if ($request->has('categories')) {
-            $commerce->categories()->sync($request->categories);
+        // Asociar el lugar polimórfico si se especifica
+        if ($request->has('placeable_id') && $request->has('placeable_type')) {
+            $placeableType = $request->placeable_type;
+            $placeableId = $request->placeable_id;
+
+            // Validar si el tipo de lugar es válido
+            if (in_array($placeableType, [Place::class])) {
+                $commerce->places()->sync([$placeableId]);
+            }
         }
 
-        return $this->respondWithSuccess($commerce, 'Commerce updated successfully!');
+        // Asociar la categoría polimórfica si se especifica
+        if ($request->has('categorizable_id') && $request->has('categorizable_type')) {
+            $categorizableType = $request->categorizable_type;
+            $categorizableId = $request->categorizable_id;
+
+            // Validar si el tipo de categoría es válido
+            if (in_array($categorizableType, [Category::class])) {
+                $commerce->categories()->sync([$categorizableId]);
+            }
+        }
+
+        return response()->json([
+            'message' => 'Commerce updated successfully!',
+            'commerce' => $commerce,
+        ]);
     }
 
     /**
-     * Elimina un comercio.
-     * API: DELETE /api/commerces/{id}
-     * Web: DELETE /commerces/{id}
+     * Remove the specified commerce from storage.
+     *
+     * @param  \App\Models\Commerce  $commerce
+     * @return \Illuminate\Http\Response
      */
-    public function destroy(Request $request, $id)
+    public function destroy(Commerce $commerce)
     {
-        try {
-            $commerce = Commerce::findOrFail($id);
-        } catch (ModelNotFoundException $e) {
-            return $this->respondWithError('Commerce not found', 404);
-        }
-
         $commerce->delete();
 
-        if ($request->wantsJson()) {
-            return $this->respondWithSuccess(null, 'Commerce deleted successfully!');
-        }
-
-        return redirect()->route('commerces.index')->with('success', 'Commerce deleted successfully!');
-    }
-
-    /**
-     * Responde con éxito.
-     *
-     * @param mixed $data
-     * @param string $message
-     * @param int $status
-     * @return \Illuminate\Http\JsonResponse
-     */
-    private function respondWithSuccess($data = null, $message = 'Operation successful', $status = 200)
-    {
         return response()->json([
-            'success' => true,
-            'message' => $message,
-            'data' => $data,
-        ], $status);
-    }
-
-    /**
-     * Responde con error.
-     *
-     * @param string $message
-     * @param int $status
-     * @return \Illuminate\Http\JsonResponse
-     */
-    private function respondWithError($message, $status = 400)
-    {
-        return response()->json([
-            'success' => false,
-            'message' => $message,
-        ], $status);
+            'message' => 'Commerce deleted successfully!',
+        ]);
     }
 }
