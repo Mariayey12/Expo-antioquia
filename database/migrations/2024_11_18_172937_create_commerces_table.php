@@ -15,7 +15,7 @@ class CreateCommercesTable extends Migration
     {
         Schema::create('commerces', function (Blueprint $table) {
             $table->id(); // Auto-incremental ID
-            $table->string('name')->nullable(); // Nombre (obligatorio)
+            $table->string('name'); // Nombre (obligatorio)
             $table->text('description')->nullable(); // Descripción (obligatoria)
             $table->string('location')->nullable(); // Ubicación (obligatoria)
             $table->string('image_url')->nullable(); // URL de la imagen (opcional)
