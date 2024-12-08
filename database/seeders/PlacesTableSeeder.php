@@ -265,7 +265,7 @@ namespace Database\Seeders;
 
             ],
         ];
-       
+
         foreach ($commerces as $commerceData) {
             // Validación para evitar campos nulos
             foreach ($commerceData as $key => $value) {
@@ -277,7 +277,6 @@ namespace Database\Seeders;
             Commerce::create($commerceData);
         }
     }
-
 
 
 }
