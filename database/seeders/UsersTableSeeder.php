@@ -30,8 +30,8 @@ class UsersTableSeeder extends Seeder
                 'email_verified_at' => Carbon::now(),
                 'role' => 'administrador',
                 'remember_token' => Str::random(10),
-                'userable_type' => Admin::class, // Relación con Admin
-                'userable_id' => $admin->id,    // ID del Admin creado
+                'userable_type' => 'App\Models\Admin'::class, // Relación con Admin
+                'userable_id' => 1,    // ID del Admin creado
             ],
             [
                 'name' => 'Carlos García',
@@ -42,8 +42,8 @@ class UsersTableSeeder extends Seeder
                 'email_verified_at' => Carbon::now(),
                 'role' => 'proveedor',
                 'remember_token' => Str::random(10),
-                'userable_type' => Provider::class, // Relación con Provider
-                'userable_id' => $provider->id,     // ID del Provider creado
+                'userable_type' => 'App\Models\Provider'::class, // Relación con Provider
+                'userable_id' => 2,     // ID del Provider creado
             ],
             [
                 'name' => 'Ana Torres',
@@ -54,8 +54,8 @@ class UsersTableSeeder extends Seeder
                 'email_verified_at' => Carbon::now(),
                 'role' => 'usuario',
                 'remember_token' => Str::random(10),
-                'userable_type' => null, // Sin relación polimórfica
-                'userable_id' => null,   // Sin ID relacionado
+                'userable_type' =>  'App\Models\User'::class, // Sin relación polimórfica
+                'userable_id' => 3,   // Sin ID relacionado
             ],
         ];
 
