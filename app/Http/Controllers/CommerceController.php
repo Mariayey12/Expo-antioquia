@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Commerce;
+use App\Models\Category;
 use Illuminate\Http\Request;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class CommerceController extends Controller
 {
@@ -17,10 +19,7 @@ class CommerceController extends Controller
         $commerces = Commerce::all();
 
         if ($request->wantsJson()) {
-            return response()->json([
-                'success' => true,
-                'data' => $commerces
-            ], 200);
+            return $this->respondWithSuccess($commerces);
         }
 
         return view('commerces.index', compact('commerces'));
@@ -44,17 +43,18 @@ class CommerceController extends Controller
             'contact_number' => 'nullable|string',
             'email' => 'nullable|email',
             'website' => 'nullable|url',
-            'categories' => 'nullable|array',
+            'categories' => 'nullable|array|exists:categories,id', // Validación para categorías
         ]);
 
         $commerce = Commerce::create($validatedData);
 
+        // Si hay categorías, asociarlas al comercio
+        if ($request->has('categories')) {
+            $commerce->categories()->sync($request->categories);
+        }
+
         if ($request->wantsJson()) {
-            return response()->json([
-                'success' => true,
-                'message' => 'Commerce created successfully!',
-                'data' => $commerce,
-            ], 201);
+            return $this->respondWithSuccess($commerce, 'Commerce created successfully!', 201);
         }
 
         return redirect()->route('commerces.index')->with('success', 'Commerce created successfully!');
@@ -67,24 +67,18 @@ class CommerceController extends Controller
      */
     public function show(Request $request, $id)
     {
-        $commerce = Commerce::find($id);
-
-        if (!$commerce) {
+        try {
+            $commerce = Commerce::findOrFail($id);
+        } catch (ModelNotFoundException $e) {
             if ($request->wantsJson()) {
-                return response()->json([
-                    'success' => false,
-                    'message' => 'Commerce not found',
-                ], 404);
+                return $this->respondWithError('Commerce not found', 404);
             }
 
             abort(404);
         }
 
         if ($request->wantsJson()) {
-            return response()->json([
-                'success' => true,
-                'data' => $commerce,
-            ], 200);
+            return $this->respondWithSuccess($commerce);
         }
 
         return view('commerces.show', compact('commerce'));
@@ -97,13 +91,10 @@ class CommerceController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $commerce = Commerce::find($id);
-
-        if (!$commerce) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Commerce not found',
-            ], 404);
+        try {
+            $commerce = Commerce::findOrFail($id);
+        } catch (ModelNotFoundException $e) {
+            return $this->respondWithError('Commerce not found', 404);
         }
 
         $validatedData = $request->validate([
@@ -117,16 +108,17 @@ class CommerceController extends Controller
             'contact_number' => 'nullable|string',
             'email' => 'nullable|email',
             'website' => 'nullable|url',
-            'categories' => 'nullable|array',
+            'categories' => 'nullable|array|exists:categories,id', // Validación de categorías
         ]);
 
         $commerce->update($validatedData);
 
-        return response()->json([
-            'success' => true,
-            'message' => 'Commerce updated successfully!',
-            'data' => $commerce,
-        ], 200);
+        // Si hay categorías, actualizar las relaciones
+        if ($request->has('categories')) {
+            $commerce->categories()->sync($request->categories);
+        }
+
+        return $this->respondWithSuccess($commerce, 'Commerce updated successfully!');
     }
 
     /**
@@ -136,24 +128,50 @@ class CommerceController extends Controller
      */
     public function destroy(Request $request, $id)
     {
-        $commerce = Commerce::find($id);
-
-        if (!$commerce) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Commerce not found',
-            ], 404);
+        try {
+            $commerce = Commerce::findOrFail($id);
+        } catch (ModelNotFoundException $e) {
+            return $this->respondWithError('Commerce not found', 404);
         }
 
         $commerce->delete();
 
         if ($request->wantsJson()) {
-            return response()->json([
-                'success' => true,
-                'message' => 'Commerce deleted successfully!',
-            ], 200);
+            return $this->respondWithSuccess(null, 'Commerce deleted successfully!');
         }
 
         return redirect()->route('commerces.index')->with('success', 'Commerce deleted successfully!');
+    }
+
+    /**
+     * Responde con éxito.
+     *
+     * @param mixed $data
+     * @param string $message
+     * @param int $status
+     * @return \Illuminate\Http\JsonResponse
+     */
+    private function respondWithSuccess($data = null, $message = 'Operation successful', $status = 200)
+    {
+        return response()->json([
+            'success' => true,
+            'message' => $message,
+            'data' => $data,
+        ], $status);
+    }
+
+    /**
+     * Responde con error.
+     *
+     * @param string $message
+     * @param int $status
+     * @return \Illuminate\Http\JsonResponse
+     */
+    private function respondWithError($message, $status = 400)
+    {
+        return response()->json([
+            'success' => false,
+            'message' => $message,
+        ], $status);
     }
 }
