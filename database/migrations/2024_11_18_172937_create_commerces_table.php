@@ -18,11 +18,10 @@ class CreateCommercesTable extends Migration
             $table->string('name'); // Nombre (obligatorio)
             $table->text('description'); // Descripción (obligatoria)
             $table->string('location'); // Ubicación (obligatoria)
-            $table->string('image_url')->nullable(); // URL de la imagen (opcional)
-            $table->string('video_url')->nullable(); // URL del video (opcional)
-            $table->string('google_maps')->nullable(); // URL de Google Maps (opcional)
-            $table->string('contact_number')->nullable(); // Número de contacto (opcional)
-            $table->string('email')->unique(); // Correo electrónico (único)
+            $table->string('image_url'); // URL de la imagen (opcional)
+            $table->string('video_url'); // URL del video (opcional)
+            $table->string('google_maps'); // URL de Google Maps (opcional)
+            $table->string('contact_number'); // Número de contacto (opcional)
             $table->string('website')->nullable(); // Página web (opcional)
 
             // Relación polimórfica

@@ -247,6 +247,8 @@ namespace Database\Seeders;
                 'website' => 'https://www.tiendadearte.com',
                 'commerciable_type' => 'App\Models\Category', // Relación con la tabla Places
                 'commerciable_id' => 6 ,
+                'created_at' => now(),
+    'updated_at' => now()
 
 
             ],
@@ -261,7 +263,9 @@ namespace Database\Seeders;
                     'email' => 'artesanias@tienda.com',
                     'website' => 'https://www.tiendadearte.com',
                     'commerciable_type' => 'App\Models\Place', // Relación con la tabla Places
-                    'commerciable_id' => 3 ,    // ID del lugar relacionado
+                    'commerciable_id' => 3 ,
+                    'created_at' => now(),
+    'updated_at' => now()    // ID del lugar relacionado
 
             ],
         ];
