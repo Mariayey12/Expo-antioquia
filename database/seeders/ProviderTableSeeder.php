@@ -25,13 +25,12 @@ class ProviderTableSeeder extends Seeder
         $user = User::create([
             'name' => 'Proveedor User',
             'email' => 'proveedoruser@example.com',
-            'password' => bcrypt('password123'), // Ajusta si no usas contraseñas
+            'password' => bcrypt('password123'),
+            'userable_type' =>'App\Models\Provider'::class, // Especificar la relación polimórfica
+            'userable_id' => 2,    // ID del proveedor asociado
         ]);
 
-         // Crear más proveedores con datos aleatorios
-         Provider::factory()->count(8)->create();
-        }
-
-
-
+        // Crear más proveedores con datos aleatorios
+        Provider::factory()->count(8)->create();
+    }
 }
