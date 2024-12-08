@@ -249,7 +249,7 @@ $serviceData = Service::factory(10)->create();
             'email' => 'artesanias@tienda.com',
             'website' => 'https://www.tiendadearte.com',
             'commerceable_type' => 'App\Models\Place',  // Relación con Category
-            'commerceable_id' => 3,
+            'commerceable_id' => 6,
             'created_at' => now(),
             'updated_at' => now()
         ],
