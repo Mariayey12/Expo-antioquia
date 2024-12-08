@@ -235,11 +235,11 @@ $serviceData = Service::factory(10)->create();
             }
         }
         // Crear 10 Comercios aleatorios y asociarles categorías y lugares
-//$commerceData = Commerce::factory(10)->create();
+ $commerceData = Commerce::factory(10)->create();
        // Crear comercios
        $commerces = [
         [
-            'name' => 'Keebler Group',
+    'name' => 'Keebler Group',
     'description' => 'Repellat et neque natus voluptas...',
     'location' => '947 Reymundo Rapids, Ryanfurt, RI 13586-3786',
     'image_url' => 'https://via.placeholder.com/640x480.png/003300?text=commerce+qui',
@@ -250,9 +250,14 @@ $serviceData = Service::factory(10)->create();
     'website' => 'http://www.dach.com/fuga-similique-neque-non-assumenda-omnis-mollitia',
     'commerceable_type' => 'App\Models\Place',  // Relación con Category
     'commerceable_id' => 6,
+    'placeable_id'=> 4,
+    'placeable_type'=> 'App\Models\Place',
+    'categorizable_id'=> 4,
+    'categorizable_type'=>' App\Models\Category',
     'created_at' => now(),
     'updated_at' => now()
         ],
+
         [
             'name' => 'Cafetería Antioqueña',
             'description' => 'Cafetería con productos típicos de Antioquia.',
