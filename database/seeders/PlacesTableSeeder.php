@@ -233,59 +233,51 @@ namespace Database\Seeders;
                 Service::create($serviceData);
             }
         }
-        // Crear comercios
-        $commerces = [
-            [
-                'name' => 'Tienda de Artesanías',
-                'description' => 'Venta de artesanías locales y souvenirs.',
-                'location' => 'Rionegro',
-                'image_url' => 'https://www.artesanias.com/images/commerce1.jpg',
-                'video_url' => 'https://www.youtube.com/watch?v=artesanias',
-                'google_maps' => 'https://www.google.com/maps/place/Tienda+de+Artesanías',
-                'contact_number' => '+57 123 456 7890',
-                'email' => 'artesanias@tienda.com',
-                'website' => 'https://www.tiendadearte.com',
-                'commerceable_type' => 'App\Models\Category', // Relación con la tabla Places
-                'commerceable_id' => 6 ,
-                'created_at' => now(),
-                'updated_at' => now()
+       // Crear comercios
+       $commerces = [
+        [
+            'name' => 'Tienda de Artesanías',
+            'description' => 'Venta de artesanías locales y souvenirs.',
+            'location' => 'Rionegro',
+            'image_url' => 'https://www.artesanias.com/images/commerce1.jpg',
+            'video_url' => 'https://www.youtube.com/watch?v=artesanias',
+            'google_maps' => 'https://www.google.com/maps/place/Tienda+de+Artesanías',
+            'contact_number' => '+57 123 456 7890',
+            'email' => 'artesanias@tienda.com',
+            'website' => 'https://www.tiendadearte.com',
+            'commerceable_type' => 'App\Models\Category',  // Relación con Category
+            'commerceable_id' => 6,
+            'created_at' => now(),
+            'updated_at' => now()
+        ],
+        [
+            'name' => 'Cafetería Antioqueña',
+            'description' => 'Cafetería con productos típicos de Antioquia.',
+            'location' => 'Medellín',
+            'image_url' => 'https://www.cafeteriaantioquena.com/images/commerce2.jpg',
+            'video_url' => 'https://www.youtube.com/watch?v=artesanias',
+            'google_maps' => 'https://www.google.com/maps/place/Tienda+de+Artesanías',
+            'contact_number' => '+57 123 456 7890',
+            'email' => 'artesanias4@tienda.com',
+            'website' => 'https://www.tiendadearte.com',
+            'commerceable_type' => 'App\Models\Place',  // Relación con Place
+            'commerceable_id' => 3,
+            'created_at' => now(),
+            'updated_at' => now()
+        ],
+    ];
 
+    foreach ($commerces as $commerceData) {
+        // Crear comercio
+        $commerce = Commerce::create($commerceData);
 
-            ],
-            [
-                    'name' => 'Cafetería Antioqueña',
-                    'description' => 'Cafetería con productos típicos de Antioquia.',
-                    'location' => 'Medellín',
-                    'image_url' => 'https://www.cafeteriaantioquena.com/images/commerce2.jpg',
-                    'video_url' => 'https://www.youtube.com/watch?v=artesanias',
-                    'google_maps' => 'https://www.google.com/maps/place/Tienda+de+Artesanías',
-                    'contact_number' => '+57 123 456 7890',
-                    'email' => 'artesanias4@tienda.com',
-                    'website' => 'https://www.tiendadearte.com',
-                    'commerceable_type' => 'App\Models\Place', // Relación con la tabla Places
-                    'commerceable_id' => 3 ,
-                    'created_at' => now(),
-                    'updated_at' => now()
-
-
-            ],
-        ];
-
-        foreach ($commerces as $commerceData) {
-            // Validación para evitar campos nulos
-            foreach ($commerceData as $key => $value) {
-            if (is_null($value)) {
-                throw new \Exception("El campo '{$key}' no puede ser nulo en el comercio '{$commerceData['name']}'");
-        }
-
-            $category = Category::where('name', 'commerce')->first(); // Asegúrate de que la categoría exista
+        // Asociar la categoría (asegúrate de que la categoría existe)
+        $category = Category::where('name', 'commerce')->first();  // Asegúrate de que esta categoría existe
         if ($category) {
-            // Supongamos que $commerce es una instancia de tu modelo Commerce
-            $commerce = Commerce::find(1); // Obtén el comercio al que quieres asociar la categoría
-
-            // Asociar la categoría al comercio usando la relación polimórfica
-            $commerce->categories()->save($category);  // Esto guardará la categoría asociada al comercio
-        }$category = Category::where('name', 'commerce')->first(); // Asegúrate de que la categoría exista
+            // Asociar la categoría al comercio de forma polimórfica
+            $commerce->categorizable()->associate($category);
+            $commerce->save();
+        }
 
         /*if ($category) {
             // Supongamos que $place es una instancia de tu modelo Place
@@ -299,7 +291,7 @@ namespace Database\Seeders;
     Commerce::create($commerceData);
         }
     }
-    }
+    
 
 
 
