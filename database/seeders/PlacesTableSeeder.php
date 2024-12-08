@@ -177,7 +177,8 @@ namespace Database\Seeders;
                 // Asociar categoría al lugar
                 $places->categories()->attach($category->id);
             }
-
+// Crear 10 Servicios aleatorios y asociarles categorías y lugares
+$serviceData = Service::factory(10)->create();
             // Crear servicios relacionados con el lugar
             $services = [
                 [
