@@ -245,7 +245,7 @@ namespace Database\Seeders;
                 'contact_number' => '+57 123 456 7890',
                 'email' => 'artesanias@tienda.com',
                 'website' => 'https://www.tiendadearte.com',
-                'commerciable_type' => 'App\Models\Catefory', // Relación con la tabla Places
+                'commerciable_type' => 'App\Models\Category', // Relación con la tabla Places
                 'commerciable_id' => 6 ,
 
 
