@@ -60,8 +60,28 @@ class UsersTableSeeder extends Seeder
         // Crear los usuarios
         foreach ($users as $userData) {
             $user = User::create($userData);
+            foreach ($users as $userData) {
+                // Verificar que los datos requeridos no sean nulos
+                if (!empty($userData['userable_type']) && !empty($userData['userable_id'])) {
+                    // Crear el usuario
+                    $user = User::create($userData);
 
-           
+                    // Validar que el modelo polimórfico exista antes de asociarlo
+                    $relatedModel = $userData['userable_type']::find($userData['userable_id']);
+                    if ($relatedModel) {
+                        $user->userable()->associate($relatedModel);
+                        $user->save();
+                    } else {
+                        // Manejar el caso donde el modelo relacionado no exista
+                        Log::warning("El modelo relacionado no se encontró: {$userData['userable_type']} con ID {$userData['userable_id']}");
+                    }
+                } else {
+                    // Manejar el caso donde los datos sean nulos o incompletos
+                    Log::error("Los datos de userable_type o userable_id son nulos o inválidos", $userData);
+                }
+            }
+
+
         }
 
         echo "Usuarios insertados exitosamente.\n";
