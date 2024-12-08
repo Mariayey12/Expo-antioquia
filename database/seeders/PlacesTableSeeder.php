@@ -235,7 +235,7 @@ $serviceData = Service::factory(10)->create();
             }
         }
         // Crear 10 Comercios aleatorios y asociarles categorías y lugares
-$commerceData = Commerce::factory(10)->create();
+/*$commerceData = Commerce::factory(10)->create();*/
        // Crear comercios
        $commerces = [
         [
@@ -249,7 +249,7 @@ $commerceData = Commerce::factory(10)->create();
             'email' => 'artesanias@tienda.com',
             'website' => 'https://www.tiendadearte.com',
             'commerceable_type' => 'App\Models\Place',  // Relación con Category
-            'commerceable_id' => 4,
+            'commerceable_id' => 3,
             'created_at' => now(),
             'updated_at' => now()
         ],
