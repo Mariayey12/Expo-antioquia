@@ -28,7 +28,7 @@ class CreateCommercesTable extends Migration
             // Relación polimórfica
             $table->morphs('commerceable'); // Relación polimórfica, creando 'commerceable_id' y 'commerceable_type'
             $table->morphs('categorizable'); // Relación polimórfica con categorías
-            $table->morphs('placeable'); // Relación polimórfica con otros modelos
+            //$table->morphs('placeable'); // Relación polimórfica con otros modelos
             $table->timestamps(); // Timestamps de creación y actualización
         });
     }

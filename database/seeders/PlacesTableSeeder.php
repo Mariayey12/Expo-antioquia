@@ -278,7 +278,7 @@ namespace Database\Seeders;
                 throw new \Exception("El campo '{$key}' no puede ser nulo en el comercio '{$commerceData['name']}'");
         }
 
-           /* $category = Category::where('name', 'Commerce')->first(); // Asegúrate de que la categoría exista
+            $category = Category::where('name', 'Commerce')->first(); // Asegúrate de que la categoría exista
         if ($category) {
             // Supongamos que $commerce es una instancia de tu modelo Commerce
             $commerce = Commerce::find(1); // Obtén el comercio al que quieres asociar la categoría
@@ -287,7 +287,7 @@ namespace Database\Seeders;
             $commerce->categories()->save($category);  // Esto guardará la categoría asociada al comercio
         }$category = Category::where('name', 'Commerce')->first(); // Asegúrate de que la categoría exista
 
-        if ($category) {
+        /*if ($category) {
             // Supongamos que $place es una instancia de tu modelo Place
             $place = Place::find(1); // Obtén el lugar al que quieres asociar la categoría
 
