@@ -239,19 +239,19 @@ $serviceData = Service::factory(10)->create();
        // Crear comercios
        $commerces = [
         [
-            'name' => 'Tienda de Artesanías',
-            'description' => 'Venta de artesanías locales y souvenirs.',
-            'location' => 'Rionegro',
-            'image_url' => 'https://www.artesanias.com/images/commerce1.jpg',
-            'video_url' => 'https://www.youtube.com/watch?v=artesanias',
-            'google_maps' => 'https://www.google.com/maps/place/Tienda+de+Artesanías',
-            'contact_number' => '+57 123 456 7890',
-            'email' => 'artesanias@tienda.com',
-            'website' => 'https://www.tiendadearte.com',
-            'commerceable_type' => 'App\Models\Place',  // Relación con Category
-            'commerceable_id' => 6,
-            'created_at' => now(),
-            'updated_at' => now()
+            'name' => 'Keebler Group',
+    'description' => 'Repellat et neque natus voluptas...',
+    'location' => '947 Reymundo Rapids, Ryanfurt, RI 13586-3786',
+    'image_url' => 'https://via.placeholder.com/640x480.png/003300?text=commerce+qui',
+    'video_url' => 'http://www.emard.com/animi-repellendus-alias-et-impedit-deserunt-reiciendis-non',
+    'google_maps' => 'http://www.roberts.biz/',
+    'contact_number' => '(678) 228-1891',
+    'email' => 'etorphy@example.com',
+    'website' => 'http://www.dach.com/fuga-similique-neque-non-assumenda-omnis-mollitia',
+    'commerceable_type' => 'App\Models\Place',  // Relación con Category
+    'commerceable_id' => 6,
+    'created_at' => now(),
+    'updated_at' => now()
         ],
         [
             'name' => 'Cafetería Antioqueña',
