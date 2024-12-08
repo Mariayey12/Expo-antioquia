@@ -25,10 +25,9 @@ class CreateCommercesTable extends Migration
             $table->string('email')->nullable();
             $table->string('website')->nullable(); // Página web (opcional)
             $table->nullableMorphs('commerceable'); // Relación polimórfica con otros modelos
-            $table->morphs('placeable');  // Esto agrega `placeable_id` y `placeable_type`
+
             $table->timestamps(); // Timestamps de creación y actualización
-            $table->morphs('categorizable');  // Esto agrega `categorizable_id` y `categorizable_type`
-        
+           
         });
     }
 
