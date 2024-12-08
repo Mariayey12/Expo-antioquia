@@ -1,3 +1,4 @@
+
 <?php
 
 use Illuminate\Database\Migrations\Migration;
@@ -13,10 +14,10 @@ class CreateCommerceablesTable extends Migration
      */
     public function up()
     {
-        Schema::create('commerceables', function (Blueprint $table) {
+        Schema::create('serviceables', function (Blueprint $table) {
             $table->id(); // Id de la relación
-            $table->morphs('commerceable'); // Este campo genera dos columnas: commerceable_id y commerceable_type
-            $table->foreignId('commerce_id')->constrained()->onDelete('cascade'); // Relación con categorías
+            $table->morphs('serviceable'); // Este campo genera dos columnas: commerceable_id y commerceable_type
+            $table->foreignId('service_id')->constrained()->onDelete('cascade'); // Relación con categorías
             $table->timestamps(); // Timestamps para created_at y updated_at
         });
     }
@@ -28,6 +29,6 @@ class CreateCommerceablesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('commerceables');
+        Schema::dropIfExists('serviceables');
     }
 }
