@@ -235,7 +235,7 @@ $serviceData = Service::factory(10)->create();
             }
         }
         // Crear 10 Comercios aleatorios y asociarles categorías y lugares
-/*$commerceData = Commerce::factory(10)->create();*/
+$commerceData = Commerce::factory(10)->create();
        // Crear comercios
        $commerces = [
         [
@@ -248,7 +248,7 @@ $serviceData = Service::factory(10)->create();
             'contact_number' => '+57 123 456 7890',
             'email' => 'artesanias@tienda.com',
             'website' => 'https://www.tiendadearte.com',
-            'commerceable_type' => 'App\Models\Category',  // Relación con Category
+            'commerceable_type' => 'App\Models\Place',  // Relación con Category
             'commerceable_id' => 4,
             'created_at' => now(),
             'updated_at' => now()
