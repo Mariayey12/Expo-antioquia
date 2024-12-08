@@ -268,23 +268,11 @@ namespace Database\Seeders;
     ];
 
     foreach ($commerces as $commerceData) {
-        // Crear comercio
-        $commerce = Commerce::create($commerceData);
-
-        // Asociar la categoría (asegúrate de que la categoría existe)
-        $category = Category::where('name', 'commerce')->first();  // Asegúrate de que esta categoría existe
-        if ($category) {
-            // Asociar la categoría al comercio de forma polimórfica
-            $commerce->categorizable()->associate($category);
-            $commerce->save();
-        }
-
-        if ($category) {
-            // Supongamos que $place es una instancia de tu modelo Place
-            $place = Place::find(1); // Obtén el lugar al que quieres asociar la categoría
-
-            // Asociar la categoría al lugar usando la relación polimórfica
-            $place->categories()->save($category);  // Esto guardará la categoría asociada al lugar
+        // Validar que los campos no sean nulos
+        foreach ($commerceData as $key => $value) {
+            if (is_null($value)) {
+                throw new \Exception("El campo '{$key}' no puede ser nulo en el comercio '{$commerceData['name']}'");
+            }
         }
     }
 
