@@ -274,6 +274,24 @@ namespace Database\Seeders;
                 throw new \Exception("El campo '{$key}' no puede ser nulo en el comercio '{$commerceData['name']}'");
             }
         }
+         // Crear el comercio si pasa la validación
+         $commerce = Commerce::create([
+            'name' => $commerceData['name'],
+            'description' => $commerceData['description'],
+            'location' => $commerceData['location'],
+            'image_url' => $commerceData['image_url'],
+            'video_url' => $commerceData['video_url'],
+            'google_maps' => $commerceData['google_maps'],
+            'category' => $commerceData['category'],
+            'contact_number' => $commerceData['contact_number'],
+            'email' => $commerceData['email'],
+            'website' => $commerceData['website'],
+        ]);
+
+        // Si hay categorías, asociarlas
+        if (isset($commerceData['categories'])) {
+            $commerce->categories()->sync($commerceData['categories']);
+        }
     }
 
     Commerce::create($commerceData);
