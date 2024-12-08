@@ -61,11 +61,7 @@ class UsersTableSeeder extends Seeder
         foreach ($users as $userData) {
             $user = User::create($userData);
 
-            // Asociar el usuario al modelo polimórfico si es necesario
-            if ($user->userable_type && $user->userable_id) {
-                $user->userable()->associate($user->userable_type::find($user->userable_id));
-                $user->save();
-            }
+           
         }
 
         echo "Usuarios insertados exitosamente.\n";
