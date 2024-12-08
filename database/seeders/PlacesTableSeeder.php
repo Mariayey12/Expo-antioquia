@@ -234,7 +234,7 @@ $serviceData = Service::factory(10)->create();
                 Service::create($serviceData);
             }
         }
-        // Crear 10 Servicios aleatorios y asociarles categorías y lugares
+        // Crear 10 Comercios aleatorios y asociarles categorías y lugares
 $commerceData = Commerce::factory(10)->create();
        // Crear comercios
        $commerces = [
