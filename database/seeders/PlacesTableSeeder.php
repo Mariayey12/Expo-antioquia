@@ -260,7 +260,7 @@ namespace Database\Seeders;
                     'video_url' => 'https://www.youtube.com/watch?v=artesanias',
                     'google_maps' => 'https://www.google.com/maps/place/Tienda+de+Artesanías',
                     'contact_number' => '+57 123 456 7890',
-                    'email' => 'artesanias@tienda.com',
+                    'email' => 'artesanias4@tienda.com',
                     'website' => 'https://www.tiendadearte.com',
                     'commerciable_type' => 'App\Models\Place', // Relación con la tabla Places
                     'commerciable_id' => 3 ,
