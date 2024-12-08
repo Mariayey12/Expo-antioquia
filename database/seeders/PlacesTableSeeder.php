@@ -234,8 +234,7 @@ $serviceData = Service::factory(10)->create();
                 Service::create($serviceData);
             }
         }
-        // Crear 10 Comercios aleatorios y asociarles categorías y lugares
-/*$commerceData = Commerce::factory(10)->create();*/
+
        // Crear comercios
        $commerces = [
         [
@@ -269,6 +268,8 @@ $serviceData = Service::factory(10)->create();
             'updated_at' => now()
         ],
     ];
+     // Crear 10 Comercios aleatorios y asociarles categorías y lugares
+ Commerce::factory(10)->create();
 
     foreach ($commerces as $commerceData) {
         // Validar que los campos no sean nulos
