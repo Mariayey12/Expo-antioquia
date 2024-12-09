@@ -40,9 +40,11 @@ namespace Database\Seeders;
                     ['name' => 'Sitios de Relajación', 'description' => 'Espacios dedicados a la tranquilidad, descanso y desconexión del estrés.'],
                     ['name' => 'Spa', 'description' => 'Centros de bienestar que ofrecen tratamientos de relajación y cuidado personal.'],
                     ['name' => 'Museos', 'description' => 'Espacios dedicados a la conservación y exhibición de colecciones artísticas, históricas y científicas.'],
+                    ['name' => 'Platos Típicos', 'description' => 'Deliciosos platos que representan la gastronomía tradicional de una región o país, hechos con ingredientes locales y típicos.'],
+                    ['name' => 'Restaurantes', 'description' => 'Establecimientos donde se ofrecen comidas preparadas, con opciones diversas de menús y servicios.'],
+                    ['name' => 'Bares', 'description' => 'Lugares donde se sirven bebidas alcohólicas y no alcohólicas, acompañados de tapas, música y entretenimiento.'],
+                    ['name' => 'Cafeterías', 'description' => 'Espacios ideales para disfrutar de café y pasteles, perfectos para un momento relajado en compañía de amigos o familiares.'],
                 ];
-
-
                         foreach ($categories as $categoryData) {
                             // Validar que los campos no sean nulos
                             foreach ($categoryData as $key => $value) {
