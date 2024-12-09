@@ -283,6 +283,15 @@ $serviceData = Service::factory(10)->create();
 
 
     }
+    // Crear el comercio
+$commerce = Commerce::create($commerceData);
+
+// Asociar la categoría
+$category = Category::where('name', 'Commerce')->first();
+if ($category) {
+    $commerce->categories()->attach($category->id);
+}
+
 
 }
 
