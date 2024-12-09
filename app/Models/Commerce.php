@@ -29,13 +29,6 @@ use Illuminate\Database\Eloquent\Model;
     {
         return $this->morphedByMany(Place::class, 'commerceable');
     }
-// Relación polimórfica muchos a muchos inversa
-
-
-public function commerces()
-{
-    return $this->morphedByMany(Commerce::class, 'commerceable');
-}
     /**
          * Relación con categorías (tabla pivote).
          */
