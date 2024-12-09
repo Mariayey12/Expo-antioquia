@@ -279,7 +279,7 @@ $serviceData = Service::factory(10)->create();
             }
         }
 
-    $commerces = Commerce::create($commerceData);
+   Commerce::create($commerceData);
 
 
     }
@@ -287,7 +287,7 @@ $serviceData = Service::factory(10)->create();
 }
 
         }
-    
+
 
 
 
