@@ -249,11 +249,10 @@ $serviceData = Service::factory(10)->create();
     'email' => 'etorphy@example.com',
     'website' => 'http://www.dach.com/fuga-similique-neque-non-assumenda-omnis-mollitia',
     'commerceable_type' => 'App\Models\Place',  // Relación con Place
-            'commerceable_id' => 6,
+    'commerceable_id' => 6,
     'created_at' => now(),
     'updated_at' => now()
         ],
-
         [
             'name' => 'Cafetería Antioqueña',
             'description' => 'Cafetería con productos típicos de Antioquia.',
@@ -271,13 +270,17 @@ $serviceData = Service::factory(10)->create();
         ],
     ];
 
+
     foreach ($commerces as $commerceData) {
         // Validar que los campos no sean nulos
         foreach ($commerceData as $key => $value) {
             if (is_null($value)) {
                 throw new \Exception("El campo '{$key}' no puede ser nulo en el comercio '{$commerceData['name']}'");
             }
-        }
+        }$place = Place::find(1);
+
+        // Asociar el comercio con el lugar a través de la tabla pivote
+        $place->commerces()->attach($commerce->id);
 
 
     // Crear comercio si no existe
