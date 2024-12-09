@@ -279,9 +279,18 @@ $serviceData = Service::factory(10)->create();
             }
         }
         /*$place = Place::find(1);
-
         // Asociar el comercio con el lugar a través de la tabla pivote
         $place->commerces()->attach($commerce->id);*/
+
+
+// Crear el comercio
+$commerces = Commerce::create($commerceData);
+// Asociar categorías a los comercios utilizando la relación polimórfica
+$category = Category::where('name', 'Commerce')->first(); // Asegúrate de que la categoría exista
+if ($category) {
+    // Asociar categoría al lugar
+    $commerces->categories()->attach($category->id);
+}
 
 
     // Crear comercio si no existe
