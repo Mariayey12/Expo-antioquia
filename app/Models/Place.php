@@ -93,7 +93,7 @@ class Place extends Model
      * Relación polimórfica inversa para comercios.
      */
    // Relación polimórfica muchos a muchos inversa
-   
+
    public function commerces()
    {
        return $this->morphedByMany(Commerce::class, 'placeable');
