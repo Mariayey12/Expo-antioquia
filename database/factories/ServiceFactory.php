@@ -27,6 +27,14 @@ class ServiceFactory extends Factory
             'status' => $this->faker->randomElement(['active', 'inactive', 'maintenance']),
             'reviews_count' => $this->faker->numberBetween(0, 100),
             'average_rating' => $this->faker->randomFloat(1, 0, 5),
+             // Relación polimórfica
+         'serviceable_type' => $this->faker->randomElement([
+            \App\Models\Place::class,   // Relación con lugares
+            \App\Models\Category::class,  // Relación con hoteles
+        ]),
+        'serviceable_id' => $this->faker->numberBetween(1, 50), // ID aleatorio relacionado
         ];
+
+
     }
 }

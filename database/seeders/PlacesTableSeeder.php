@@ -7,7 +7,7 @@ namespace Database\Seeders;
     use App\Models\Category;
     use App\Models\Service;
     use App\Models\Commerce;
-    
+
 
         class PlacesTableSeeder extends Seeder
             {
@@ -29,6 +29,7 @@ namespace Database\Seeders;
 
                 $categories = [
                     ['name' => 'Commerce', 'description' => 'Espacios dedicados a la venta de bienes y servicios.'],
+                    ['name' => 'Service', 'description' => 'Espacios dedicados a la venta de bienes y servicios.'],
                     ['name' => 'Productos', 'description' => 'Artículos disponibles para compra o venta.'],
                     ['name' => 'Transporte', 'description' => 'Servicios de movilidad para personas y bienes.'],
                     ['name' => 'Relajación', 'description' => 'Lugares para descansar y recargar energías.'],
@@ -235,6 +236,14 @@ $serviceData = Service::factory(10)->create();
                 Service::create($serviceData);
             }
         }
+            // Crear el Servicio
+$services = Service::create($serviceData);
+
+// Asociar la categoría
+$category = Category::where('name', 'Service')->first();
+if ($category) {
+    $services->categories()->attach($category->id);
+}
         // Crear 10 Comercios aleatorios y asociarles categorías y lugares
  $commerceData = Commerce::factory(10)->create();
        // Crear comercios
