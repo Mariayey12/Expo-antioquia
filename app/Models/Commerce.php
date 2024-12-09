@@ -24,30 +24,12 @@ class Commerce extends Model
 
     ];
 
+ // Relación polimórfica muchos a muchos
+ public function commerceables()
+ {
+     return $this->morphedByMany(Place::class, 'commerceable');
+ }
 
 
-    /**
-     * Relación polimórfica para categorías.
-     */
-    public function categories()
-    {
-        return $this->morphToMany(Category::class, 'categorizable');
-    }
-
-    /**
-     * Relación polimórfica para lugares (Place).
-     */
-    public function places()
-    {
-        return $this->morphToMany(Place::class, 'placeable');
-    }
-
-    /**
-     * Relación polimórfica con otro modelo, si es necesario.
-     */
-    public function commerceable()
-    {
-        return $this->morphTo();
-    }
 }
 

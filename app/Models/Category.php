@@ -34,9 +34,10 @@ class Category extends Model
      /**
      * Relación polimórfica inversa para comercios.
      */
-    public function commerces()
-    {
-        return $this->morphedByMany(Commerce::class, 'categorizable');
-    }
+  // Relación polimórfica muchos a muchos inversa
+  public function commerces()
+  {
+      return $this->morphToMany(Commerce::class, 'commerceable');
+  }
 }
 
