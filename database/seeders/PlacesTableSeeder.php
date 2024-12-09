@@ -277,10 +277,11 @@ $serviceData = Service::factory(10)->create();
             if (is_null($value)) {
                 throw new \Exception("El campo '{$key}' no puede ser nulo en el comercio '{$commerceData['name']}'");
             }
-        }$place = Place::find(1);
+        }
+        /*$place = Place::find(1);
 
         // Asociar el comercio con el lugar a través de la tabla pivote
-        $place->commerces()->attach($commerce->id);
+        $place->commerces()->attach($commerce->id);*/
 
 
     // Crear comercio si no existe
