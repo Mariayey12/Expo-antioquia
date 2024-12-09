@@ -11,14 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('gastronomias', function (Blueprint $table) {
+        Schema::create('gastronomys', function (Blueprint $table) {
             $table->id();
             $table->string('name'); // Name of the gastronomic place
             $table->text('description'); // Description
             $table->string('type'); // Type (Restaurant, Café, Bar, etc.)
             $table->string('location'); // Location
             $table->string('image_url'); // Image URL
-           
+
             $table->timestamps();
         });
     }
