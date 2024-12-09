@@ -287,7 +287,7 @@ Commerce::create($commerceData);
     $category = Category::where('name', 'Commerce')->first();
     if ($category) {
         // Asociar la categoría al comercio
-        $commerce->categories()->attach($category->id);
+        $commerces->categories()->attach($category->id);
     }
 
 }
