@@ -34,7 +34,7 @@ use Illuminate\Database\Eloquent\Model;
 
 public function commerces()
 {
-    return $this->morphedByMany(Commerce::class, 'categorizable');
+    return $this->morphedByMany(Commerce::class, 'commerceable');
 }
     /**
          * Relación con categorías (tabla pivote).
