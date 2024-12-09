@@ -51,7 +51,10 @@ class Service extends Model
     {
         return $this->morphToMany(Category::class, 'categorizable');
     }
-
+    public function commerces()
+    {
+        return $this->morphedByMany(Commerce::class, 'serviceable');
+    }
 
 }
 
