@@ -264,7 +264,7 @@ $serviceData = Service::factory(10)->create();
             'email' => 'artesanias4@tienda.com',
             'website' => 'https://www.tiendadearte.com',
             'commerceable_type' => 'App\Models\Place',  // Relación con Place
-            'commerceable_id' => 3,
+            'commerceable_id' => 13,
             'created_at' => now(),
             'updated_at' => now()
         ],
@@ -283,14 +283,7 @@ $serviceData = Service::factory(10)->create();
         $place->commerces()->attach($commerce->id);*/
 
 
-// Crear el comercio
-$commerces = Commerce::create($commerceData);
-// Asociar categorías a los comercios utilizando la relación polimórfica
-$category = Category::where('name', 'Commerce')->first(); // Asegúrate de que la categoría exista
-if ($category) {
-    // Asociar categoría al lugar
-    $commerces->categories()->attach($category->id);
-}
+
 
 
     // Crear comercio si no existe
