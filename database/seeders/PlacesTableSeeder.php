@@ -7,6 +7,7 @@ namespace Database\Seeders;
     use App\Models\Category;
     use App\Models\Service;
     use App\Models\Commerce;
+    
 
         class PlacesTableSeeder extends Seeder
             {

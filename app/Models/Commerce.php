@@ -30,6 +30,12 @@ class Commerce extends Model
      return $this->morphedByMany(Place::class, 'commerceable');
  }
 
-
+/**
+     * Relación con categorías (tabla pivote).
+     */
+    public function categories()
+    {
+        return $this->morphToMany(Category::class, 'categorizable');
+    }
 }
 
