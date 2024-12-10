@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('phone')->nullable(); // Teléfono opcional
             $table->string('address')->nullable(); // Dirección opcional
             $table->string('profile_picture')->nullable(); // Foto de perfil
+            $table->enum('role', ['administrador', 'usuario', 'proveedor'])->default('usuario'); // Roles predefinidos y role: Para manejar roles de acceso, permisos o lógica general en el sistema.
             $table->text('services')->nullable();
             $table->rememberToken();
             $table->timestamps();
