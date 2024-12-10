@@ -26,6 +26,7 @@ class User extends Authenticatable
         'address',
         'profile_picture',
         'role',
+        'services', // Asegúrate de agregar services al fillable
     ];
 
     /**
@@ -46,6 +47,7 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
+        'services' => 'array', // Agregar esto para manejar correctamente el campo 'services' como tipo JSON
     ];
 
     /**
@@ -74,10 +76,13 @@ class User extends Authenticatable
     {
         return $this->morphTo();
     }
-    public function places()
-{
-    return $this->morphToMany(Place::class, 'userable');
-}
 
+    /**
+     * Relación muchos a muchos polimórfica con los lugares.
+     */
+    public function places()
+    {
+        return $this->morphToMany(Place::class, 'userable');
+    }
 }
 

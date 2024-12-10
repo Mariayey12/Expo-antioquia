@@ -30,8 +30,9 @@ class UsersTableSeeder extends Seeder
                 'email_verified_at' => Carbon::now(),
                 'role' => 'administrador',
                 'remember_token' => Str::random(10),
-                'userable_type' => 'App\Models\Admin'::class, // Relación con Admin
-                'userable_id' => 1,    // ID del Admin creado
+                'userable_type' => Admin::class, // Relación con Admin
+                'userable_id' => $admin->id,    // ID del Admin creado
+                'services' => json_encode(['service_1', 'service_2']), // Agregar servicios JSON
             ],
             [
                 'name' => 'Carlos García',
@@ -42,8 +43,9 @@ class UsersTableSeeder extends Seeder
                 'email_verified_at' => Carbon::now(),
                 'role' => 'proveedor',
                 'remember_token' => Str::random(10),
-                'userable_type' => 'App\Models\Provider'::class, // Relación con Provider
-                'userable_id' => 2,     // ID del Provider creado
+                'userable_type' => Provider::class, // Relación con Provider
+                'userable_id' => $provider->id,     // ID del Provider creado
+                'services' => json_encode(['service_3', 'service_4']), // Agregar servicios JSON
             ],
             [
                 'name' => 'Ana Torres',
@@ -54,8 +56,9 @@ class UsersTableSeeder extends Seeder
                 'email_verified_at' => Carbon::now(),
                 'role' => 'usuario',
                 'remember_token' => Str::random(10),
-                'userable_type' =>  'App\Models\User'::class, // Sin relación polimórfica
+                'userable_type' => User::class, // Sin relación polimórfica
                 'userable_id' => 3,   // Sin ID relacionado
+                'services' => json_encode([]), // Usuario sin servicios
             ],
         ];
 

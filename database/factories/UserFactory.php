@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use App\Models\User;
+use App\Models\Admin;  // Asegúrate de importar el modelo relacionado
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
@@ -16,6 +17,9 @@ class UserFactory extends Factory
      */
     public function definition(): array
     {
+        // Obtener el primer admin para usarlo en la relación polimórfica
+        $admin = Admin::first() ?? Admin::factory()->create(); // Crea uno si no existe
+
         return [
             'name' => $this->faker->name(),
             'email' => $this->faker->unique()->safeEmail(),
@@ -25,11 +29,14 @@ class UserFactory extends Factory
             'address' => $this->faker->optional()->address(),
             'profile_picture' => $this->faker->optional()->imageUrl(100, 100, 'people', true, 'Perfil'),
             'role' => $this->faker->randomElement(['administrador', 'usuario', 'proveedor']),
-            'userable_type' => \App\Models\Admin::class, // Modelo relacionado
-            'userable_id' => 1, // ID del modelo relacionado
+            'userable_type' => Admin::class, // Usar el nombre de la clase del modelo relacionado
+            'userable_id' => $admin->id, // Establecer el ID del modelo relacionado
+            'services' => $this->faker->randomElement([ // Agregar servicios como tipo JSON
+                json_encode(['service_1', 'service_2']),
+                json_encode(['service_3', 'service_4'])
+            ]),
             'remember_token' => Str::random(10),
         ];
-
     }
 
     /**
