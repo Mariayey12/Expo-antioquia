@@ -1,5 +1,7 @@
 <?php
 
+// app/Database/Seeders/UsersTableSeeder.php
+
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
@@ -8,14 +10,13 @@ use App\Models\Admin;
 use App\Models\Provider;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Log;
 use Carbon\Carbon;
 
 class UsersTableSeeder extends Seeder
 {
     public function run()
     {
-        // Crear administradores y proveedores con factory
+        // Crear administradores y proveedores
         $admin = Admin::factory()->create(); // Crea un admin
         $provider = Provider::factory()->create(); // Crea un provider
 
@@ -32,7 +33,6 @@ class UsersTableSeeder extends Seeder
                 'remember_token' => Str::random(10),
                 'userable_type' => Admin::class, // Relación con Admin
                 'userable_id' => $admin->id,    // ID del Admin creado
-                'services' => json_encode(['service_1', 'service_2']), // Agregar servicios JSON
             ],
             [
                 'name' => 'Carlos García',
@@ -45,7 +45,6 @@ class UsersTableSeeder extends Seeder
                 'remember_token' => Str::random(10),
                 'userable_type' => Provider::class, // Relación con Provider
                 'userable_id' => $provider->id,     // ID del Provider creado
-                'services' => json_encode(['service_3', 'service_4']), // Agregar servicios JSON
             ],
             [
                 'name' => 'Ana Torres',
@@ -56,9 +55,8 @@ class UsersTableSeeder extends Seeder
                 'email_verified_at' => Carbon::now(),
                 'role' => 'usuario',
                 'remember_token' => Str::random(10),
-                'userable_type' => User::class, // Sin relación polimórfica
+                'userable_type' =>  'App\Models\User'::class, // Sin relación polimórfica
                 'userable_id' => 3,   // Sin ID relacionado
-                'services' => json_encode([]), // Usuario sin servicios
             ],
         ];
 
@@ -74,8 +72,6 @@ class UsersTableSeeder extends Seeder
                     if ($relatedModel) {
                         $user->userable()->associate($relatedModel);
                         $user->save();
-                    } else {
-                        Log::warning("El modelo relacionado no se encontró: {$userData['userable_type']} con ID {$userData['userable_id']}");
                     }
                 }
             } catch (\Exception $e) {
