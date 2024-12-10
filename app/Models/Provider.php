@@ -17,7 +17,7 @@ class Provider extends Model
         'phone',
         'address',
         'company_name',
-        
+
     ];
 
 
@@ -26,6 +26,10 @@ class Provider extends Model
 public function users()
 {
     return $this->morphMany(User::class, 'userable');
+}
+public function services()
+{
+    return $this->morphMany(Service::class, 'serviceable');
 }
 
 }

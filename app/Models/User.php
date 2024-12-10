@@ -26,7 +26,7 @@ class User extends Authenticatable
         'address',
         'profile_picture',
         'role',
-        
+
     ];
 
     /**
@@ -84,5 +84,11 @@ class User extends Authenticatable
     {
         return $this->morphToMany(Place::class, 'userable');
     }
+
+    public function services()
+{
+    return $this->morphMany(Service::class, 'serviceable');
+}
+
 }
 
