@@ -15,7 +15,7 @@ class CreateProvidersTable extends Migration
             $table->string('phone');
             $table->string('address');
             $table->string('company_name')->nullable();
-            $table->json('services')->nullable();
+            $table->morphs('serviceable'); // Agrega la relación polimórfica
             $table->timestamps();
         });
 

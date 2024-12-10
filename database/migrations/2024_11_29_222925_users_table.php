@@ -23,7 +23,6 @@ return new class extends Migration
             $table->string('address')->nullable(); // Dirección (opcional)
             $table->string('profile_picture')->nullable(); // Foto de perfil (opcional)
             $table->enum('role', ['administrador', 'usuario', 'proveedor'])->default('usuario'); // Roles predefinidos
-            $table->json('services')->nullable(); // Servicios como JSON (más flexible que texto plano)
             $table->rememberToken(); // Token para recordar sesión
             $table->timestamps(); // Tiempos de creación y actualización
         });
