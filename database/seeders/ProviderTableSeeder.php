@@ -18,7 +18,7 @@ class ProviderTableSeeder extends Seeder
             'address' => '123 Main St',
             'company_name' => 'Proveedor S.A.',
             'contact_person' => '65565657656',
-            'services' => 'Consultoría, Soporte Técnico',
+            //'services' => 'Consultoría, Soporte Técnico',
         ]);
 
         // Crear un usuario asociado al proveedor
