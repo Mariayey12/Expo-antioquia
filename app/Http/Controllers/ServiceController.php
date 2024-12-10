@@ -7,69 +7,123 @@ use Illuminate\Http\Request;
 
 class ServiceController extends Controller
 {
-    // Mostrar todos los servicios
-    public function index()
+    public function index(Request $request)
     {
-        return Service::with('comerce')->get();
+        $services = Service::all();
+
+        if ($request->wantsJson()) {
+            return response()->json([
+                'success' => true,
+                'data' => $services
+            ], 200);
+        }
+
+        return view('services.index', compact('services'));
     }
 
-    // Crear un nuevo servicio
     public function store(Request $request)
     {
-        $validated = $request->validate([
+        $validatedData = $request->validate([
             'name' => 'required|string|max:255',
             'description' => 'nullable|string',
-            'cost' => 'nullable|numeric',
+            'cost' => 'required|numeric',
             'duration' => 'nullable|string',
-            'category' => 'nullable|string',
             'image_url' => 'nullable|url',
+            'video_url' => 'nullable|url',
+            'google_maps' => 'nullable|url',
             'provider_name' => 'nullable|string',
             'location' => 'nullable|string',
             'is_available' => 'boolean',
             'available_from' => 'nullable|date',
             'available_until' => 'nullable|date',
             'contact_info' => 'nullable|string',
-            'comerce_id' => 'required|exists:comerces,id', // Asegúrate que el comercio exista
+            'status' => 'nullable|string',
+            'reviews_count' => 'nullable|integer',
+            'average_rating' => 'nullable|numeric',
         ]);
 
-        return Service::create($validated);
+        $service = Service::create($validatedData);
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Service created successfully!',
+            'data' => $service,
+        ], 201);
     }
 
-    // Mostrar un servicio específico
-    public function show($id)
+    public function show(Request $request, $id)
     {
-        return Service::with('comerce')->findOrFail($id);
+        $service = Service::find($id);
+
+        if (!$service) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Service not found',
+            ], 404);
+        }
+
+        return response()->json([
+            'success' => true,
+            'data' => $service,
+        ], 200);
     }
 
-    // Actualizar un servicio existente
     public function update(Request $request, $id)
     {
-        $service = Service::findOrFail($id);
-        $validated = $request->validate([
-            'name' => 'sometimes|required|string|max:255',
+        $service = Service::find($id);
+
+        if (!$service) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Service not found',
+            ], 404);
+        }
+
+        $validatedData = $request->validate([
+            'name' => 'required|string|max:255',
             'description' => 'nullable|string',
-            'cost' => 'nullable|numeric',
+            'cost' => 'required|numeric',
             'duration' => 'nullable|string',
-            'category' => 'nullable|string',
             'image_url' => 'nullable|url',
+            'video_url' => 'nullable|url',
+            'google_maps' => 'nullable|url',
             'provider_name' => 'nullable|string',
             'location' => 'nullable|string',
             'is_available' => 'boolean',
             'available_from' => 'nullable|date',
             'available_until' => 'nullable|date',
             'contact_info' => 'nullable|string',
-            'comerce_id' => 'sometimes|required|exists:comerces,id', // Asegúrate que el comercio exista
+            'status' => 'nullable|string',
+            'reviews_count' => 'nullable|integer',
+            'average_rating' => 'nullable|numeric',
         ]);
 
-        $service->update($validated);
-        return $service;
+        $service->update($validatedData);
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Service updated successfully!',
+            'data' => $service,
+        ], 200);
     }
 
-    // Eliminar un servicio
     public function destroy($id)
     {
-        $service = Service::findOrFail($id);
+        $service = Service::find($id);
+
+        if (!$service) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Service not found',
+            ], 404);
+        }
+
         $service->delete();
-        return response()->noContent();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Service deleted successfully!',
+        ], 200);
     }
 }
+

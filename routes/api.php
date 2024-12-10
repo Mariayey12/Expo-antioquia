@@ -15,64 +15,63 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\ComerceController;
-use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\PlaceController;
-use App\Http\Controllers\HotelController;
-use App\Http\Controllers\TouristPlaceController;
-use App\Http\Controllers\RelaxationPlaceController;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\AdminController;
+use App\Http\Controllers\ProviderController; // Agregar controlador para proveedor
+use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\CommerceController;
+use App\Http\Controllers\ServiceController;
+use App\Http\Controllers\GastronomyController;
+use App\Http\Controllers\EventController;
+use App\Http\Controllers\PromotionController;
 use App\Http\Controllers\ReservationController;
 use App\Http\Controllers\CommentController;
-use App\Http\Controllers\UserController;
-use App\Http\Controllers\HandicraftController;
-use App\Http\Controllers\CultureController;
-use App\Http\Controllers\RestaurantController;
-use App\Http\Controllers\GastronomyController;
-use App\Http\Controllers\EventoController; // Asegúrate de que este nombre esté correcto
+use App\Http\Controllers\TestimonialController;
 
-// Rutas para lugares
+
+
+
+
+// Rutas públicas para usuarios
+Route::resource('users', UserController::class);
+
+// Rutas para administradores (autenticación + autorización para roles específicos)
+Route::middleware(['auth:sanctum', 'can:access-dashboard'])->apiResource('admins', AdminController::class);
+
+// Rutas para proveedores (autenticación + autorización para proveedores)
+Route::middleware(['auth:sanctum', 'check.provider'])->apiResource('providers', ProviderController::class);
+
+// Rutas públicas para lugares, comercios y servicios
 Route::apiResource('places', PlaceController::class);
 
-// Rutas para hoteles
-Route::apiResource('hotels', HotelController::class);
-
-// Rutas para lugares turísticos
-Route::apiResource('tourist_places', TouristPlaceController::class);
-
-// Rutas para lugares de relajación
-Route::apiResource('relaxation_places', RelaxationPlaceController::class);
-
-// Rutas para reservas
-Route::apiResource('reservations', ReservationController::class);
-
-// Rutas para comentarios
-Route::apiResource('comments', CommentController::class);
-
-// Rutas para usuarios
-Route::apiResource('users', UserController::class);
-
-// Rutas para artesanías
-Route::apiResource('handicrafts', HandicraftController::class);
-
-// Rutas para cultura
-Route::apiResource('culture', CultureController::class);
-
-// Rutas para restaurantes
-Route::apiResource('restaurants', RestaurantController::class);
-
-// Rutas para gastronomía
-Route::apiResource('gastronomy', GastronomyController::class);
-
-// Rutas para eventos
-Route::apiResource('events', EventoController::class); // Corrige el nombre si es necesario
-
-// Rutas para comercios
-Route::apiResource('comerces', ComerceController::class);
-
-// Rutas para servicios
+// Rutas RESTful para la entidad Category
+Route::apiResource('categories', CategoryController::class);
+Route::apiResource('commerces', CommerceController::class);
 Route::apiResource('services', ServiceController::class);
+Route::apiResource('gastronomys', GastronomyController::class);
+Route::apiResource('events', EventController::class);
+Route::apiResource('promotions', PromotionController::class);
+Route::apiResource('reservations', ReservationController::class);
+Route::apiResource('comments', CommentController::class);
+Route::apiResource('testimonials', TestimonialController::class);
 
-// Ruta para obtener el usuario autenticado
+// Ruta protegida para obtener datos del usuario autenticado
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+// Ruta protegida con autorización específica para el dashboard (solo administradores)
+Route::middleware(['auth:sanctum', 'can:access-dashboard'])->get('/dashboard', function () {
+    return response()->json(['message' => 'Bienvenido al Dashboard']);
+});
+
+// Ruta protegida para proveedores (ejemplo de autorización personalizada)
+Route::middleware(['auth:sanctum', 'check.provider'])->get('/provider-area', function () {
+    return response()->json(['message' => 'Área exclusiva para proveedores']);
+});
+
+
+
+
+
