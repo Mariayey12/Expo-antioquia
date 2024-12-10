@@ -10,17 +10,13 @@ class CreateProvidersTable extends Migration
     {
         Schema::create('providers', function (Blueprint $table) {
             $table->id();
-            $table->string('name');  // Esta columna debe existir
-            $table->string('company_name')->nullable();  // Nombre de la empresa
-            $table->string('contact_person') ->nullable();  // Persona de contacto
-            $table->string('email')->nullable();  // Correo electrónico
-            $table->string('phone')->nullable();  // Teléfono
-            $table->text('address')->nullable();  // Dirección
-            $table->string('password')->nullable();
-            $table->text('services')->nullable();
-
+            $table->string('company_name')->nullable(); // Nombre de la empresa
+            $table->string('contact_person')->nullable(); // Persona de contacto
+            $table->text('address')->nullable(); // Dirección
+            $table->text('services')->nullable(); // Servicios prestados
             $table->timestamps();
         });
+
     }
 
 

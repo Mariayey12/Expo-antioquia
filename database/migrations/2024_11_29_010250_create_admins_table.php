@@ -8,16 +8,19 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::create('admins', function (Blueprint $table) {
-            $table->id();
-            $table->string('permissions')->nullable();
-            $table->string('department')->nullable();
-            $table->string('notes')->nullable();
 
 
+            Schema::create('admins', function (Blueprint $table) {
+                $table->id();
+                $table->string('permissions')->nullable(); // Permisos, ¿en formato texto o JSON?
+                $table->string('department')->nullable();  // Departamento asociado
+                $table->string('notes')->nullable();       // Notas adicionales
 
-            $table->timestamps();
-        });
+                $table->timestamps();
+            });
+
+
+     
     }
 
     public function down(): void

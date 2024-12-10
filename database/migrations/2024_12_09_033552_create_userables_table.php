@@ -12,12 +12,14 @@ return new class extends Migration
         Schema::create('userables', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id'); // Relación con la tabla users
-            $table->string('userable_type'); // Tipo del modelo relacionado
-            $table->unsignedBigInteger('userable_id'); // ID del modelo relacionado
+            $table->morphs('userable'); // Definición estándar de relación polimórfica
             $table->timestamps();
 
             // Llave foránea para garantizar la integridad referencial
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('user_id')
+                ->references('id')
+                ->on('users')
+                ->onDelete('cascade');
         });
     }
 
