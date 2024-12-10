@@ -26,7 +26,7 @@ class User extends Authenticatable
         'address',
         'profile_picture',
         'role',
-        'services', // Asegúrate de agregar services al fillable
+        
     ];
 
     /**
