@@ -22,6 +22,15 @@ use App\Http\Controllers\ProviderController; // Agregar controlador para proveed
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CommerceController;
 use App\Http\Controllers\ServiceController;
+use App\Http\Controllers\GastronomyController;
+use App\Http\Controllers\EventController;
+use App\Http\Controllers\PromotionController;
+use App\Http\Controllers\ReservationController;
+use App\Http\Controllers\CommentController;
+use App\Http\Controllers\TestimonialController;
+
+
+
 
 
 // Rutas públicas para usuarios
@@ -40,7 +49,12 @@ Route::apiResource('places', PlaceController::class);
 Route::apiResource('categories', CategoryController::class);
 Route::apiResource('commerces', CommerceController::class);
 Route::apiResource('services', ServiceController::class);
-
+Route::apiResource('gastronomys', GastronomyController::class);
+Route::apiResource('events', EventController::class);
+Route::apiResource('promotions', PromotionController::class);
+Route::apiResource('reservations', ReservationController::class);
+Route::apiResource('comments', CommentController::class);
+Route::apiResource('testimonials', TestimonialController::class);
 
 // Ruta protegida para obtener datos del usuario autenticado
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
