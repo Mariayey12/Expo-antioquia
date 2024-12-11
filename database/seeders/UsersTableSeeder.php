@@ -19,7 +19,7 @@ class UsersTableSeeder extends Seeder
         // Crear administradores, proveedores y clientes
         $admin = Admin::factory()->create(); // Crea un admin
         $provider = Provider::factory()->create(); // Crea un proveedor
-        $customer = Customer::factory()->create(); // Crea un cliente
+        //$customer = Customer::factory()->create(); // Crea un cliente
 
         // Crear usuarios con relaciones polimórficas
         $users = [
@@ -32,8 +32,8 @@ class UsersTableSeeder extends Seeder
                 'email_verified_at' => Carbon::now(),
                 'role' => 'administrador',
                 'remember_token' => Str::random(10),
-                'userable_type' => Admin::class, // Relación con Admin
-                'userable_id' => $admin->id,    // ID del Admin creado
+                'userable_type' => App\Models\Admin, // Relación con Admin
+                'userable_id' => 1,    // ID del Admin creado
             ],
             [
                 'name' => 'Carlos García',
@@ -44,7 +44,7 @@ class UsersTableSeeder extends Seeder
                 'email_verified_at' => Carbon::now(),
                 'role' => 'proveedor',
                 'remember_token' => Str::random(10),
-                'userable_type' => Provider::class, // Relación con Provider
+                'userable_type' => App\Models\Admin, // Relación con Provider
                 'userable_id' => $provider->id,     // ID del Provider creado
             ],
             [
@@ -56,8 +56,8 @@ class UsersTableSeeder extends Seeder
                 'email_verified_at' => Carbon::now(),
                 'role' => 'cliente',
                 'remember_token' => Str::random(10),
-                'userable_type' => Customer::class, // Relación con Customer
-                'userable_id' => $customer->id,   // ID del Customer creado
+                'userable_type' => App\Models\User, // Relación con Customer
+                'userable_id' => 3,   // ID del Customer creado
             ],
             [
                 'name' => 'Laura Gómez',
@@ -68,8 +68,8 @@ class UsersTableSeeder extends Seeder
                 'email_verified_at' => Carbon::now(),
                 'role' => 'administrador',
                 'remember_token' => Str::random(10),
-                'userable_type' => Admin::class, // Relación con Admin
-                'userable_id' => $admin->id,    // ID del Admin creado
+                'userable_type' => App\Models\Provider, // Relación con Admin
+                'userable_id' => 4,    // ID del Admin creado
             ],
         ];
 
