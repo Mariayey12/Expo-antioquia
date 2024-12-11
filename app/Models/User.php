@@ -1,5 +1,7 @@
 <?php
 
+
+
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -26,7 +28,8 @@ class User extends Authenticatable
         'address',
         'profile_picture',
         'role',
-
+        'userable_type', // Se agregó para la relación polimórfica
+        'userable_id',   // Se agregó para la relación polimórfica
     ];
 
     /**
@@ -47,7 +50,6 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
-       
     ];
 
     /**
@@ -85,10 +87,25 @@ class User extends Authenticatable
         return $this->morphToMany(Place::class, 'userable');
     }
 
+    /**
+     * Relación uno a muchos polimórfica con los servicios.
+     */
     public function services()
-{
-    return $this->morphMany(Service::class, 'serviceable');
-}
+    {
+        return $this->morphMany(Service::class, 'serviceable');
+    }
 
-}
+    /**
+     * Sobrescribir el método `save` para cifrar la contraseña antes de guardar el usuario.
+     */
+    public static function boot()
+    {
+        parent::boot();
 
+        static::creating(function ($user) {
+            if ($user->password) {
+                $user->password = bcrypt($user->password); // Cifra la contraseña antes de guardarla
+            }
+        });
+    }
+}
