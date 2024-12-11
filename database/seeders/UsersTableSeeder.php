@@ -1,25 +1,25 @@
 <?php
 
-// app/Database/Seeders/UsersTableSeeder.php
-
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use App\Models\User;
 use App\Models\Admin;
 use App\Models\Provider;
+use App\Models\Customer; // Asumimos que tienes un modelo Customer
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Log; // Agregar esta línea para importar Log
+use Illuminate\Support\Facades\Log;
 use Carbon\Carbon;
 
 class UsersTableSeeder extends Seeder
 {
     public function run()
     {
-        // Crear administradores y proveedores
+        // Crear administradores, proveedores y clientes
         $admin = Admin::factory()->create(); // Crea un admin
-        $provider = Provider::factory()->create(); // Crea un provider
+        $provider = Provider::factory()->create(); // Crea un proveedor
+        $customer = Customer::factory()->create(); // Crea un cliente
 
         // Crear usuarios con relaciones polimórficas
         $users = [
@@ -54,10 +54,22 @@ class UsersTableSeeder extends Seeder
                 'phone' => '3051237890',
                 'address' => 'Diagonal 12 #34-56, Cartagena',
                 'email_verified_at' => Carbon::now(),
-                'role' => 'usuario',
+                'role' => 'cliente',
                 'remember_token' => Str::random(10),
-                'userable_type' =>  'App\Models\User'::class, // Sin relación polimórfica
-                'userable_id' => 3,   // Sin ID relacionado
+                'userable_type' => Customer::class, // Relación con Customer
+                'userable_id' => $customer->id,   // ID del Customer creado
+            ],
+            [
+                'name' => 'Laura Gómez',
+                'email' => 'laura@example.com',
+                'password' => Hash::make('password54321'),
+                'phone' => '3009876543',
+                'address' => 'Calle 45 #56-78, Bogotá',
+                'email_verified_at' => Carbon::now(),
+                'role' => 'administrador',
+                'remember_token' => Str::random(10),
+                'userable_type' => Admin::class, // Relación con Admin
+                'userable_id' => $admin->id,    // ID del Admin creado
             ],
         ];
 
