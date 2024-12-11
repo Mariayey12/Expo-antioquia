@@ -89,6 +89,6 @@ class User extends Authenticatable
 {
     return $this->morphMany(Service::class, 'serviceable');
 }
-
+   
 }
 

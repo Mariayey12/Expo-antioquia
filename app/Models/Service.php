@@ -55,6 +55,12 @@ class Service extends Model
     {
         return $this->morphedByMany(Commerce::class, 'serviceable');
     }
+    // Relación polimórfica inversa
+    public function providers()
+    {
+        return $this->morphMany(Provider::class, 'serviceable');
+    }
+      
 
 }
 
