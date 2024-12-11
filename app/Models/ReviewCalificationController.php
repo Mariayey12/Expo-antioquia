@@ -11,13 +11,11 @@ class ReviewCalification extends Model
 
     protected $fillable = ['user_id', 'service_id', 'rating', 'review'];
 
-    // Relación con el usuario
     public function user()
     {
         return $this->belongsTo(User::class);
     }
 
-    // Relación con el servicio
     public function service()
     {
         return $this->belongsTo(Service::class);
