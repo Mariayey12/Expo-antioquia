@@ -32,7 +32,7 @@ class UsersTableSeeder extends Seeder
                 'email_verified_at' => Carbon::now(),
                 'role' => 'administrador',
                 'remember_token' => Str::random(10),
-                'userable_type' => App\Models\Admin, // Relación con Admin
+                'userable_type' => 'App\Models\Admin', // Relación con Admin
                 'userable_id' => 1,    // ID del Admin creado
             ],
             [
@@ -44,7 +44,7 @@ class UsersTableSeeder extends Seeder
                 'email_verified_at' => Carbon::now(),
                 'role' => 'proveedor',
                 'remember_token' => Str::random(10),
-                'userable_type' => App\Models\Provider, // Relación con Provider
+                'userable_type' => 'App\Models\Provider', // Relación con Provider
                 'userable_id' => $provider->id,     // ID del Provider creado
             ],
             [
@@ -56,7 +56,7 @@ class UsersTableSeeder extends Seeder
                 'email_verified_at' => Carbon::now(),
                 'role' => 'user',
                 'remember_token' => Str::random(10),
-                'userable_type' => App\Models\User, // Relación con Customer
+                'userable_type' =>' App\Models\User', // Relación con Customer
                 'userable_id' => 3,   // ID del Customer creado
             ],
             [
@@ -68,7 +68,7 @@ class UsersTableSeeder extends Seeder
                 'email_verified_at' => Carbon::now(),
                 'role' => 'administrador',
                 'remember_token' => Str::random(10),
-                'userable_type' => App\Models\Admin, // Relación con Admin
+                'userable_type' => 'App\Models\Admin', // Relación con Admin
                 'userable_id' => 4,    // ID del Admin creado
             ],
         ];
@@ -90,6 +90,8 @@ class UsersTableSeeder extends Seeder
             } catch (\Exception $e) {
                 Log::error("Error al crear el usuario: {$e->getMessage()}", $userData);
             }
+            // Crear más proveedores con datos aleatorios
+        User::factory()->count(8)->create();
         }
 
         echo "Usuarios insertados exitosamente.\n";

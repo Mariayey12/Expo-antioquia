@@ -44,8 +44,8 @@ class ProviderTableSeeder extends Seeder
         ]);
 
         // Asociar los servicios al proveedor usando la relación polimórfica
-        $provider->services()->save($service1);
-        $provider->services()->save($service2);
+        //$provider->services()->save($service1);
+        //$provider->services()->save($service2);
 
         // Crear más proveedores con datos aleatorios
         Provider::factory()->count(8)->create();
