@@ -33,5 +33,10 @@ class Provider extends Model
     public function services()
     {
         return $this->morphMany(Service::class, 'serviceable');
-    }   
+    }
+    public function user()
+{
+    return $this->morphOne(User::class, 'userable');
+}
+
 }
