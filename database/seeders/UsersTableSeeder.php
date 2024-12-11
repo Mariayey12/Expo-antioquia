@@ -44,7 +44,7 @@ class UsersTableSeeder extends Seeder
                 'email_verified_at' => Carbon::now(),
                 'role' => 'proveedor',
                 'remember_token' => Str::random(10),
-                'userable_type' => App\Models\Admin, // Relación con Provider
+                'userable_type' => App\Models\Provider, // Relación con Provider
                 'userable_id' => $provider->id,     // ID del Provider creado
             ],
             [
@@ -54,7 +54,7 @@ class UsersTableSeeder extends Seeder
                 'phone' => '3051237890',
                 'address' => 'Diagonal 12 #34-56, Cartagena',
                 'email_verified_at' => Carbon::now(),
-                'role' => 'cliente',
+                'role' => 'user',
                 'remember_token' => Str::random(10),
                 'userable_type' => App\Models\User, // Relación con Customer
                 'userable_id' => 3,   // ID del Customer creado
@@ -68,7 +68,7 @@ class UsersTableSeeder extends Seeder
                 'email_verified_at' => Carbon::now(),
                 'role' => 'administrador',
                 'remember_token' => Str::random(10),
-                'userable_type' => App\Models\Provider, // Relación con Admin
+                'userable_type' => App\Models\Admin, // Relación con Admin
                 'userable_id' => 4,    // ID del Admin creado
             ],
         ];
