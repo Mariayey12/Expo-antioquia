@@ -7,7 +7,7 @@ use App\Models\Provider;
 use App\Models\User;
 use App\Models\Service;
 
-class ProviderTableSeeder extends Seeder
+class ProvidersTableSeeder extends Seeder
 {
     public function run()
     {
