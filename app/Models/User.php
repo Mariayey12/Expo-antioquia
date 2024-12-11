@@ -47,7 +47,7 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
-        'services' => 'array', // Agregar esto para manejar correctamente el campo 'services' como tipo JSON
+       
     ];
 
     /**
@@ -89,6 +89,6 @@ class User extends Authenticatable
 {
     return $this->morphMany(Service::class, 'serviceable');
 }
-   
+
 }
 
