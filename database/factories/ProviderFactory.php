@@ -3,7 +3,7 @@
 namespace Database\Factories;
 
 use App\Models\Provider;
-use App\Models\Service; // Asegúrate de importar el modelo de Service
+use App\Models\Service;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class ProviderFactory extends Factory
@@ -12,18 +12,27 @@ class ProviderFactory extends Factory
 
     public function definition()
     {
-        // Crear un servicio de forma aleatoria
-        $service = Service::factory()->create();
-
         return [
             'name' => $this->faker->company,
             'email' => $this->faker->unique()->safeEmail,
             'phone' => $this->faker->phoneNumber,
             'address' => $this->faker->address,
             'company_name' => $this->faker->company,
-            // Relación polimórfica
-            'serviceable_type' => Service::class, // Indica que es un servicio
-            'serviceable_id' => $service->id, // Asocia el proveedor con un servicio aleatorio
+            'contact_person' => $this->faker->name, // Contacto asociado
         ];
+    }
+
+    /**
+     * Define la relación polimórfica con un servicio.
+     *
+     * @return \Illuminate\Database\Eloquent\Factories\Factory
+     */
+    public function withService()
+    {
+        return $this->afterCreating(function (Provider $provider) {
+            $service = Service::factory()->create(); // Crea un servicio
+            $service->serviceable()->associate($provider); // Asocia el servicio con el proveedor
+            $service->save();
+        });
     }
 }

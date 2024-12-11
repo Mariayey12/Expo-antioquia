@@ -15,8 +15,13 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users = User::all(); // Obtiene todos los usuarios
-        return response()->json($users); // Devuelve los usuarios en formato JSON
+        // Obtiene todos los usuarios y devuelve como JSON
+        $users = User::all();
+
+        return response()->json([
+            'message' => 'Lista de usuarios obtenida exitosamente',
+            'users' => $users,
+        ]);
     }
 
     /**
@@ -30,8 +35,8 @@ class UserController extends Controller
         // Validación de los datos de entrada
         $request->validate([
             'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users,email', // Cambié 'usuarios' a 'users'
-            'password' => 'required|string|min:8|confirmed', // La contraseña debe ser confirmada
+            'email' => 'required|string|email|max:255|unique:users,email',
+            'password' => 'required|string|min:8|confirmed',
         ]);
 
         // Creación del usuario con datos validados
@@ -43,8 +48,8 @@ class UserController extends Controller
 
         return response()->json([
             'message' => 'Usuario creado exitosamente',
-            'user' => $user
-        ], 201); // Devuelve un código HTTP 201 para creación exitosa
+            'user' => $user,
+        ], 201); // Código HTTP 201: Creación exitosa
     }
 
     /**
@@ -55,13 +60,18 @@ class UserController extends Controller
      */
     public function show(string $id)
     {
-        $user = User::find($id); // Busca el usuario por ID
+        // Busca el usuario por ID
+        $user = User::find($id);
 
         if (!$user) {
-            return response()->json(['message' => 'Usuario no encontrado'], 404); // Código HTTP 404 si no se encuentra
+            // Respuesta si no se encuentra el usuario
+            return response()->json(['message' => 'Usuario no encontrado'], 404);
         }
 
-        return response()->json($user); // Devuelve el usuario en formato JSON
+        return response()->json([
+            'message' => 'Usuario obtenido exitosamente',
+            'user' => $user,
+        ]);
     }
 
     /**
@@ -73,32 +83,33 @@ class UserController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        $user = User::find($id); // Busca el usuario por ID
+        // Busca el usuario por ID
+        $user = User::find($id);
 
         if (!$user) {
-            return response()->json(['message' => 'Usuario no encontrado'], 404); // Código HTTP 404 si no se encuentra
+            return response()->json(['message' => 'Usuario no encontrado'], 404);
         }
 
         // Validación de los datos de entrada
         $request->validate([
-            'name' => 'sometimes|string|max:255', // 'sometimes' permite que el campo sea opcional
+            'name' => 'sometimes|string|max:255',
             'email' => 'sometimes|string|email|max:255|unique:users,email,' . $user->id,
-            'password' => 'sometimes|string|min:8|confirmed', // Opcional, pero si está presente, debe ser confirmado
+            'password' => 'sometimes|string|min:8|confirmed',
         ]);
 
-        // Actualización de los datos del usuario
-        $user->name = $request->name ?? $user->name; // Si no se envía el campo, conserva el valor existente
+        // Actualiza los campos solo si están presentes en la solicitud
+        $user->name = $request->name ?? $user->name;
         $user->email = $request->email ?? $user->email;
 
         if ($request->password) {
-            $user->password = Hash::make($request->password); // Encripta la nueva contraseña
+            $user->password = Hash::make($request->password);
         }
 
-        $user->save(); // Guarda los cambios
+        $user->save(); // Guarda los cambios en la base de datos
 
         return response()->json([
             'message' => 'Usuario actualizado correctamente',
-            'user' => $user
+            'user' => $user,
         ]);
     }
 
@@ -110,14 +121,44 @@ class UserController extends Controller
      */
     public function destroy(string $id)
     {
-        $user = User::find($id); // Busca el usuario por ID
+        // Busca el usuario por ID
+        $user = User::find($id);
 
         if (!$user) {
-            return response()->json(['message' => 'Usuario no encontrado'], 404); // Código HTTP 404 si no se encuentra
+            return response()->json(['message' => 'Usuario no encontrado'], 404);
         }
 
         $user->delete(); // Elimina el usuario
 
-        return response()->json(['message' => 'Usuario eliminado exitosamente']);
+        return response()->json([
+            'message' => 'Usuario eliminado exitosamente',
+        ]);
+    }
+
+    /**
+     * Busca usuarios por nombre.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function search(Request $request)
+    {
+        // Validación de la búsqueda
+        $request->validate([
+            'name' => 'required|string',
+        ]);
+
+        // Busca usuarios cuyo nombre coincida (case insensitive)
+        $users = User::where('name', 'LIKE', '%' . $request->name . '%')->get();
+
+        if ($users->isEmpty()) {
+            return response()->json(['message' => 'No se encontraron usuarios con ese nombre'], 404);
+        }
+
+        return response()->json([
+            'message' => 'Usuarios encontrados',
+            'users' => $users,
+        ]);
     }
 }
+

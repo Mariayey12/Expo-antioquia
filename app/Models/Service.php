@@ -60,7 +60,7 @@ class Service extends Model
     {
         return $this->morphMany(Provider::class, 'serviceable');
     }
-      
+
 
 }
 
