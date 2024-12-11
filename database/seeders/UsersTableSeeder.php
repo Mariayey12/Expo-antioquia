@@ -9,7 +9,7 @@ use App\Models\User;
 use App\Models\Admin;
 use App\Models\Provider;
 use Illuminate\Support\Str;
-//use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log; // Agregar esta línea para importar Log
 use Carbon\Carbon;
 
