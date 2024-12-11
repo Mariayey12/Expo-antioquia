@@ -28,6 +28,7 @@ use App\Http\Controllers\PromotionController;
 use App\Http\Controllers\ReservationController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\TestimonialController;
+use App\Http\Controllers\ReviewsCalificationController;
 
 
 
@@ -49,12 +50,13 @@ Route::apiResource('places', PlaceController::class);
 Route::apiResource('categories', CategoryController::class);
 Route::apiResource('commerces', CommerceController::class);
 Route::apiResource('services', ServiceController::class);
-Route::apiResource('gastronomys', GastronomyController::class);
+Route::apiResource('gastronomies', GastronomyController::class);
 Route::apiResource('events', EventController::class);
 Route::apiResource('promotions', PromotionController::class);
 Route::apiResource('reservations', ReservationController::class);
 Route::apiResource('comments', CommentController::class);
 Route::apiResource('testimonials', TestimonialController::class);
+Route::apiResource('reviews-califications', ReviewsCalificationController::class);
 
 // Ruta protegida para obtener datos del usuario autenticado
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {

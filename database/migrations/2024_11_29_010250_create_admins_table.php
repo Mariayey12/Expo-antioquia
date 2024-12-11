@@ -14,13 +14,15 @@ return new class extends Migration
                 $table->id();
                 $table->string('permissions')->nullable(); // Permisos, ¿en formato texto o JSON?
                 $table->string('department')->nullable();  // Departamento asociado
-                $table->string('notes')->nullable();       // Notas adicionales
+                $table->string('notes')->nullable();
+                $table->string('userable_type');
+                $table->unsignedBigInteger('userable_id');
 
                 $table->timestamps();
             });
 
 
-     
+
     }
 
     public function down(): void
