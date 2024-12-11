@@ -17,7 +17,7 @@ class DatabaseSeeder extends Seeder
         $this->call([
             AdminsTableSeeder::class,         // Seeder para administradores
             UsersTableSeeder::class,         // Seeder para usuarios
-            ProviderTableSeeder::class,      // Seeder para proveedores (o servicios, etc.)
+            ProvidersTableSeeder::class,      // Seeder para proveedores (o servicios, etc.)
             PlacesTableSeeder::class,        // Seeder para lugares
             // Otros seeders que puedas tener
         ]);
