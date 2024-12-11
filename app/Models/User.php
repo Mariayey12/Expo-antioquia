@@ -58,7 +58,7 @@ class User extends Authenticatable
      */
     public function comentarios()
     {
-        return $this->hasMany(Comment::class, 'userable');
+        return $this->morphedByMany(Comment::class, 'userable');
     }
 
     /**
@@ -67,7 +67,7 @@ class User extends Authenticatable
      */
     public function reservas()
     {
-        return $this->hasMany(Reservation::class, 'userable');
+        return $this->morphedByMany(Reservation::class, 'userable');
     }
 
     /**
@@ -84,7 +84,7 @@ class User extends Authenticatable
      */
     public function places()
     {
-        return $this->morphToMany(Place::class, 'userable');
+        return $this->morphedByMany(Place::class, 'userable');
     }
 
     /**
@@ -92,7 +92,7 @@ class User extends Authenticatable
      */
     public function services()
     {
-        return $this->morphMany(Service::class, 'userable');
+        return $this->morphedByMany(Service::class, 'userable');
     }
 
     /**
