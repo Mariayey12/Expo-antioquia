@@ -33,5 +33,5 @@ class Provider extends Model
     public function services()
     {
         return $this->morphMany(Service::class, 'serviceable');
-    } 
+    }   
 }

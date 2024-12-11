@@ -31,10 +31,7 @@ class UserFactory extends Factory
             'role' => $this->faker->randomElement(['administrador', 'usuario', 'proveedor']),
             'userable_type' => Admin::class, // Usar el nombre de la clase del modelo relacionado
             'userable_id' => $admin->id, // Establecer el ID del modelo relacionado
-            'services' => json_encode([
-            'service_1' => 'Servicio A',
-            'service_2' => 'Servicio B',
-                           ]),
+           
 
             'remember_token' => Str::random(10),
         ];
