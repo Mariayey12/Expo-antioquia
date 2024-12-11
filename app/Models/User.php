@@ -70,14 +70,7 @@ class User extends Authenticatable
         return $this->morphedByMany(Reservation::class, 'userable');
     }
 
-    /**
-     * Relación polimórfica.
-     * Un usuario puede ser de diferentes tipos (administrador, proveedor, etc.).
-     */
-    public function userable()
-    {
-        return $this->morphTo();
-    }
+    
 
     /**
      * Relación muchos a muchos polimórfica con los lugares.
