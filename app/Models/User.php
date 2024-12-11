@@ -1,7 +1,5 @@
 <?php
 
-
-
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -28,8 +26,8 @@ class User extends Authenticatable
         'address',
         'profile_picture',
         'role',
-        'userable_type', // Se agregó para la relación polimórfica
-        'userable_id',   // Se agregó para la relación polimórfica
+        'userable_type',
+        'userable_id',
     ];
 
     /**
@@ -49,12 +47,18 @@ class User extends Authenticatable
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
-        'password' => 'hashed',
     ];
 
     /**
-     * Relación con el modelo Comentario.
-     * Un usuario puede tener muchos comentarios.
+     * Relación polimórfica uno a uno con el modelo userable (roles específicos).
+     */
+    public function userable()
+    {
+        return $this->morphTo();
+    }
+
+    /**
+     * Relación polimórfica muchos a muchos con comentarios.
      */
     public function comentarios()
     {
@@ -62,18 +66,15 @@ class User extends Authenticatable
     }
 
     /**
-     * Relación con el modelo Reserva.
-     * Un usuario puede tener muchas reservas.
+     * Relación polimórfica muchos a muchos con reservas.
      */
     public function reservas()
     {
         return $this->morphedByMany(Reservation::class, 'userable');
     }
 
-    
-
     /**
-     * Relación muchos a muchos polimórfica con los lugares.
+     * Relación polimórfica muchos a muchos con lugares.
      */
     public function places()
     {
@@ -81,7 +82,7 @@ class User extends Authenticatable
     }
 
     /**
-     * Relación uno a muchos polimórfica con los servicios.
+     * Relación polimórfica muchos a muchos con servicios.
      */
     public function services()
     {
@@ -89,15 +90,21 @@ class User extends Authenticatable
     }
 
     /**
-     * Sobrescribir el método `save` para cifrar la contraseña antes de guardar el usuario.
+     * Evento para cifrar contraseñas antes de guardar un usuario.
      */
-    public static function boot()
+    protected static function boot()
     {
         parent::boot();
 
         static::creating(function ($user) {
             if ($user->password) {
-                $user->password = bcrypt($user->password); // Cifra la contraseña antes de guardarla
+                $user->password = bcrypt($user->password);
+            }
+        });
+
+        static::updating(function ($user) {
+            if ($user->isDirty('password')) {
+                $user->password = bcrypt($user->password);
             }
         });
     }
