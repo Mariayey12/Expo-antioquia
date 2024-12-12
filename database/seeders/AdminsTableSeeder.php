@@ -1,6 +1,5 @@
 <?php
 
-
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
@@ -22,8 +21,8 @@ class AdminsTableSeeder extends Seeder
             'name' => 'Admin Principal',
             'email' => 'admin1@example.com',
             'password' => bcrypt('password123'), // Contraseña encriptada
-            'userable_type' => 'App\Models\Admin', // Relación polimórfica
-            'userable_id' => 10, // ID del administrador creado
+            'userable_type' => Admin::class, // Relación polimórfica
+            'userable_id' => $admin1->id, // ID dinámico
         ]);
 
         // Crear el segundo administrador con usuario asociado
@@ -47,13 +46,14 @@ class AdminsTableSeeder extends Seeder
         foreach ($admins as $admin) {
             User::create([
                 'name' => 'Admin ' . $admin->id,
-                'email' =>  'admind@example.com',
+                'email' => 'admin' . $admin->id . '@example.com',
                 'password' => bcrypt('password123'),
-                'userable_type' => 'App\Models\Admin',
-                'userable_id' => 11, // Asociar el ID del administrador dinámicamente
+                'userable_type' => Admin::class,
+                'userable_id' => $admin->id, // ID dinámico
             ]);
         }
-          // Crear más proveedores con datos aleatorios
+          // Crear más administradores con datos aleatorios
           Admin::factory()->count(8)->create();
     }
+
 }
