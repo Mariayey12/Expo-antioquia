@@ -19,21 +19,31 @@ class AdminController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'permissions' => 'required|string',
-            'department' => 'required|string',
-            'notes' => 'nullable|string',
-            'user' => 'required|array', // Datos para crear un usuario relacionado
+            'permissions' => 'required|string|max:255',
+            'department' => 'required|string|max:255',
+            'notes' => 'nullable|string|max:500',
+            'user.name' => 'required|string|max:255',
+            'user.email' => 'required|email|unique:users,email',
+            'user.password' => 'required|string|min:8',
         ]);
 
-        // Crear el administrador
-        $admin = Admin::create($request->only(['permissions', 'department', 'notes']));
+        try {
+            // Crear el administrador
+            $admin = Admin::create($request->only(['permissions', 'department', 'notes']));
 
-        // Crear el usuario relacionado con la relación polimórfica
-        $user = new User($request->input('user')); // Datos del usuario
-        $user->userable()->associate($admin); // Asociar con el modelo Admin
-        $user->save();
+            // Crear el usuario relacionado con la relación polimórfica
+            $user = new User([
+                'name' => $request->input('user.name'),
+                'email' => $request->input('user.email'),
+                'password' => bcrypt($request->input('user.password')), // Encriptar contraseña
+            ]);
+            $user->userable()->associate($admin);
+            $user->save();
 
-        return response()->json(['admin' => $admin, 'user' => $user], 201);
+            return response()->json(['admin' => $admin, 'user' => $user], 201);
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'Error al crear el administrador: ' . $e->getMessage()], 500);
+        }
     }
 
     // Mostrar un administrador específico
@@ -46,37 +56,52 @@ class AdminController extends Controller
     // Actualizar un administrador
     public function update(Request $request, $id)
     {
-        $admin = Admin::findOrFail($id); // Buscar el administrador por ID
-
         $request->validate([
-            'permissions' => 'required|string',
-            'department' => 'required|string',
-            'notes' => 'nullable|string',
-            'user' => 'sometimes|array', // Datos opcionales para actualizar el usuario
+            'permissions' => 'sometimes|string|max:255',
+            'department' => 'sometimes|string|max:255',
+            'notes' => 'nullable|string|max:500',
+            'user.name' => 'sometimes|string|max:255',
+            'user.email' => 'sometimes|email|unique:users,email,' . $id,
+            'user.password' => 'sometimes|string|min:8',
         ]);
 
-        // Actualizar los datos del administrador
-        $admin->update($request->only(['permissions', 'department', 'notes']));
+        try {
+            $admin = Admin::with('user')->findOrFail($id);
 
-        // Actualizar los datos del usuario relacionado (si se envían)
-        if ($request->has('user')) {
-            $admin->user->update($request->input('user'));
+            // Actualizar datos del administrador
+            $admin->update($request->only(['permissions', 'department', 'notes']));
+
+            // Actualizar datos del usuario relacionado (si se envían)
+            if ($request->has('user')) {
+                $user = $admin->user;
+                $user->update([
+                    'name' => $request->input('user.name', $user->name),
+                    'email' => $request->input('user.email', $user->email),
+                    'password' => $request->has('user.password') ? bcrypt($request->input('user.password')) : $user->password,
+                ]);
+            }
+
+            return response()->json($admin->load('user'));
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'Error al actualizar el administrador: ' . $e->getMessage()], 500);
         }
-
-        return response()->json($admin->load('user')); // Devolver el administrador con la relación cargada
     }
 
     // Eliminar un administrador
     public function destroy($id)
     {
-        $admin = Admin::findOrFail($id); // Buscar el administrador por ID
+        try {
+            $admin = Admin::with('user')->findOrFail($id);
 
-        // Eliminar el usuario relacionado
-        $admin->user()->delete();
+            // Eliminar el usuario relacionado
+            $admin->user->delete();
 
-        // Eliminar el administrador
-        $admin->delete();
+            // Eliminar el administrador
+            $admin->delete();
 
-        return response()->json(null, 204); // Responder con estado 204 (sin contenido)
+            return response()->json(null, 204);
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'Error al eliminar el administrador: ' . $e->getMessage()], 500);
+        }
     }
 }
