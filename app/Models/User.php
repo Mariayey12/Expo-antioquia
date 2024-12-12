@@ -56,7 +56,7 @@ class User extends Authenticatable
     {
         return $this->morphTo();
     }
-     
+
     /**
      * Relación polimórfica muchos a muchos con comentarios.
      */
