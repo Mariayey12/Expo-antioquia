@@ -44,7 +44,10 @@ namespace Database\Seeders;
                     ['name' => 'Restaurantes', 'description' => 'Establecimientos donde se ofrecen comidas preparadas, con opciones diversas de menús y servicios.'],
                     ['name' => 'Bares', 'description' => 'Lugares donde se sirven bebidas alcohólicas y no alcohólicas, acompañados de tapas, música y entretenimiento.'],
                     ['name' => 'Cafeterías', 'description' => 'Espacios ideales para disfrutar de café y pasteles, perfectos para un momento relajado en compañía de amigos o familiares.'],
-                    festival, concierto, feria
+                    ['name' => 'concierto','description' => 'Eventos musicales donde artistas se presentan en vivo para ofrecer una experiencia única a los asistentes.'],
+                    ['name' => 'festival', 'description' => 'Eventos culturales y artísticos que reúnen a grandes multitudes para disfrutar de música, danza y otras expresiones artísticas.'],
+                    ['name' => 'feria','description' => 'Eventos musicales donde artistas se presentan en vivo para ofrecer una experiencia única a los asistentes.'],
+
                 ];
                         foreach ($categories as $categoryData) {
                             // Validar que los campos no sean nulos
