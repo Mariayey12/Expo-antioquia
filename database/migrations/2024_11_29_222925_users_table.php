@@ -24,8 +24,7 @@ return new class extends Migration
             $table->string('profile_picture')->nullable(); // Foto de perfil (opcional)
             $table->enum('role', ['administrador', 'usuario', 'proveedor'])->default('usuario'); // Roles predefinidos
             $table->rememberToken(); // Token para recordar sesión
-            $table->string('userable_type'); // Tipo del modelo relacionado polimórfico
-            $table->unsignedBigInteger('userable_id'); // ID del modelo relacionado polimórfico
+            $table->morphs('userable'); // Esto crea automáticamente userable_type y userable_id
             $table->timestamps(); // Tiempos de creación y actualización
         });
     }
