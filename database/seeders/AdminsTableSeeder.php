@@ -53,5 +53,7 @@ class AdminsTableSeeder extends Seeder
                 'userable_id' => 11, // Asociar el ID del administrador dinámicamente
             ]);
         }
+          // Crear más proveedores con datos aleatorios
+          Admin::factory()->count(8)->create();
     }
 }
