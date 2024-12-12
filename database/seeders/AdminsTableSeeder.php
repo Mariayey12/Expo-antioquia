@@ -22,7 +22,7 @@ namespace Database\Seeders;
                 'email' => 'admin1@example.com',
                 'password' => bcrypt('password123'), // Contraseña encriptada
                 'userable_type' => Admin::class, // Relación polimórfica
-                'userable_id' => $admin1->id, // ID del administrador creado
+                'userable_id' => 10, // ID del administrador creado
             ]);
 
             $admin2 = Admin::create([
@@ -36,7 +36,7 @@ namespace Database\Seeders;
                 'email' => 'admin2@example.com',
                 'password' => bcrypt('password123'),
                 'userable_type' => Admin::class,
-                'userable_id' => $admin2->id,
+                'userable_id' => 11,
             ]);
 
             // Crear más administradores con datos aleatorios
@@ -49,7 +49,7 @@ namespace Database\Seeders;
                     'email' => 'admin' . $admin->id . '@example.com',
                     'password' => bcrypt('password123'),
                     'userable_type' => Admin::class,
-                    'userable_id' => $admin->id,
+                    'userable_id' => 12,
                 ]);
                 // Crear más administradores con datos aleatorios
         Admin::factory()->count(8)->create(); // Puedes ajustar el número según necesites
