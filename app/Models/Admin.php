@@ -27,7 +27,12 @@ class Admin extends Model
     public function user()
     {
         return $this->morphOne(User::class, 'userable');
+
+    }
+    // Relación polimórfica
+    public function userable()
+    {
+        return $this->morphTo();
     }
 
 }
-
