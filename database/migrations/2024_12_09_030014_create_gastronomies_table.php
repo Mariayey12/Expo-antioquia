@@ -17,20 +17,23 @@ return new class extends Migration
             $table->text('description'); // Description
             $table->string('address'); // Address
             $table->string('city'); // City
-            $table->string('contact_info'); // Contact information
-            $table->string('opening_hours'); // Opening hours
+            $table->json('contact_info')->nullable(); // Contact information (e.g., phone, email)
+            $table->string('opening_hours')->nullable(); // Opening hours
             $table->enum('cost_range', ['low', 'medium', 'high']); // Cost range
-            $table->text('image_url')->nullable(); // Featured image URL
-            $table->text('video_url')->nullable(); // Video URL (optional)
-            $table->text('google_maps')->nullable(); // Google Maps URL
+            $table->string('image_url', 2048)->nullable(); // Featured image URL
+            $table->string('video_url', 2048)->nullable(); // Video URL (optional)
+            $table->string('google_maps', 2048)->nullable(); // Google Maps URL
             $table->text('specialties')->nullable(); // Specialties or main dishes
             $table->decimal('latitude', 10, 8)->nullable(); // Latitude for location
             $table->decimal('longitude', 11, 8)->nullable(); // Longitude for location
             $table->boolean('is_open')->default(false); // Is the place open?
             $table->decimal('average_rating', 3, 2)->default(0); // Average rating (e.g., 4.5)
             $table->unsignedInteger('reviews_count')->default(0); // Reviews count
-            $table->nullableMorphs('commerceable'); // Polymorphic relation (if necessary)
+            $table->nullableMorphs('gastronomiceables'); // Polymorphic relation 
             $table->timestamps();
+
+            // Index for faster geospatial queries
+            $table->index(['latitude', 'longitude']);
         });
     }
 
@@ -42,14 +45,3 @@ return new class extends Migration
         Schema::dropIfExists('gastronomies');
     }
 };
-
-
-
-
-
-
-
-
-
-
-

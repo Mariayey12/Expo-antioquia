@@ -1,6 +1,5 @@
-<?php
 
-// App\Models\Gastronomia.php
+<?php
 
 namespace App\Models;
 
@@ -11,8 +10,30 @@ class Gastronomy extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'description', 'type', 'location', 'image_url', 'user_id', 'place_id', 'category_id'];
+    protected $fillable = [
+        'name',
+        'description',
+        'address',
+        'city',
+        'contact_info',
+        'opening_hours',
+        'cost_range',
+        'image_url',
+        'video_url',
+        'google_maps',
+        'specialties',
+        'latitude',
+        'longitude',
+        'is_open',
+        'average_rating',
+        'reviews_count',
+    ];
 
+    // Relación polimórfica
+    public function gastronomiceable()
+    {
+        return $this->morphTo();
+    }
     // Relationship with User
     public function user()
     {
