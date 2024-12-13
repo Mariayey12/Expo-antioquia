@@ -38,17 +38,16 @@ class Gastronomy extends Model
         return $this->belongsTo(User::class);
     }
 
-    // Relationship with Place
-    public function place()
-    {
-        return $this->belongsTo(Place::class);
-    }
+    public function places()
+{
+    return $this->morphToMany(Place::class, 'placeable');
+}
 
-    // Relationship with Category
-    public function category()
-    {
-        return $this->belongsTo(Category::class);
-    }
+
+public function categories()
+{
+    return $this->morphToMany(Category::class, 'categorizable');
+}
 
     // Polymorphic relationship with Event
     public function events()
@@ -56,10 +55,9 @@ class Gastronomy extends Model
         return $this->morphToMany(Event::class, 'eventable');
     }
 
-    // Relationship with Promotions
     public function promotions()
     {
-        return $this->hasMany(Promotion::class);
+        return $this->morphToMany(Promotion::class, 'promocionable');
     }
 }
 

@@ -116,4 +116,9 @@ class Place extends Model
     {
         return $this->hasMany(Comment::class);
     }
+    public function gastronomies()
+{
+    return $this->morphedByMany(Gastronomy::class, 'placeable');
+}
+
 }

@@ -41,5 +41,9 @@ class Category extends Model
   {
       return $this->morphedByMany(Commerce::class, 'categorizable');
   }
+  public function gastronomies()
+{
+    return $this->morphedByMany(Gastronomy::class, 'categorizable');
+}
 }
 
