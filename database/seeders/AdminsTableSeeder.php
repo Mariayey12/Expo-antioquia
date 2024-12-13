@@ -19,7 +19,7 @@ class AdminsTableSeeder extends Seeder
 
         User::create([
             'name' => 'Admin Principal',
-            'email' => 'admin1@example.com',
+            'email' => 'admin5@example.com',
             'password' => bcrypt('password123'), // Contraseña encriptada
             'userable_type' => Admin::class, // Relación polimórfica
             'userable_id' => $admin1->id, // ID dinámico
