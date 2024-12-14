@@ -21,7 +21,6 @@ class DatabaseSeeder extends Seeder
             PlacesTableSeeder::class,// Seeder para lugares
             GastronomysTableSeeder::class, // Seeder para Gastronomia
             EventsTableSeeder::class, // Seeder para eventos
-
             // Otros seeders que puedas tener
         ]);
     }

@@ -23,6 +23,7 @@ class EventsTableSeeder extends Seeder
             $this->command->warn('No se encontraron categorías. Asegúrate de ejecutar el CategoriesTableSeeder.');
             return;
         }
+        
 
         // Obtén modelos polimórficos existentes
         $places = Place::all();
