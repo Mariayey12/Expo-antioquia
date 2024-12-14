@@ -18,7 +18,7 @@ class UsersTableSeeder extends Seeder
         $users = [
             [
                 'name' => 'Administrador General',
-                'email' => 'admin77@example.com',
+                'email' => 'admin79@example.com',
                 'email_verified_at' => Carbon::now(),
                 'company_name' => 'Tech Solutions',
                 'password' => Hash::make('password123'), // Hashear la contraseña
@@ -34,7 +34,7 @@ class UsersTableSeeder extends Seeder
             ],
             [
                 'name' => 'Usuario Regular',
-                'email' => 'user65@example.com',
+                'email' => 'user57@example.com',
                 'email_verified_at' => Carbon::now(),
                 'company_name' => 'Empresa Ejemplo',
                 'password' => Hash::make('userpassword'), // Hashear la contraseña
@@ -50,7 +50,7 @@ class UsersTableSeeder extends Seeder
             ],
             [
                 'name' => 'Proveedor Ejemplo',
-                'email' => 'provider3@example.com',
+                'email' => 'provider@example.com',
                 'email_verified_at' => Carbon::now(),
                 'company_name' => 'Proveedora XYZ',
                 'password' => Hash::make('providerpass'), // Hashear la contraseña
