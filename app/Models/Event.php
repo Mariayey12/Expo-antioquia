@@ -45,5 +45,14 @@ class Event extends Model
     {
         return $this->morphMany(Review::class, 'reviewable');
     }
+    // Modelo Place
+public function events()
+{
+    return $this->morphMany(Event::class, 'eventable');
+}
+
+
+
+
 }
 
