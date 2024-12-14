@@ -119,8 +119,7 @@ class EventsTableSeeder extends Seeder
                 'eventable_id' => $shop->id,
             ]);*/
 
-            // Asocia una categoría
-            $event->categories()->attach($categories->random());
+            
                  // Crear eventos adicionales usando factories
         Event::factory(10)->create();
         }
