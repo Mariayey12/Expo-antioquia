@@ -7,11 +7,11 @@ use Illuminate\Database\Seeder;
 
 class EventsTableSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     */
-    public function run(): void
+    public function run()
     {
-        //
+        Event::factory()->count(50)->create(); // Crea 50 eventos de ejemplo
     }
 }
+
+
+
