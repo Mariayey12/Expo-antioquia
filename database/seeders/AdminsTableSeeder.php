@@ -34,7 +34,7 @@ class AdminsTableSeeder extends Seeder
 
         User::create([
             'name' => 'Admin de Clientes',
-            'email' => 'admin2@example.com',
+            'email' => 'admin29@example.com',
             'password' => bcrypt('password123'),
             'userable_type' => Admin::class,
             'userable_id' => $admin2->id,
