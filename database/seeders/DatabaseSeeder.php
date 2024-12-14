@@ -15,11 +15,12 @@ class DatabaseSeeder extends Seeder
     {
         // Llama a los seeders de las tablas específicas en el orden adecuado
         $this->call([
-            AdminsTableSeeder::class,         // Seeder para administradores
-            UsersTableSeeder::class,         // Seeder para usuarios
-            ProvidersTableSeeder::class,      // Seeder para proveedores (o servicios, etc.)
-            PlacesTableSeeder::class,        // Seeder para lugares
-            GastronomysTableSeeder::class,// Seeder para Gastronomia
+            AdminsTableSeeder::class,// Seeder para administradores
+            UsersTableSeeder::class,// Seeder para usuarios
+            ProvidersTableSeeder::class, // Seeder para proveedores (o servicios, etc.)
+            PlacesTableSeeder::class,// Seeder para lugares
+            GastronomysTableSeeder::class, // Seeder para Gastronomia
+            EventsTableSeeder::class, // Seeder para eventos
 
             // Otros seeders que puedas tener
         ]);
