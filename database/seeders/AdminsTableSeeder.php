@@ -5,55 +5,81 @@ namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 use App\Models\Admin;
 use App\Models\User;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Carbon;
 
 class AdminsTableSeeder extends Seeder
 {
     public function run()
     {
-        // Crear el primer administrador con usuario asociado
-        $admin1 = Admin::create([
-            'permissions' => 'manage_users,view_reports',
-            'department' => 'IT',
-            'notes' => 'Administrador del sistema principal',
-        ]);
-
-        User::create([
-            'name' => 'Admin Principal',
-            'email' => 'admin77@example.com',
-            'password' => bcrypt('password123'), // Contraseña encriptada
-            'userable_type' => Admin::class, // Relación polimórfica
-            'userable_id' => $admin1->id, // ID dinámico
-        ]);
-
-        // Crear el segundo administrador con usuario asociado
-        $admin2 = Admin::create([
-            'permissions' => 'manage_admins,view_reports',
-            'department' => 'Customer Service',
-            'notes' => 'Administrador de servicios a clientes',
-        ]);
-
-        User::create([
-            'name' => 'Admin de Clientes',
-            'email' => 'admin29@example.com',
-            'password' => bcrypt('password123'),
-            'userable_type' => Admin::class,
-            'userable_id' => $admin2->id,
-        ]);
-
-        // Crear más administradores con datos aleatorios y usuarios asociados
-        $admins = Admin::factory()->count(8)->create();
-
-        foreach ($admins as $admin) {
-            User::create([
-                'name' => 'Admin ' . $admin->id,
-                'email' => 'admin' . $admin->id . '@example.com',
+        // Crear datos de administradores manualmente
+        $admins = [
+            [
+                'permissions' => 'manage_users,view_reports',
+                'department' => 'IT',
+                'notes' => 'Administrador principal del sistema',
+                'name' => 'Admin Principal',
+                'email' => 'admin1@example.com',
                 'password' => bcrypt('password123'),
-                'userable_type' => Admin::class,
-                'userable_id' => $admin->id, // ID dinámico
-            ]);
-        }
-          // Crear más administradores con datos aleatorios
-          Admin::factory()->count(8)->create();
-    }
+            ],
+            [
+                'permissions' => 'manage_reports,edit_content',
+                'department' => 'Marketing',
+                'notes' => 'Administrador de marketing y contenido',
+                'name' => 'Admin Marketing',
+                'email' => 'admin2@example.com',
+                'password' => bcrypt('password123'),
+            ],
+            [
+                'permissions' => 'manage_support,view_tickets',
+                'department' => 'Customer Service',
+                'notes' => 'Administrador de atención al cliente',
+                'name' => 'Admin Soporte',
+                'email' => 'admin3@example.com',
+                'password' => bcrypt('password123'),
+            ],
+        ];
 
+        foreach ($admins as $adminData) {
+            try {
+                // Crear registro en Admin
+                $admin = Admin::create([
+                    'permissions' => $adminData['permissions'],
+                    'department' => $adminData['department'],
+                    'notes' => $adminData['notes'],
+                    'created_at' => Carbon::now(),
+                    'updated_at' => Carbon::now(),
+                ]);
+
+                // Crear registro en Users vinculado al Admin
+                User::firstOrCreate(
+                    ['email' => $adminData['email']], // Evitar duplicados
+                    [
+                        'name' => $adminData['name'],
+                        'password' => $adminData['password'],
+                        'userable_id' => $admin->id,
+                        'userable_type' => Admin::class,
+                        'created_at' => Carbon::now(),
+                        'updated_at' => Carbon::now(),
+                    ]
+                );
+            } catch (\Exception $e) {
+                Log::error("Error al crear administrador: {$e->getMessage()}");
+            }
+        }
+
+        // Crear administradores adicionales con datos aleatorios usando Factory
+        Admin::factory()->count(8)->create()->each(function ($admin) {
+            User::create([
+                'name' => 'Admin Aleatorio',
+                'email' => fake()->unique()->safeEmail,
+                'password' => bcrypt('password123'),
+                'userable_id' => $admin->id,
+                'userable_type' => Admin::class,
+            ]);
+        });
+
+        echo "Administradores insertados exitosamente.\n";
+    }
 }
+

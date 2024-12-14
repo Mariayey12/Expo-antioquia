@@ -48,6 +48,6 @@ class AdminsTableSeeder extends Seeder
         // Crear administradores adicionales con datos aleatorios usando Factory
         Admin::factory()->count(8)->create();
 
-        echo "Administradores insertados exitosamente.\n";
+        echo " insertados exitosamente.\n";
     }
 }
