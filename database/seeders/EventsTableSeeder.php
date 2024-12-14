@@ -9,22 +9,49 @@ use Illuminate\Database\Seeder;
 
 class EventsTableSeeder extends Seeder
 {
-    public function run()
+    /**
+     * Run the database seeds.
+     */
+    public function run(): void
     {
-        // Crear categorías de ejemplo
-        $categories = Category::factory()->count(5)->create(); // Crea 5 categorías
-        $places = Place::factory()->count(10)->create(); // Crea 10 lugares
+        // Obtén categorías existentes
+        $categories = Category::whereIn('name', ['Concierto', 'Festival', 'Feria'])->get();
 
-        // Crear eventos y asociarlos a categorías y lugares
-        Event::factory()->count(50)->create()->each(function ($event) use ($categories, $places) {
+        // Obtén lugares existentes
+        $places = Place::all();
+
+        // Crea eventos de ejemplo y establece relaciones
+        foreach ($places as $place) {
+            $event = Event::create([
+                'name' => 'Evento en ' . $place->name,
+                'description' => 'Un evento único en ' . $place->city,
+                'type' => $categories->random()->name, // Asigna una categoría aleatoria
+                'start_date' => now()->addDays(rand(1, 30)),
+                'end_date' => now()->addDays(rand(31, 60)),
+                'location' => $place->address,
+                'organizer_name' => 'Organización ' . $place->name,
+                'contact_info' => json_encode([
+                    'phone' => '+57 300' . rand(1000000, 9999999),
+                    'email' => 'contacto@' . strtolower(str_replace(' ', '', $place->name)) . '.com',
+                ]),
+                'image_url' => 'https://via.placeholder.com/800x600',
+                'video_url' => 'https://www.youtube.com/watch?v=example',
+                'google_maps' => 'https://maps.google.com/?q=' . $place->latitude . ',' . $place->longitude,
+                'latitude' => $place->latitude,
+                'longitude' => $place->longitude,
+                'is_virtual' => rand(0, 1), // Aleatoriamente define si el evento es virtual
+                'price' => rand(0, 200000), // Genera un precio aleatorio
+            ]);
+
             // Asocia una categoría aleatoria al evento
-            $event->category()->associate($categories->random());
+            $event->categories()->attach($categories->random());
 
-            // Asocia un lugar aleatorio al evento
-            $event->place()->associate($places->random());
-
-            // Guarda el evento con las relaciones
+            // Asocia el evento al lugar (relación polimórfica)
+            $event->eventable()->associate($place);
             $event->save();
-        });
+        }
+
+        // Crear eventos adicionales usando factories
+        Event::factory(10)->create();
     }
 }

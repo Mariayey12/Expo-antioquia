@@ -15,7 +15,7 @@ class GastronomysTableSeeder extends Seeder
     public function run(): void
     {
         // Obtén categorías y lugares existentes
-        $categories = Category::whereIn('name', ['Restaurantes', 'Cafeterías'])->get();
+        $categories = Category::whereIn('name', ['Restaurantes', 'Cafeterías', 'bares'])->get();
         $places = Place::all();
 
         // Crea gastronomías de ejemplo y establece relaciones
