@@ -19,6 +19,8 @@ class DatabaseSeeder extends Seeder
             UsersTableSeeder::class,         // Seeder para usuarios
             ProvidersTableSeeder::class,      // Seeder para proveedores (o servicios, etc.)
             PlacesTableSeeder::class,        // Seeder para lugares
+            GastronomysTableSeeder::class,// Seeder para Gastronomia
+
             // Otros seeders que puedas tener
         ]);
     }
