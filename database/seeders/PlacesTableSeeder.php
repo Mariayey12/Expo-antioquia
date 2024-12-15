@@ -57,8 +57,6 @@ namespace Database\Seeders;
                                 }
                             }
 
-                            // Crear categoría si no existe
-                            Category::firstOrCreate($categoryData);
                         }
                     // Crear 10 lugares aleatorios y asociarles categorías y servicios
         $placesData = Place::factory(10)->create();
@@ -312,8 +310,5 @@ if ($category) {
    }
 
 }
-
-
-
 
 
