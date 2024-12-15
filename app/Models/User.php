@@ -93,7 +93,19 @@ public function passwordResets()
 {
     return $this->hasMany(PasswordResetToken::class, 'email', 'email');
 }
+/**
 
+     * Get the clientable relationship.
+     */
+    public function clientable()
+    {
+        return $this->morphOne(Client::class, 'clientable');
+    }
+      // Relación con Client (Uno a Uno)
+      public function client()
+      {
+          return $this->hasOne(Client::class);
+      }
     /**
      * Evento para cifrar contraseñas antes de guardar un usuario.
      */
