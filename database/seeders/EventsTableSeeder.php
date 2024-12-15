@@ -1,5 +1,3 @@
-<?php
-
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
@@ -17,13 +15,18 @@ class EventsTableSeeder extends Seeder
         // Obtén categorías existentes
         $categories = Category::whereIn('name', ['Concierto', 'Festival', 'Feria'])->get();
 
- // Obtén modelos de lugares existentes
- $places = Place::all();
-        
+        if ($categories->isEmpty()) {
+            $this->command->warn('No se encontraron categorías. Asegúrate de ejecutar el CategoriesTableSeeder.');
+            return;
+        }
 
+        // Obtén modelos de lugares existentes
+        $places = Place::all();
 
-
-
+        if ($places->isEmpty()) {
+            $this->command->warn('No se encontraron lugares. Asegúrate de llenar la tabla de lugares.');
+            return;
+        }
 
         // Crear eventos relacionados con lugares
         foreach ($places as $place) {
@@ -55,6 +58,6 @@ class EventsTableSeeder extends Seeder
         }
 
         // Puedes crear más eventos o usar un factory si es necesario
-         Event::factory(10)->create();
+        // Event::factory(10)->create();
     }
 }
