@@ -120,5 +120,10 @@ class Place extends Model
 {
     return $this->morphedByMany(Gastronomy::class, 'placeable');
 }
+// En el modelo Place
+public function events()
+{
+    return $this->morphMany(Event::class, 'eventable');
+}
 
 }

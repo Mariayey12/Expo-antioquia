@@ -45,5 +45,11 @@ class Category extends Model
 {
     return $this->morphedByMany(Gastronomy::class, 'categorizable');
 }
+
+public function events()
+{
+    return $this->belongsToMany(Event::class);
+}
+
 }
 

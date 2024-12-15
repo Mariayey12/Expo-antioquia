@@ -5,8 +5,8 @@ namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 use App\Models\Event;
 use App\Models\Place;
-//use App\Models\Service;
-//use App\Models\Commerce;
+use App\Models\Service;
+use App\Models\Commerce;
 use App\Models\Category;
 
 class EventsTableSeeder extends Seeder
@@ -27,8 +27,8 @@ class EventsTableSeeder extends Seeder
 
         // Obtén modelos polimórficos existentes
         $places = Place::all();
-        //$services = Service::all();
-        //$commerce = Commerce::all();
+        $services = Service::all();
+        $commerce = Commerce::all();
 
         // Verifica que haya datos disponibles
         if ($places->isEmpty() && $services->isEmpty() && $commerce->isEmpty()) {
@@ -65,7 +65,7 @@ class EventsTableSeeder extends Seeder
             $event->categories()->attach($categories->random());
         }
 
-       /* // Crear eventos relacionados con servicios
+        // Crear eventos relacionados con servicios
         foreach ($services as $service) {
             $event = Event::create([
                 'name' => 'Evento de Servicio ' . $service->name,
@@ -117,14 +117,14 @@ class EventsTableSeeder extends Seeder
                 'reviews_count' => rand(20, 70),
                 'eventable_type' => Commerce::class,
                 'eventable_id' => $shop->id,
-            ]);*/
+            ]);
 
-            
-                 // Crear eventos adicionales usando factories
-        Event::factory(10)->create();
+            // Asocia una categoría
+            $event->categories()->attach($categories->random());
         }
 
-
+        // Crear eventos adicionales usando factories
+        Event::factory(10)->create();
     }
-
+}
 

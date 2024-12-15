@@ -51,6 +51,10 @@ public function events()
     return $this->morphMany(Event::class, 'eventable');
 }
 
+public function categories()
+{
+    return $this->belongsToMany(Category::class);
+}
 
 
 
