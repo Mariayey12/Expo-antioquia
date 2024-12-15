@@ -14,14 +14,34 @@ class GastronomysTableSeeder extends Seeder
      */
     public function run(): void
     {
-        // Obtén categorías y lugares existentes
+        // Verifica que existan categorías con los nombres especificados
         $categories = Category::whereIn('name', ['Restaurantes', 'Cafeterías', 'bares'])->get();
+
+        if ($categories->isEmpty()) {
+            $this->command->info('No se encontraron categorías con los nombres especificados.');
+        } else {
+            $this->command->info('Categorías encontradas: ' . $categories->pluck('name')->implode(', '));
+        }
+
+        // Verifica que existan lugares
         $places = Place::all();
+
+        if ($places->isEmpty()) {
+            $this->command->info('No se encontraron lugares para asociar con gastronomías.');
+        } else {
+            $this->command->info('Lugares encontrados: ' . $places->pluck('name')->implode(', '));
+        }
 
         // Crea gastronomías de ejemplo y establece relaciones
         foreach ($places as $place) {
+            // Verifica si el lugar tiene las coordenadas necesarias
+            if (empty($place->latitude) || empty($place->longitude)) {
+                $this->command->info("El lugar {$place->name} no tiene coordenadas para asociarse correctamente.");
+                continue;
+            }
+
             $gastronomy = Gastronomy::create([
-                'name' => 'Restaurante' . $place->name,
+                'name' => 'Restaurante ' . $place->name,
                 'description' => 'Una experiencia gastronómica única en ' . $place->city,
                 'address' => $place->address,
                 'city' => $place->city,
@@ -38,18 +58,28 @@ class GastronomysTableSeeder extends Seeder
                 'latitude' => $place->latitude,
                 'longitude' => $place->longitude,
                 'is_open' => true,
-                'average_rating' => rand(3, 5), // Genera un promedio aleatorio
+                'average_rating' => rand(3, 5),
                 'reviews_count' => rand(10, 100),
                 'gastronomiceables_type' => Place::class,
                 'gastronomiceables_id' => $place->id,
             ]);
 
-            // Asocia categorías
+            // Asocia las categorías solo si existen
             foreach ($categories as $category) {
-                $gastronomy->categories()->attach($category);
+                // Verifica si la categoría ya existe
+                if (Category::find($category->id)) {
+                    $gastronomy->categories()->attach($category);
+                    $this->command->info("Categoría '{$category->name}' asociada a la gastronomía '{$gastronomy->name}' exitosamente.");
+                } else {
+                    $this->command->info("La categoría '{$category->name}' no se encontró, no se asoció.");
+                }
             }
+
+            $this->command->info("Gastronomía '{$gastronomy->name}' insertada exitosamente.");
         }
+
+        // Crear 10 entradas adicionales con la fábrica
         Gastronomy::factory(10)->create();
-        echo "Gastronomies insertados exitosamente.\n";
+        $this->command->info("Gastronomías insertadas exitosamente.");
     }
 }
