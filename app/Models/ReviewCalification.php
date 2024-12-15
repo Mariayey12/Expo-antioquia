@@ -20,4 +20,9 @@ class ReviewCalification extends Model
     {
         return $this->belongsTo(Service::class);
     }
+     // Relación polimórfica inversa
+     public function reviewable()
+     {
+         return $this->morphTo();
+     }
 }
