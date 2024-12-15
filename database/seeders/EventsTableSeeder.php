@@ -5,8 +5,6 @@ namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 use App\Models\Event;
 use App\Models\Place;
-use App\Models\Service;
-use App\Models\Commerce;
 use App\Models\Category;
 
 class EventsTableSeeder extends Seeder
@@ -24,15 +22,12 @@ class EventsTableSeeder extends Seeder
             return;
         }
 
-
-        // Obtén modelos polimórficos existentes
+        // Obtén modelos de lugares existentes
         $places = Place::all();
-        $services = Service::all();
-        $commerce = Commerce::all();
 
-        // Verifica que haya datos disponibles
-        if ($places->isEmpty() && $services->isEmpty() && $commerce->isEmpty()) {
-            $this->command->warn('No se encontraron lugares, servicios o comercios. Asegúrate de llenar estas tablas antes de ejecutar el seeder.');
+        // Verifica que haya lugares disponibles
+        if ($places->isEmpty()) {
+            $this->command->warn('No se encontraron lugares. Asegúrate de llenar la tabla de lugares antes de ejecutar el seeder.');
             return;
         }
 
@@ -65,66 +60,9 @@ class EventsTableSeeder extends Seeder
             $event->categories()->attach($categories->random());
         }
 
-        // Crear eventos relacionados con servicios
-        foreach ($services as $service) {
-            $event = Event::create([
-                'name' => 'Evento de Servicio ' . $service->name,
-                'description' => 'Un evento relacionado con el servicio ' . $service->name,
-                'type' => $categories->random()->name,
-                'start_date' => now()->addDays(rand(10, 40)),
-                'end_date' => now()->addDays(rand(41, 70)),
-                'location' => $service->address,
-                'cost' => rand(0, 300),
-                'organizer_name' => 'Organización ' . $service->name,
-                'contact_info' => json_encode([
-                    'phone' => '+57 320' . rand(1000000, 9999999),
-                    'email' => 'info@' . strtolower(str_replace(' ', '', $service->name)) . '.com',
-                ]),
-                'image_url' => 'https://via.placeholder.com/800x600',
-                'video_url' => 'https://www.youtube.com/watch?v=example2',
-                'google_maps' => 'https://maps.google.com/?q=' . $service->latitude . ',' . $service->longitude,
-                'is_active' => true,
-                'average_rating' => rand(3, 5),
-                'reviews_count' => rand(5, 50),
-                'eventable_type' => Service::class,
-                'eventable_id' => $service->id,
-            ]);
-
-            // Asocia una categoría
-            $event->categories()->attach($categories->random());
-        }
-
-        // Crear eventos relacionados con comercios
-        foreach ($commerce as $shop) {
-            $event = Event::create([
-                'name' => 'Evento Comercial ' . $shop->name,
-                'description' => 'Un evento único en ' . $shop->city . '.',
-                'type' => $categories->random()->name,
-                'start_date' => now()->addDays(rand(5, 25)),
-                'end_date' => now()->addDays(rand(26, 50)),
-                'location' => $shop->address,
-                'cost' => rand(0, 200),
-                'organizer_name' => 'Comercio ' . $shop->name,
-                'contact_info' => json_encode([
-                    'phone' => '+57 350' . rand(1000000, 9999999),
-                    'email' => 'contacto@' . strtolower(str_replace(' ', '', $shop->name)) . '.com',
-                ]),
-                'image_url' => 'https://via.placeholder.com/800x600',
-                'video_url' => 'https://www.youtube.com/watch?v=example3',
-                'google_maps' => 'https://maps.google.com/?q=' . $shop->latitude . ',' . $shop->longitude,
-                'is_active' => true,
-                'average_rating' => rand(4, 5),
-                'reviews_count' => rand(20, 70),
-                'eventable_type' => Commerce::class,
-                'eventable_id' => $shop->id,
-            ]);
-
-            // Asocia una categoría
-            $event->categories()->attach($categories->random());
-        }
-
-        // Crear eventos adicionales usando factories
+        // Crear eventos adicionales usando factories (si es necesario)
         Event::factory(10)->create();
     }
 }
+
 

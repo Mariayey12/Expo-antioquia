@@ -59,5 +59,6 @@ public function categories()
     {
         return $this->morphToMany(Promotion::class, 'promocionable');
     }
+    
 }
 

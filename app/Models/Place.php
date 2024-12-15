@@ -116,14 +116,16 @@ class Place extends Model
     {
         return $this->hasMany(Comment::class);
     }
-    public function gastronomies()
-{
-    return $this->morphedByMany(Gastronomy::class, 'placeable');
-}
+ 
 // En el modelo Place
 public function events()
 {
     return $this->morphMany(Event::class, 'eventable');
+}
+// En el modelo Place
+public function gastronomies()
+{
+    return $this->morphMany(Gastronomy::class, 'gastronomiceable');
 }
 
 }
