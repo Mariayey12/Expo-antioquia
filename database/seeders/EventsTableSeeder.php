@@ -17,23 +17,17 @@ class EventsTableSeeder extends Seeder
         // Obtén categorías existentes
         $categories = Category::whereIn('name', ['Concierto', 'Festival', 'Feria'])->get();
 
-        if ($categories->isEmpty()) {
-            $this->command->warn('No se encontraron categorías. Asegúrate de ejecutar el CategoriesTableSeeder.');
-            return;
-        }
+
 
         // Obtén modelos de lugares existentes
         $places = Place::all();
 
-        if ($places->isEmpty()) {
-            $this->command->warn('No se encontraron lugares. Asegúrate de llenar la tabla de lugares.');
-            return;
-        }
+       
 
         // Crear eventos relacionados con lugares
         foreach ($places as $place) {
             $event = Event::create([
-                'name' => 'Evento en ' . $place->name,
+                'name' => 'Concierto ' . $place->name,
                 'description' => 'Un evento único en ' . $place->city . '.',
                 'type' => $categories->random()->name, // Esto usa una categoría aleatoria
                 'start_date' => now()->addDays(rand(1, 30)),
@@ -56,7 +50,7 @@ class EventsTableSeeder extends Seeder
             ]);
 
             // Asociar una categoría (ahora solo se pasa el ID)
-            $event->categories()->attach($categories->random()->id); // Corregido
+
 
              // Asociar categorías al evento
              $event->categories()->attach($categories->random()->id); // Asociar una categoría aleatoria
