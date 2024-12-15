@@ -52,7 +52,7 @@ public function events()
 
 public function categories()
 {
-    return $this->belongsToMany(Category::class);
+    return $this->morphToMany(Category::class);
 }
 
 
