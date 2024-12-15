@@ -22,7 +22,7 @@ class EventsTableSeeder extends Seeder
         // Obtén modelos de lugares existentes
         $places = Place::all();
 
-       
+
 
         // Crear eventos relacionados con lugares
         foreach ($places as $place) {
@@ -50,10 +50,10 @@ class EventsTableSeeder extends Seeder
             ]);
 
             // Asociar una categoría (ahora solo se pasa el ID)
-
-
-             // Asociar categorías al evento
-             $event->categories()->attach($categories->random()->id); // Asociar una categoría aleatoria
+ // Asocia categorías
+ foreach ($categories as $category) {
+    $event->categories()->attach($category);
+}
 
              // Mensaje de éxito para cada evento insertado
              $this->command->info("Evento '{$event->name}' insertado exitosamente.");
