@@ -24,7 +24,7 @@ class DatabaseSeeder extends Seeder
             // Seeders para entidades principales
             //CategoriesTableSeeder::class,      // Categorías para lugares y servicios
             PlacesTableSeeder::class,          // Lugares (depende de categorías)
-            GastronomiesTableSeeder::class,    // Gastronomía
+            GastronomysTableSeeder::class,    // Gastronomía
             EventsTableSeeder::class,          // Eventos
             ProductsTableSeeder::class,        // Productos
             BlogsTableSeeder::class,           // Blogs
