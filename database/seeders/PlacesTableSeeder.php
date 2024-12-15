@@ -306,12 +306,12 @@ $commerces = Commerce::create($commerceData);
 $category = Category::where('name', 'Commerce')->first();
 if ($category) {
     $commerces->categories()->attach($category->id);
+
+     }
+     
+   }
+
 }
-
-
-}
-
-        }
 
 
 

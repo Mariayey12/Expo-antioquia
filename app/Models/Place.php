@@ -116,7 +116,7 @@ class Place extends Model
     {
         return $this->hasMany(Comment::class);
     }
- 
+
 // En el modelo Place
 public function events()
 {

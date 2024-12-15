@@ -35,7 +35,7 @@ class EventsTableSeeder extends Seeder
             $event = Event::create([
                 'name' => 'Evento en ' . $place->name,
                 'description' => 'Un evento único en ' . $place->city . '.',
-                'type' => $categories->random()->name,
+                'type' => $categories->random()->name, // Esto usa una categoría aleatoria
                 'start_date' => now()->addDays(rand(1, 30)),
                 'end_date' => now()->addDays(rand(31, 60)),
                 'location' => $place->address,
@@ -52,14 +52,16 @@ class EventsTableSeeder extends Seeder
                 'average_rating' => rand(3, 5),
                 'reviews_count' => rand(10, 100),
                 'eventables_type' => Place::class,
-                'eventables_id' => $place->id, // Relación polimórfica
+                'eventables_id' => $place->id, // Relación polimórfica con Place
             ]);
 
-            // Asocia una categoría
-            $event->categories()->attach($categories->random());
+            // Asociar una categoría (ahora solo se pasa el ID)
+            $event->categories()->attach($categories->random()->id); // Corregido
+
         }
 
-        // Puedes crear más eventos o usar un factory si es necesario
-         Event::factory(10)->create();
+        // Si deseas crear más eventos con un factory
+         Event::factory(10)->create(); // Esto solo lo usas si necesitas más eventos generados por el factory
     }
 }
+
