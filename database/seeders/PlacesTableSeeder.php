@@ -308,7 +308,7 @@ if ($category) {
     $commerces->categories()->attach($category->id);
 
      }
-
+     $this->command->info('Places Categorias Servios y comercios insertados exitosamente.');
    }
 
 }
