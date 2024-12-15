@@ -57,8 +57,8 @@ class EventsTableSeeder extends Seeder
                 'is_active' => true,
                 'average_rating' => rand(3, 5),
                 'reviews_count' => rand(10, 100),
-                'eventables_type' => Place::class,
-                'eventables_id' => $place->id, // Relación polimórfica con Place
+                'eventable_type' => Place::class,
+                'eventable_id' => $place->id, // Relación polimórfica con Place
             ]);
 
             // Asociar la categoría aleatoria al evento
