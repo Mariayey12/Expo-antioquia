@@ -36,7 +36,7 @@ class EventsTableSeeder extends Seeder
         foreach ($places as $place) {
             // Crear evento
             $event = Event::create([
-                'name' => 'Evento en ' . $place->name,
+                'name' => 'Concierto' . $place->name,
                 'description' => 'Un evento único en ' . $place->city . '.',
                 'type' => $categories->random()->name, // Usa una categoría aleatoria
                 'start_date' => now()->addDays(rand(1, 30)),
