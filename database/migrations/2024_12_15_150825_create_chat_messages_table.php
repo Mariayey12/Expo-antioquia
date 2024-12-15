@@ -20,7 +20,7 @@ return new class extends Migration
                 $table->text('message');
                 $table->timestamps();
                 $table->foreignId('sender_id')->constrained('clients')->onDelete('cascade');
-                $table->foreignId('receiver_id')->constrained('clients')->onDelete('cascade');
+               $table->foreignId('receiver_id')->constrained('clients')->onDelete('cascade');
                 $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
                 $table->foreign('seller_id')->references('id')->on('users')->onDelete('cascade');
             });

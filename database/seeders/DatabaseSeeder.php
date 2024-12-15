@@ -15,30 +15,33 @@ class DatabaseSeeder extends Seeder
     {
         // Llama a los seeders de las tablas específicas en el orden adecuado
         $this->call([
-             AdminsTableSeeder::class,// Seeder para administradores
-             UsersTableSeeder::class,// Seeder para usuarios
-             ProvidersTableSeeder::class, // Seeder para proveedores (o servicios, etc.)
-             ClientsTableSeeder::class,        // Seeder para clientes
+            // Seeders para usuarios y roles
+            AdminsTableSeeder::class,          // Administradores
+            UsersTableSeeder::class,           // Usuarios
+            ProvidersTableSeeder::class,       // Proveedores
+            ClientsTableSeeder::class,         // Clientes
 
-            // Seeders para entidades relacionadas con lugares y servicios
-            //CategoriesTableSeeder::class,     // Categorías para lugares
-            PlacesTableSeeder::class,         // Seeder para lugares dentro esta categorias servicios comercios
-            GastronomysTableSeeder::class,    // Seeder para gastronomía
-            //ProductsTableSeeder::class,       // Seeder para productos
-            EventsTableSeeder::class,         // Seeder para eventos
-            //BlogsTableSeeder::class,          // Seeder para blogs
+            // Seeders para entidades principales
+            //CategoriesTableSeeder::class,      // Categorías para lugares y servicios
+            PlacesTableSeeder::class,          // Lugares (depende de categorías)
+            GastronomiesTableSeeder::class,    // Gastronomía
+            EventsTableSeeder::class,          // Eventos
+            ProductsTableSeeder::class,        // Productos
+            BlogsTableSeeder::class,           // Blogs
+            AdsTableSeeder::class,             // Anuncios publicitarios
 
-             // Seeders para tablas pivote o relacionadas
-             //FavoritesTableSeeder::class,      // Relación entre usuarios y lugares favoritos
-             ReservationsTableSeeder::class,   // Reservas de lugares
-             //CommentsTableSeeder::class,       // Comentarios en lugares
-             //TestimonialsTableSeeder::class,   // Testimonios de usuarios
-             //ReviewCalificationsTableSeeder::class, // Calificaciones y reseñas
-             //PromotionsTableSeeder::class,     // Promociones relacionadas con lugares y productos
-             //ShoppingCartsTableSeeder::class,  // Carritos de compras
-             //MediaGalleryTableSeeder::class,   // Galerías de medios
-             //ChatMessagesTableSeeder::class,   // Mensajes de chat
-             //AdsTableSeeder::class,            // Anuncios publicitarios
+            // Seeders para datos relacionados o tablas pivote
+            ReservationsTableSeeder::class,    // Reservas de lugares
+            CommentsTableSeeder::class,        // Comentarios
+            TestimonialsTableSeeder::class,    // Testimonios
+            FavoritesTableSeeder::class,       // Favoritos (usuarios y lugares)
+            ReviewCalificationsTableSeeder::class, // Calificaciones y reseñas
+            ShoppingCartsTableSeeder::class,   // Carritos de compras
+
+            // Seeders adicionales
+            PromotionsTableSeeder::class,      // Promociones
+            MediaGallerysTableSeeder::class,    // Galerías de medios
+            ChatMessagesTableSeeder::class,    // Mensajes de chat
         ]);
     }
 }
