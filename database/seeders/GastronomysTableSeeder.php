@@ -50,5 +50,6 @@ class GastronomysTableSeeder extends Seeder
             }
         }
         Gastronomy::factory(10)->create();
+        echo "Gastronomies insertados exitosamente.\n";
     }
 }
