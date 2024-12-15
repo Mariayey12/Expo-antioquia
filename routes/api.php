@@ -31,6 +31,11 @@ use App\Http\Controllers\TestimonialController;
 use App\Http\Controllers\ReviewsCalificationController;
 use App\Http\Controllers\MediaGalleryController;
 use App\Http\Controllers\ChatController;
+use App\Http\Controllers\ProductController;
+use App\Http\Controllers\ClientController;
+use App\Http\Controllers\FavoriteController;
+
+
 
 
 
@@ -47,8 +52,7 @@ Route::middleware(['auth:sanctum', 'check.provider'])->apiResource('providers', 
 
 // Rutas públicas para lugares, comercios y servicios
 Route::apiResource('places', PlaceController::class);
-
-// Rutas RESTful para la entidad Category
+// Rutas RESTful para la entidad Category y demas 
 Route::apiResource('categories', CategoryController::class);
 Route::apiResource('commerces', CommerceController::class);
 Route::apiResource('services', ServiceController::class);
@@ -61,6 +65,11 @@ Route::apiResource('testimonials', TestimonialController::class);
 Route::apiResource('reviews-califications', ReviewsCalificationController::class);
 Route::apiResource('media_gallery' ,MediaGalleryController::class);
 Route::apiResource('chat_messages', ChatController::class);
+Route::resource('products', ProductController::class);
+Route::resource('clients', ClientController::class);
+Route::resource('favorites', FavoriteController::class);
+
+
 
 // Ruta protegida para obtener datos del usuario autenticado
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {

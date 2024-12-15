@@ -88,6 +88,11 @@ class User extends Authenticatable
     {
         return $this->morphedByMany(Service::class, 'userable');
     }
+// User.php
+public function passwordResets()
+{
+    return $this->hasMany(PasswordResetToken::class, 'email', 'email');
+}
 
     /**
      * Evento para cifrar contraseñas antes de guardar un usuario.
