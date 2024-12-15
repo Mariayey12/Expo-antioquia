@@ -17,7 +17,6 @@ class EventsTableSeeder extends Seeder
         // Obtén categorías existentes
         $categories = Category::whereIn('name', ['Concierto', 'Festival', 'Feria'])->get();
 
-        // Verificar que existan categorías
         if ($categories->isEmpty()) {
             $this->command->warn('No se encontraron categorías. Asegúrate de ejecutar el CategoriesTableSeeder.');
             return;
@@ -26,7 +25,6 @@ class EventsTableSeeder extends Seeder
         // Obtén modelos de lugares existentes
         $places = Place::all();
 
-        // Verificar que existan lugares
         if ($places->isEmpty()) {
             $this->command->warn('No se encontraron lugares. Asegúrate de llenar la tabla de lugares.');
             return;
@@ -34,11 +32,10 @@ class EventsTableSeeder extends Seeder
 
         // Crear eventos relacionados con lugares
         foreach ($places as $place) {
-            // Crear evento
             $event = Event::create([
-                'name' => 'Concierto' . $place->name,
+                'name' => 'Evento en ' . $place->name,
                 'description' => 'Un evento único en ' . $place->city . '.',
-                'type' => $categories->random()->name, // Usa una categoría aleatoria
+                'type' => $categories->random()->name, // Esto usa una categoría aleatoria
                 'start_date' => now()->addDays(rand(1, 30)),
                 'end_date' => now()->addDays(rand(31, 60)),
                 'location' => $place->address,
@@ -54,20 +51,25 @@ class EventsTableSeeder extends Seeder
                 'is_active' => true,
                 'average_rating' => rand(3, 5),
                 'reviews_count' => rand(10, 100),
-                'eventables_type' => Place::class, // Relación polimórfica con Place
+                'eventables_type' => Place::class,
                 'eventables_id' => $place->id, // Relación polimórfica con Place
             ]);
 
-            // Asociar categorías al evento
-            $event->categories()->attach($categories->random()->id); // Asociar una categoría aleatoria
+            // Asociar una categoría (ahora solo se pasa el ID)
+            $event->categories()->attach($categories->random()->id); // Corregido
 
-            // Mensaje de éxito para cada evento insertado
-            $this->command->info("Evento '{$event->name}' insertado exitosamente.");
+             // Asociar categorías al evento
+             $event->categories()->attach($categories->random()->id); // Asociar una categoría aleatoria
+
+             // Mensaje de éxito para cada evento insertado
+             $this->command->info("Evento '{$event->name}' insertado exitosamente.");
+
         }
 
-        // Si deseas generar más eventos con un factory
-         Event::factory(10)->create(); // Descomentar si deseas usar factories para generar más eventos
-
-        $this->command->info('Eventos insertados exitosamente.');
+        // Si deseas crear más eventos con un factory
+         Event::factory(10)->create(); // Esto solo lo usas si necesitas más eventos generados por el factory
+         $this->command->info('Eventos insertados exitosamente.');
     }
 }
+
+
