@@ -50,11 +50,14 @@ public function events()
     return $this->morphMany(Event::class, 'eventable');
 }
 
+
+
+// App\Models\Event.php
+
 public function categories()
 {
-    return $this->morphToMany(Category::class);
+    return $this->morphToMany(Category::class, 'categorizable');
 }
-
 
 
 }
