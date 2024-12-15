@@ -53,6 +53,6 @@ class ProvidersTableSeeder extends Seeder
                 $services = Service::factory()->count(2)->create();
                 $provider->services()->saveMany($services);
             });
-            echo "Provedores insertados exitosamente.\n";
+            $this->command->info('Proveedores insertados exitosamente.\n');
     }
 }

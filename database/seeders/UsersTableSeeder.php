@@ -73,6 +73,6 @@ class UsersTableSeeder extends Seeder
 
         // Generar usuarios adicionales de manera aleatoria con la fábrica
         User::factory()->count(10)->create();
-        echo "Usuarios insertados exitosamente.\n";
+        $this->command->info('Usuarios insertados exitosamente.\n');
     }
 }

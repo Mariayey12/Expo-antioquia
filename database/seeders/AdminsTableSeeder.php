@@ -78,8 +78,7 @@ class AdminsTableSeeder extends Seeder
                 'userable_type' => Admin::class,
             ]);
         });
-
-        echo "Administradores insertados exitosamente.\n";
+        $this->command->info('Administradores insertados exitosamente.\n');
     }
 }
 
