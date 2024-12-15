@@ -14,7 +14,6 @@ class EventFactory extends Factory
         return [
             'name' => $this->faker->sentence(3),
             'description' => $this->faker->paragraph(),
-            'type' => $this->faker->randomElement(['concierto', 'festival', 'feria']),
             'start_date' => $this->faker->dateTimeBetween('+1 days', '+1 month'),
             'end_date' => $this->faker->dateTimeBetween('+1 month', '+2 months'),
             'location' => $this->faker->address(),

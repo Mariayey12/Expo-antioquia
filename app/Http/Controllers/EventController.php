@@ -31,7 +31,6 @@ class EventController extends Controller
         $validatedData = $request->validate([
             'name' => 'required|string|max:255',
             'description' => 'required',
-            'type' => 'required|string|max:50',
             'start_date' => 'required|date',
             'end_date' => 'required|date|after_or_equal:start_date',
             'location' => 'required|string|max:255',
@@ -61,7 +60,6 @@ class EventController extends Controller
         $validatedData = $request->validate([
             'name' => 'sometimes|required|string|max:255',
             'description' => 'sometimes|required',
-            'type' => 'sometimes|required|string|max:50',
             'start_date' => 'sometimes|required|date',
             'end_date' => 'sometimes|required|date|after_or_equal:start_date',
             'location' => 'sometimes|required|string|max:255',

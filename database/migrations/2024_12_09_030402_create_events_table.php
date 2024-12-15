@@ -12,7 +12,6 @@ class CreateEventsTable extends Migration
             $table->id(); // Identificador único
             $table->string('name'); // Nombre del evento
             $table->text('description'); // Descripción detallada
-            $table->string('type'); // Tipo de evento (festival, concierto, feria, etc.)
             $table->dateTime('start_date'); // Fecha y hora de inicio
             $table->dateTime('end_date'); // Fecha y hora de finalización
             $table->string('location'); // Ubicación física o virtual
