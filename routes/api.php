@@ -29,6 +29,8 @@ use App\Http\Controllers\ReservationController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\TestimonialController;
 use App\Http\Controllers\ReviewsCalificationController;
+use App\Http\Controllers\MediaGalleryController;
+use App\Http\Controllers\ChatController;
 
 
 
@@ -57,6 +59,8 @@ Route::apiResource('reservations', ReservationController::class);
 Route::apiResource('comments', CommentController::class);
 Route::apiResource('testimonials', TestimonialController::class);
 Route::apiResource('reviews-califications', ReviewsCalificationController::class);
+Route::apiResource('media_gallery' ,MediaGalleryController::class);
+Route::apiResource('chat_messages', ChatController::class);
 
 // Ruta protegida para obtener datos del usuario autenticado
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
