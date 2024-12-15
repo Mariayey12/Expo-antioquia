@@ -1,3 +1,5 @@
+<?php
+
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
@@ -58,6 +60,6 @@ class EventsTableSeeder extends Seeder
         }
 
         // Puedes crear más eventos o usar un factory si es necesario
-        // Event::factory(10)->create();
+         Event::factory(10)->create();
     }
 }
