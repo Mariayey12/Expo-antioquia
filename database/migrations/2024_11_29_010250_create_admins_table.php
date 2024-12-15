@@ -15,8 +15,7 @@ return new class extends Migration
                 $table->string('permissions')->nullable(); // Permisos, ¿en formato texto o JSON?
                 $table->string('department')->nullable();  // Departamento asociado
                 $table->string('notes')->nullable();
-                $table->string('userable_type');
-                $table->unsignedBigInteger('userable_id');
+                $table->nullableMorphs('userable'); // Esto crea automáticamente userable_type y userable_id
 
                 $table->timestamps();
             });

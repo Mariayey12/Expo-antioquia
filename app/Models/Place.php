@@ -128,4 +128,6 @@ public function gastronomies()
     return $this->morphMany(Gastronomy::class, 'gastronomiceable');
 }
 
+
+
 }
