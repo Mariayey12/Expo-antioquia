@@ -17,19 +17,31 @@ class EventsTableSeeder extends Seeder
         // Obtén categorías existentes
         $categories = Category::whereIn('name', ['Concierto', 'Festival', 'Feria'])->get();
 
-
+        // Verifica si existen categorías
+        if ($categories->isEmpty()) {
+            $this->command->warn('No se encontraron categorías con los nombres especificados.');
+            return;
+        }
 
         // Obtén modelos de lugares existentes
         $places = Place::all();
 
-
+        // Verifica si existen lugares
+        if ($places->isEmpty()) {
+            $this->command->warn('No se encontraron lugares en la base de datos.');
+            return;
+        }
 
         // Crear eventos relacionados con lugares
         foreach ($places as $place) {
+            // Seleccionar una categoría aleatoria
+            $category = $categories->random();
+
+            // Crear el evento
             $event = Event::create([
                 'name' => 'Concierto ' . $place->name,
                 'description' => 'Un evento único en ' . $place->city . '.',
-                'type' => $categories->random()->name, // Esto usa una categoría aleatoria
+                'type' => $category->name,  // Usar la categoría aleatoria
                 'start_date' => now()->addDays(rand(1, 30)),
                 'end_date' => now()->addDays(rand(31, 60)),
                 'location' => $place->address,
@@ -49,21 +61,16 @@ class EventsTableSeeder extends Seeder
                 'eventables_id' => $place->id, // Relación polimórfica con Place
             ]);
 
-            // Asociar una categoría (ahora solo se pasa el ID)
- // Asocia categorías
- foreach ($categories as $category) {
-    $event->categories()->attach($category);
-}
+            // Asociar la categoría aleatoria al evento
+            $event->categories()->attach($category);
 
-             // Mensaje de éxito para cada evento insertado
-             $this->command->info("Evento '{$event->name}' insertado exitosamente.");
-
+            // Mensaje de éxito para cada evento insertado
+            $this->command->info("Evento '{$event->name}' insertado exitosamente.");
         }
 
         // Si deseas crear más eventos con un factory
-         Event::factory(10)->create(); // Esto solo lo usas si necesitas más eventos generados por el factory
-         $this->command->info('Eventos insertados exitosamente.');
+        Event::factory(10)->create(); // Esto solo lo usas si necesitas más eventos generados por el factory
+        $this->command->info('Eventos insertados exitosamente.');
     }
 }
-
 
