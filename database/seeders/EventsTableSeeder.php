@@ -17,10 +17,7 @@ class EventsTableSeeder extends Seeder
         // Obtén categorías existentes
         $categories = Category::whereIn('name', ['Concierto', 'Festival', 'Feria'])->get();
 
-        if ($categories->isEmpty()) {
-            $this->command->warn('No se encontraron categorías. Asegúrate de ejecutar el CategoriesTableSeeder.');
-            return;
-        }
+       
 
         // Obtén modelos de lugares existentes
         $places = Place::all();
