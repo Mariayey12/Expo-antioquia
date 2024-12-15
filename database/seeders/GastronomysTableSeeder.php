@@ -21,7 +21,7 @@ class GastronomysTableSeeder extends Seeder
         // Crea gastronomías de ejemplo y establece relaciones
         foreach ($places as $place) {
             $gastronomy = Gastronomy::create([
-                'name' => 'Restaurante ' . $place->name,
+                'name' => 'Restaurante' . $place->name,
                 'description' => 'Una experiencia gastronómica única en ' . $place->city,
                 'address' => $place->address,
                 'city' => $place->city,
