@@ -57,9 +57,9 @@ namespace Database\Seeders;
                                 }
                             }
 
+                            // Crear categoría si no existe
+                            Category::firstOrCreate($categoryData);
                         }
-                    // Crear 10 lugares aleatorios y asociarles categorías y servicios
-        $placesData = Place::factory(10)->create();
 
         // Crear lugares
         $placesData = [
@@ -182,9 +182,11 @@ namespace Database\Seeders;
             if ($category) {
                 // Asociar categoría al lugar
                 $places->categories()->attach($category->id);
+                // Crear 10 lugares aleatorios y asociarles categorías y servicios
+        $placesData = Place::factory(10)->create();
+
             }
-// Crear 10 Servicios aleatorios y asociarles categorías y lugares
-$serviceData = Service::factory(10)->create();
+
             // Crear servicios relacionados con el lugar
             $services = [
                 [
@@ -247,6 +249,8 @@ $services = Service::create($serviceData);
 $category = Category::where('name', 'Service')->first();
 if ($category) {
     $services->categories()->attach($category->id);
+    // Crear 10 Servicios aleatorios y asociarles categorías y lugares
+$serviceData = Service::factory(10)->create();
 }
         // Crear 10 Comercios aleatorios y asociarles categorías y lugares
  $commerceData = Commerce::factory(10)->create();
@@ -310,5 +314,10 @@ if ($category) {
    }
 
 }
+
+
+
+
+
 
 
