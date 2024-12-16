@@ -11,8 +11,8 @@ use App\Models\Place;
 use App\Models\Anuncio;
 use App\Models\Blog;
 use App\Models\User;
-use App\Models\Booking; // Añadido
-use App\Models\Reservation; // Añadido
+use App\Models\Booking;
+use App\Models\Reservation;
 use Faker\Factory as Faker;
 
 class ProviderSeeder extends Seeder
@@ -21,8 +21,8 @@ class ProviderSeeder extends Seeder
     {
         $faker = Faker::create();
 
-        // Usuarios de ejemplo (puedes generar más según tus necesidades)
-        $users = User::factory()->count(5)->create(); // Generar 5 usuarios aleatorios
+        // Generar usuarios aleatorios
+        $users = User::factory()->count(5)->create();
 
         $providers = [
             [
@@ -39,35 +39,35 @@ class ProviderSeeder extends Seeder
                 'contact' => 'contacto@lahacienda.com',
                 'description' => 'Restaurante tradicional con especialidades locales y menú gourmet.',
             ],
-            // Más proveedores aquí...
         ];
 
         foreach ($providers as $providerData) {
             // Seleccionar un usuario aleatorio para la relación polimórfica
             $randomUser = $users->random();
 
-            // Crear el proveedor con la relación polimórfica establecida
+            // Crear el proveedor
             $provider = Provider::create([
                 'name' => $providerData['name'],
                 'email' => $faker->unique()->safeEmail,
                 'phone' => $faker->phoneNumber,
-                'address' => $faker->address,
+                'address' => $providerData['location'],
                 'description' => $providerData['description'],
                 'profile_picture' => $faker->imageUrl(200, 200),
                 'website' => $faker->url,
                 'company_name' => $faker->company,
                 'contact_person' => $faker->name,
-                'userable_type' => get_class($randomUser), // Modelo del usuario relacionado
-                'userable_id' => $randomUser->id, // ID del usuario relacionado
+                'userable_type' => get_class($randomUser),
+                'userable_id' => $randomUser->id,
             ]);
 
-            // Relacionar con categorías, servicios y productos
+            // Relacionar categorías
             $category = Category::firstOrCreate(['name' => $providerData['category']]);
             $provider->categories()->attach($category);
 
+            // Crear servicios y productos
             $this->createServicesAndProducts($provider, $providerData['category']);
 
-            // Relacionar con lugares, anuncios y blogs
+            // Crear lugares, anuncios y blogs
             Place::create([
                 'provider_id' => $provider->id,
                 'name' => $providerData['name'] . ' Place',
@@ -87,7 +87,7 @@ class ProviderSeeder extends Seeder
                 'content' => 'En este blog hablamos de las experiencias únicas que puedes vivir en ' . $providerData['name'] . '.',
             ]);
 
-            // Relacionar con reservas y bookings
+            // Crear reservas y bookings
             Reservation::create([
                 'provider_id' => $provider->id,
                 'user_id' => $randomUser->id,
@@ -104,6 +104,8 @@ class ProviderSeeder extends Seeder
                 'details' => 'Reserva previa del usuario.',
             ]);
         }
+
+        $this->command->info('Proveedores insertados exitosamente.');
     }
 
     /**
@@ -129,15 +131,43 @@ class ProviderSeeder extends Seeder
                 'name' => $productName,
             ]);
         }
+    }
+
+    /**
+     * Obtener servicios según la categoría.
+     *
+     * @param string $category
+     * @return array
+     */
+    private function getServicesByCategory($category)
+    {
+        $services = [
+            'Hoteles' => ['Reserva de habitaciones', 'Paquetes especiales', 'Experiencias personalizadas'],
+            'Restaurantes' => ['Reservas en línea', 'Menús especiales', 'Catering y organización de eventos'],
+        ];
+
+        return $services[$category] ?? [];
+    }
+
+    /**
+     * Obtener productos según la categoría.
+     *
+     * @param string $category
+     * @return array
+     */
+    private function getProductsByCategory($category)
+    {
+        $products = [
+            'Hoteles' => ['Kits de bienvenida', 'Souvenirs locales', 'Artículos de baño exclusivos'],
+            'Restaurantes' => ['Salsas gourmet', 'Condimentos locales', 'Panadería artesanal'],
+        ];
 
         return $products[$category] ?? [];
         $this->command->info('Proveedores insertados exitosamente.\n');
     }
 
-    private function getServicesByCategory($category) { /* Tu lógica actual */ }
-    private function getProductsByCategory($category) { /* Tu lógica actual */ }
-}
 
+}
 
 
 

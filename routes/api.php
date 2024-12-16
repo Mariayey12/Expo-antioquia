@@ -27,7 +27,13 @@ use App\Http\Controllers\{
     PasswordResetTokenController,
     BookingController,
     BlogController,
-    AdController
+    AdController,
+    CultureController,
+    CraftController,
+    SportController,
+    NewsController,
+    DepartmentController,
+    MunicipalityController
 };
 
 // Rutas de autenticación
@@ -99,3 +105,10 @@ Route::get('products/{id}', [ProductController::class, 'show']);
 Route::post('products', [ProductController::class, 'store']);
 Route::put('products/{id}', [ProductController::class, 'update']);
 Route::delete('products/{id}', [ProductController::class, 'destroy']);
+// Estas rutas permiten gestionar las operaciones CRUD (crear, leer, actualizar y eliminar) para culturas, artesanías, deportes, noticias, departamentos y municipios utilizando los controladores correspondientes.
+Route::resource('cultures', CultureController::class);
+Route::resource('crafts', CraftController::class);
+Route::resource('sports', SportController::class);
+Route::resource('news', NewsController::class);
+Route::resource('departments', DepartmentController::class);
+Route::resource('municipalities', MunicipalityController::class);

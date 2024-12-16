@@ -122,5 +122,3 @@ Route::prefix('password-reset')->group(function () {
 
 // Rutas para la creación de reservas
 Route::post('/bookings', [BookingController::class, 'store']);
-
-

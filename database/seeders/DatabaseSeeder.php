@@ -24,7 +24,7 @@ class DatabaseSeeder extends Seeder
             // Seeders para entidades principales
             //CategoriesTableSeeder::class,      // Categorías para lugares y servicios
             PlacesTableSeeder::class,          // Lugares (depende de categorías)
-            GastronomysTableSeeder::class,    // Gastronomía
+            GastronomysTableSeeder::class,     // Gastronomía
             EventsTableSeeder::class,          // Eventos
             ProductsTableSeeder::class,        // Productos
             BlogsTableSeeder::class,           // Blogs
@@ -40,8 +40,16 @@ class DatabaseSeeder extends Seeder
 
             // Seeders adicionales
             PromotionsTableSeeder::class,      // Promociones
-            MediaGallerysTableSeeder::class,    // Galerías de medios
+            MediaGallerysTableSeeder::class,   // Galerías de medios
             ChatMessagesTableSeeder::class,    // Mensajes de chat
+
+            // Seeders recientemente creados
+            CultureSeeder::class,              // Culturas
+            CraftSeeder::class,                // Artesanías
+            SportSeeder::class,                // Deportes
+            NewsSeeder::class,                 // Actualidad
+            DepartmentSeeder::class,           // Departamentos
+            MunicipalitySeeder::class,         // Municipios
         ]);
     }
 }
