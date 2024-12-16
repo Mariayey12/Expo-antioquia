@@ -27,5 +27,18 @@ class Product extends Model
     public function reviews()
     {
         return $this->morphMany(ReviewCalification::class, 'reviewable');
+
+    }
+
+      // Relación polimórfica con categorías
+    public function categorizable()
+    {
+        return $this->morphTo();
+    }
+
+    // Relación polimórfica con proveedores (o cualquier otro modelo que uses)
+    public function userable()
+    {
+        return $this->morphTo();
     }
 }

@@ -3,6 +3,8 @@
 namespace Database\Factories;
 
 use App\Models\Product;
+use App\Models\Provider; // Asegúrate de importar el modelo Provider
+use App\Models\Category; // Asegúrate de importar el modelo Category
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class ProductFactory extends Factory
@@ -21,6 +23,10 @@ class ProductFactory extends Factory
      */
     public function definition(): array
     {
+        // Obtener una categoría y un proveedor aleatorios
+        $category = Category::inRandomOrder()->first();
+        $provider = Provider::inRandomOrder()->first();
+
         return [
             'name' => $this->faker->word, // Nombre del producto (una palabra aleatoria)
             'description' => $this->faker->paragraph, // Descripción del producto (un párrafo aleatorio)
@@ -28,6 +34,14 @@ class ProductFactory extends Factory
             'stock' => $this->faker->numberBetween(1, 100), // Stock disponible del producto (número aleatorio entre 1 y 100)
             'created_at' => now(), // Fecha de creación del producto (hora actual)
             'updated_at' => now(), // Fecha de actualización del producto (hora actual)
+
+            // Asignar la relación polimórfica con una categoría o proveedor aleatorio
+            'userable_id' => $provider->id, // Relacionar con un proveedor aleatorio
+            'userable_type' => Provider::class, // Tipo del modelo relacionado (Provider)
+
+            // También podemos asociar una categoría si lo necesitas
+            'categorizable_id' => $category->id, // Relacionar con una categoría aleatoria
+            'categorizable_type' => Category::class, // Tipo del modelo relacionado (Category)
         ];
     }
 }

@@ -50,6 +50,11 @@ class Provider extends Model
         return $this->morphMany(Service::class, 'serviceable');
     }
 
+
+public function products()
+    {
+        return $this->morphMany(Product::class, 'userable');
+    }
     /**
      * Ejemplo de búsqueda personalizada: Encontrar proveedores por nombre.
      *

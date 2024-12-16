@@ -24,16 +24,26 @@ class ProductsTableSeeder extends Seeder
 
         // Crear 50 productos de ejemplo
         foreach (range(1, 50) as $index) {
-            Product::create([
-                'name' => $faker->word(), // Nombre del producto
-                'description' => $faker->sentence(), // Descripción del producto
-                'price' => $faker->randomFloat(2, 10, 500), // Precio aleatorio entre 10 y 500
-                'category_id' => $categories->random()->id, // Relacionar con una categoría aleatoria
-                'provider_id' => $providers->random()->id, // Relacionar con un proveedor aleatorio
-                'stock' => $faker->numberBetween(1, 100), // Stock aleatorio entre 1 y 100
+            $product = Product::create([
+                'name' => $faker->word(),
+                'description' => $faker->sentence(),
+                'price' => $faker->randomFloat(2, 10, 500),
+                'stock' => $faker->numberBetween(1, 100),
+                'userable_id',
+        'userable_type',
                 'created_at' => now(),
                 'updated_at' => now(),
             ]);
+
+            // Asignar una categoría aleatoria
+            $category = $categories->random();
+            $product->categorizable()->associate($category); // Relación polimórfica con categoría
+            $product->save();
+
+            // Asignar un proveedor aleatorio
+            $provider = $providers->random();
+            $product->userable()->associate($provider); // Relación polimórfica con proveedor
+            $product->save();
         }
     }
 }
