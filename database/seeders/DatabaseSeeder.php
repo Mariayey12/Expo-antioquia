@@ -44,12 +44,12 @@ class DatabaseSeeder extends Seeder
             ChatMessagesTableSeeder::class,    // Mensajes de chat
 
             // Seeders recientemente creados
-            CultureSeeder::class,              // Culturas
-            CraftSeeder::class,                // Artesanías
-            SportSeeder::class,                // Deportes
-            NewsSeeder::class,                 // Actualidad
-            DepartmentSeeder::class,           // Departamentos
-            MunicipalitySeeder::class,         // Municipios
+            CulturesTableSeeder::class,              // Culturas
+            CraftsTableSeeder::class,                // Artesanías
+            SportsTableSeeder::class,                // Deportes
+            NewsTableSeeder::class,                 // Actualidad
+            DepartmentsTableSeeder::class,           // Departamentos
+            MunicipalitysTablaSeeder::class,         // Municipios
         ]);
     }
 }
