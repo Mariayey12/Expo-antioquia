@@ -22,21 +22,24 @@ class Product extends Model
     ];
 
     /**
-     * Relación polimórfica con el modelo ReviewCalification.
+     * Relación polimórfica con ReviewCalification (comentarios o calificaciones).
      */
     public function reviews()
     {
         return $this->morphMany(ReviewCalification::class, 'reviewable');
-
     }
 
-      // Relación polimórfica con categorías
+    /**
+     * Relación polimórfica con categorías.
+     */
     public function categorizable()
     {
         return $this->morphTo();
     }
 
-    // Relación polimórfica con proveedores (o cualquier otro modelo que uses)
+    /**
+     * Relación polimórfica con proveedores (o cualquier otro modelo que uses).
+     */
     public function userable()
     {
         return $this->morphTo();

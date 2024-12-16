@@ -92,7 +92,9 @@ Route::middleware(['web'])->group(function () {
     Route::get('/products', [ProductController::class, 'index']); // Listar productos
     Route::get('/products/{id}', [ProductController::class, 'show']); // Ver un producto específico con reseñas
     Route::post('/products/{id}/reviews', [ProductController::class, 'addReview']); // Agregar una reseña a un producto
-
+    Route::post('products', [ProductController::class, 'store']);
+    Route::put('products/{id}', [ProductController::class, 'update']);
+    Route::delete('products/{id}', [ProductController::class, 'destroy']);
 });
 
 

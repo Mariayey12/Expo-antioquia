@@ -9,44 +9,98 @@ use Illuminate\Http\Request;
 class ProductController extends Controller
 {
     /**
-     * Listar todos los productos.
+     * Mostrar una lista de todos los productos.
+     *
+     * @return \Illuminate\Http\Response
      */
     public function index()
     {
-        $products = Product::with('reviews')->get();
+        // Obtener todos los productos
+        $products = Product::all();
+
         return response()->json($products);
     }
 
     /**
-     * Mostrar un producto específico con sus reseñas.
+     * Mostrar los detalles de un producto.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
      */
     public function show($id)
     {
-        $product = Product::with('reviews')->findOrFail($id);
+        // Buscar el producto por ID
+        $product = Product::findOrFail($id);
+
+        // Incluir las calificaciones (reviews) si las tiene
+        $product->load('reviews');
+
         return response()->json($product);
     }
 
     /**
-     * Crear una nueva reseña para un producto.
+     * Almacenar un nuevo producto.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
      */
-    public function addReview(Request $request, $productId)
+    public function store(Request $request)
     {
+        // Validación de los datos
         $validated = $request->validate([
-            'user_id' => 'required|exists:users,id',
-            'rating' => 'required|integer|min:1|max:5',
-            'review' => 'nullable|string',
+            'name' => 'required|string|max:255',
+            'description' => 'required|string',
+            'price' => 'required|numeric',
+            'stock' => 'required|integer',
         ]);
 
-        $product = Product::findOrFail($productId);
+        // Crear el nuevo producto
+        $product = Product::create($validated);
 
-        $review = new ReviewCalification([
-            'user_id' => $validated['user_id'],
-            'rating' => $validated['rating'],
-            'review' => $validated['review'],
+        return response()->json($product, 201);
+    }
+
+    /**
+     * Actualizar los detalles de un producto.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, $id)
+    {
+        // Validación de los datos
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'description' => 'required|string',
+            'price' => 'required|numeric',
+            'stock' => 'required|integer',
         ]);
 
-        $product->reviews()->save($review);
+        // Buscar el producto por ID
+        $product = Product::findOrFail($id);
 
-        return response()->json(['message' => 'Review added successfully!', 'review' => $review]);
+        // Actualizar el producto
+        $product->update($validated);
+
+        return response()->json($product);
+    }
+
+    /**
+     * Eliminar un producto.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy($id)
+    {
+        // Buscar el producto por ID
+        $product = Product::findOrFail($id);
+
+        // Eliminar el producto
+        $product->delete();
+
+        return response()->json(null, 204);
     }
 }
+

@@ -25,6 +25,7 @@ use App\Http\Controllers\{
     FavoriteController,
     ShoppingCartController,
     PasswordResetTokenController
+    
 };
 
 // Rutas de autenticación
@@ -77,3 +78,11 @@ Route::prefix('password-reset')->group(function () {
     Route::get('tokens/{email}', [PasswordResetTokenController::class, 'show']); // Obtener el token
     Route::delete('tokens/{email}', [PasswordResetTokenController::class, 'destroy']); // Eliminar el token
 });
+
+
+
+Route::get('products', [ProductController::class, 'index']);
+Route::get('products/{id}', [ProductController::class, 'show']);
+Route::post('products', [ProductController::class, 'store']);
+Route::put('products/{id}', [ProductController::class, 'update']);
+Route::delete('products/{id}', [ProductController::class, 'destroy']);
