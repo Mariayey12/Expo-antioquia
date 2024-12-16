@@ -18,19 +18,20 @@ use App\Http\Controllers\ReviewsCalificationController;
 use App\Http\Controllers\MediaGalleryController;
 use App\Http\Controllers\ChatController;
 use App\Http\Controllers\ProductController;
+use Illuminate\Http\Request;
 
 Route::middleware(['web'])->group(function () {
 
-    // Rutas para usuarios (si es necesario en la web)
+    // Rutas públicas para usuarios
     Route::resource('users', UserController::class);
 
     // Rutas para administradores
-    Route::resource('admins', AdminController::class);
+    Route::middleware(['auth:sanctum', 'can:access-dashboard'])->resource('admins', AdminController::class);
 
     // Rutas para proveedores
-    Route::resource('providers', ProviderController::class);
+    Route::middleware(['auth:sanctum', 'check.provider'])->resource('providers', ProviderController::class);
 
-    // Rutas para lugares
+    // Rutas para lugares (sin protección)
     Route::resource('places', PlaceController::class);
 
     // Rutas para servicios
@@ -48,25 +49,25 @@ Route::middleware(['web'])->group(function () {
     // Rutas para promociones
     Route::resource('promotions', PromotionController::class);
 
-    // Rutas para reservas
-    Route::resource('reservations', ReservationController::class);
+    // Rutas para reservas (protegidas)
+    Route::middleware('auth:sanctum')->resource('reservations', ReservationController::class);
 
-    // Rutas para comentarios
-    Route::resource('comments', CommentController::class);
+    // Rutas para comentarios (protegidas)
+    Route::middleware('auth:sanctum')->resource('comments', CommentController::class);
 
     // Rutas para testimonios
-    Route::resource('testimonials', TestimonialController::class);
+    Route::middleware('auth:sanctum')->resource('testimonials', TestimonialController::class);
 
     // Rutas para calificaciones y reseñas
-    Route::resource('reviews-califications', ReviewsCalificationController::class);
+    Route::middleware('auth:sanctum')->resource('reviews-califications', ReviewsCalificationController::class);
 
     // Rutas para galería multimedia
-    Route::resource('media_gallery', MediaGalleryController::class);
+    Route::middleware('auth:sanctum')->resource('media_gallery', MediaGalleryController::class);
 
     // Rutas para mensajes de chat
-    Route::resource('chat_messages', ChatController::class);
+    Route::middleware('auth:sanctum')->resource('chat_messages', ChatController::class);
 
-    // Ruta principal (inicio)
+    // Ruta para la vista principal
     Route::get('/', function () {
         return view('welcome'); // Vista de bienvenida
     });
@@ -86,10 +87,9 @@ Route::middleware(['web'])->group(function () {
         return response()->json(['message' => 'Área exclusiva para proveedores']);
     });
 
+    // Rutas para productos
     Route::get('/products', [ProductController::class, 'index']); // Listar productos
     Route::get('/products/{id}', [ProductController::class, 'show']); // Ver un producto específico con reseñas
     Route::post('/products/{id}/reviews', [ProductController::class, 'addReview']); // Agregar una reseña a un producto
-
-
 
 });
