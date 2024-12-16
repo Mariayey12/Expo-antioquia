@@ -19,8 +19,10 @@ class Product extends Model
         'description',
         'price',
         'stock',
+        'userable_id',  // Si estás usando morphs, estos deberían estar aquí.
+        'userable_type',
+        // Otros campos si es necesario
     ];
-
     /**
      * Relación polimórfica con ReviewCalification (comentarios o calificaciones).
      */
@@ -43,5 +45,12 @@ class Product extends Model
     public function userable()
     {
         return $this->morphTo();
+    }
+     /**
+     * Relación muchos a muchos con Promotion.
+     */
+    public function promotions()
+    {
+        return $this->belongsToMany(Promotion::class, 'promotion_product');
     }
 }

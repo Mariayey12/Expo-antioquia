@@ -17,4 +17,12 @@ class Promotion extends Model
     {
         return $this->belongsTo(Gastronomia::class);
     }
+
+     /**
+     * Relación muchos a muchos con Product.
+     */
+    public function products()
+    {
+        return $this->belongsToMany(Product::class, 'promotion_product');
+    }
 }
