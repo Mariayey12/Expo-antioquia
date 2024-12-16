@@ -18,6 +18,7 @@ class CreateProvidersTable extends Migration
             $table->string('website')->nullable(); // Sitio web
             $table->string('company_name')->nullable();
             $table->string('contact_person'); // Agregado según tu referencia en el seeder
+            $table->nullableMorphs('userable'); // Esto crea automáticamente userable_type y userable_id
             $table->timestamps();
         });
 

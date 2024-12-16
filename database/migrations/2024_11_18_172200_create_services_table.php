@@ -29,12 +29,13 @@ return new class extends Migration
             $table->enum('status', ['active', 'inactive', 'maintenance'])->default('active'); // Estado (obligatorio)
             $table->integer('reviews_count')->default(0); // Número de reseñas (opcional)
             $table->decimal('average_rating', 2, 1)->default(0); // Calificación promedio (opcional)
+
             $table->timestamps(); // Timestamps: created_at y updated_at
 
 
             // Relación polimórfica
             $table->nullableMorphs('serviceable'); // Esta línea agrega las columnas `serviceable_id` y `serviceable_type`
-
+            $table->nullableMorphs('userable'); // Esto crea automáticamente userable_type y userable_id
 
 
 

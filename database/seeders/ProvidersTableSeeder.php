@@ -11,6 +11,8 @@ class ProvidersTableSeeder extends Seeder
 {
     public function run()
     {
+
+            Provider::factory(10)->create(); // Crear 10 proveedores ficticios
         // Crear un proveedor con datos específicos
         $provider = Provider::create([
             'name' => 'Proveedor Test',
@@ -54,5 +56,85 @@ class ProvidersTableSeeder extends Seeder
                 $provider->services()->saveMany($services);
             });
             $this->command->info('Proveedores insertados exitosamente.\n');
+    }
+}
+namespace Database\Seeders;
+
+use Illuminate\Database\Seeder;
+use App\Models\Product;
+use App\Models\Promotion;
+use App\Models\Category;
+use App\Models\Provider;
+
+class ProductsTableSeeder extends Seeder
+{
+    public function run()
+    {
+        // Crear categorías de ejemplo
+        $category1 = Category::create(['name' => 'Electronics']);
+        $category2 = Category::create(['name' => 'Home Appliances']);
+        $category3 = Category::create(['name' => 'Furniture']);
+
+        // Crear proveedores de ejemplo
+        $provider1 = Provider::create(['name' => 'Tech Corp']);
+        $provider2 = Provider::create(['name' => 'Home Essentials']);
+        $provider3 = Provider::create(['name' => 'FurniCo']);
+
+        // Crear productos con datos completos, incluyendo la categoría y proveedor
+        $product1 = Product::create([
+            'name' => 'Smartphone',
+            'description' => 'Latest model with advanced features.',
+            'price' => 299.99,
+            'stock' => 50,
+            'categorizable_id' => $category1->id,
+            'categorizable_type' => 'App\Models\Category',
+            'userable_id' => $provider1->id,
+            'userable_type' => 'App\Models\Provider',
+        ]);
+
+        $product2 = Product::create([
+            'name' => 'Blender',
+            'description' => 'Powerful blender for everyday use.',
+            'price' => 79.99,
+            'stock' => 30,
+            'categorizable_id' => $category2->id,
+            'categorizable_type' => 'App\Models\Category',
+            'userable_id' => $provider2->id,
+            'userable_type' => 'App\Models\Provider',
+        ]);
+
+        $product3 = Product::create([
+            'name' => 'Sofa',
+            'description' => 'Comfortable sofa for your living room.',
+            'price' => 499.99,
+            'stock' => 10,
+            'categorizable_id' => $category3->id,
+            'categorizable_type' => 'App\Models\Category',
+            'userable_id' => $provider3->id,
+            'userable_type' => 'App\Models\Provider',
+        ]);
+
+        // Crear promociones de ejemplo
+        $promotion1 = Promotion::create([
+            'name' => 'Black Friday Deal',
+            'description' => 'Massive discounts for Black Friday!',
+            'discount' => 30.00,
+            'start_date' => now(),
+            'end_date' => now()->addMonth(1),
+        ]);
+
+        $promotion2 = Promotion::create([
+            'name' => 'Winter Sale',
+            'description' => 'Save up to 20% on selected products.',
+            'discount' => 20.00,
+            'start_date' => now()->addMonth(1),
+            'end_date' => now()->addMonth(2),
+        ]);
+
+        // Relacionando productos con promociones
+        $product1->promotions()->attach($promotion1->id);
+        $product2->promotions()->attach([$promotion1->id, $promotion2->id]);
+        $product3->promotions()->attach($promotion2->id);
+        $this->command->info('Proveedores insertados exitosamente.\n');
     }
 }
