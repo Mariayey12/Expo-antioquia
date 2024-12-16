@@ -35,7 +35,6 @@ class Provider extends Model
     public function services()
     {
         return $this->morphMany(Service::class, 'serviceable');
-        // 'serviceable' es el nombre de la columna que identifica la relación polimórfica
     }
 
     /**
@@ -45,7 +44,6 @@ class Provider extends Model
     public function products()
     {
         return $this->morphMany(Product::class, 'userable');
-        // 'userable' es el nombre de la columna que identifica la relación polimórfica
     }
 
     /**
@@ -55,7 +53,6 @@ class Provider extends Model
     public function categories()
     {
         return $this->hasMany(Category::class);
-        // Un proveedor puede tener muchas categorías asociadas a él.
     }
 
     /**
@@ -65,7 +62,6 @@ class Provider extends Model
     public function places()
     {
         return $this->hasMany(Place::class);
-        // Un proveedor puede tener muchos lugares asociados a él.
     }
 
     /**
@@ -75,7 +71,6 @@ class Provider extends Model
     public function ads()
     {
         return $this->morphMany(Ad::class, 'advertisable');
-        // 'advertisable' es el nombre de la columna que identifica la relación polimórfica
     }
 
     /**
@@ -85,7 +80,6 @@ class Provider extends Model
     public function reservations()
     {
         return $this->hasManyThrough(Reservation::class, Place::class);
-        // Un proveedor puede tener muchas reservas a través de los lugares que tiene asociados.
     }
 
     /**
@@ -95,7 +89,6 @@ class Provider extends Model
     public function bookings()
     {
         return $this->hasMany(Booking::class);
-        // Un proveedor puede tener muchas reservas.
     }
 
     /**
@@ -105,7 +98,24 @@ class Provider extends Model
     public function users()
     {
         return $this->hasManyThrough(User::class, Reservation::class);
-        // Un proveedor puede tener muchos usuarios a través de las reservas.
+    }
+
+    /**
+     * Relación polimórfica con eventos.
+     * Un proveedor puede estar relacionado con muchos eventos.
+     */
+    public function events()
+    {
+        return $this->morphMany(Event::class, 'eventable');
+    }
+
+    /**
+     * Relación polimórfica con gastronomía.
+     * Un proveedor puede estar relacionado con muchos elementos gastronómicos.
+     */
+    public function gastronomies()
+    {
+        return $this->morphMany(Gastronomy::class, 'gastronomiceable');
     }
 
     /**
@@ -115,7 +125,6 @@ class Provider extends Model
     public function scopeByName($query, $name)
     {
         return $query->where('name', 'like', "%{$name}%");
-        // Filtra proveedores cuyo nombre contenga el término de búsqueda.
     }
 
     /**
@@ -125,7 +134,6 @@ class Provider extends Model
     public function setNameAttribute($value)
     {
         $this->attributes['name'] = ucwords(strtolower($value));
-        // Convierte el nombre en formato capitalizado (primer letra en mayúsculas).
     }
 
     /**
@@ -135,6 +143,6 @@ class Provider extends Model
     public function getContactPersonAttribute($value)
     {
         return strtoupper($value);
-        // Convierte el nombre del contacto en mayúsculas cuando se accede a él.
     }
 }
+

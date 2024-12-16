@@ -18,4 +18,9 @@ class Reservation extends Model
     {
         return $this->morphToMany(User::class, 'userable');
     }
+    // Relación polimórfica inversa
+    public function reservable()
+    {
+        return $this->morphTo();
+    }
 }

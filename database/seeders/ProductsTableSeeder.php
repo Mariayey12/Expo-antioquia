@@ -4,79 +4,58 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use App\Models\Product;
+use App\Models\Category;
+use App\Models\Provider;
 use App\Models\Promotion;
 
-class ProductsTableSeeder extends Seeder
+class ProductSeeder extends Seeder
 {
     public function run()
     {
-        // Crear productos con datos completos
+        // Obtener categorías existentes
+        $categories = Category::all();
+        $categoryHotel = $categories->where('name', 'Alojamiento')->first();
+        $categoryRestaurant = $categories->where('name', 'Gastronomía')->first();
+
+        // Obtener proveedores existentes
+        $providers = Provider::all();
+        $providerHotel = $providers->first(); // Ajusta según el proveedor deseado
+        $providerRestaurant = $providers->last(); // Ajusta según el proveedor deseado
+
+        // Crear productos asociados a categorías y proveedores
         $product1 = Product::create([
-            'name' => 'Product 1',
-            'description' => 'High-quality gadget for modern living.',
-            'price' => 100.00,
-            'stock' => 15,
-            'categorizable_id' => 1, // Example category ID (adjust as per your categorization logic)
-            'categorizable_type' => 'App\Models\Category', // Adjust to your actual category model
-            'userable_id' => 1, // Example user ID (adjust to your user model logic)
-            'userable_type' => 'App\Models\User', // Adjust to your actual user model
+            'name' => 'Suite Deluxe en Hotel Antioquia',
+            'description' => 'Habitación espaciosa con vistas espectaculares y desayuno incluido.',
+            'price' => 350000,
+            'stock' => 8,
+            'categorizable_id' => $categoryHotel->id,
+            'categorizable_type' => get_class($categoryHotel),
+            'userable_id' => $providerHotel->id,
+            'userable_type' => get_class($providerHotel),
+            'created_at' => now(),
+            'updated_at' => now(),
         ]);
 
         $product2 = Product::create([
-            'name' => 'Product 2',
-            'description' => 'Affordable yet durable, perfect for any occasion.',
-            'price' => 50.00,
+            'name' => 'Cena Gourmet en Sabores de Antioquia',
+            'description' => 'Menú especial con los mejores ingredientes locales.',
+            'price' => 95000,
             'stock' => 25,
-            'categorizable_id' => 2,
-            'categorizable_type' => 'App\Models\Category',
-            'userable_id' => 2,
-            'userable_type' => 'App\Models\User',
+            'categorizable_id' => $categoryRestaurant->id,
+            'categorizable_type' => get_class($categoryRestaurant),
+            'userable_id' => $providerRestaurant->id,
+            'userable_type' => get_class($providerRestaurant),
+            'created_at' => now(),
+            'updated_at' => now(),
         ]);
 
-        $product3 = Product::create([
-            'name' => 'Product 3',
-            'description' => 'Premium quality kitchen appliance for every home.',
-            'price' => 200.00,
-            'stock' => 10,
-            'categorizable_id' => 3,
-            'categorizable_type' => 'App\Models\Category',
-            'userable_id' => 3,
-            'userable_type' => 'App\Models\User',
-        ]);
-
-        // Crear promociones con datos completos
-        $promotion1 = Promotion::create([
-            'name' => 'Summer Sale',
-            'description' => 'Get up to 20% off on all gadgets this summer.',
-            'discount' => 20.00,
-            'start_date' => now(),
-            'end_date' => now()->addMonth(1),
-        ]);
-
-        $promotion2 = Promotion::create([
-            'name' => 'Winter Special',
-            'description' => 'Enjoy up to 15% off on selected products for the winter season.',
-            'discount' => 15.00,
-            'start_date' => now()->addMonth(1),
-            'end_date' => now()->addMonth(2),
-        ]);
-
-        $promotion3 = Promotion::create([
-            'name' => 'Black Friday Deals',
-            'description' => 'Black Friday exclusive! Save up to 50% on selected products.',
-            'discount' => 50.00,
-            'start_date' => now()->addDays(10),
-            'end_date' => now()->addDays(30),
-        ]);
-
-        // Relacionando productos con promociones
-        // Aseguramos que los productos estén asociados con promociones de manera condicional
-
-        $product1->promotions()->attach($promotion1->id);
-        $product2->promotions()->attach([$promotion1->id, $promotion2->id]);
-        $product3->promotions()->attach($promotion2->id);
-
-        // Opcional: Si deseas asociar más promociones de forma aleatoria a los productos
-        // Puedes usar lógica más avanzada, como un ciclo for o condición adicional
+        // Si ya tienes promociones cargadas en la base de datos
+        $promotions = Promotion::all();
+        if ($promotions->isNotEmpty()) {
+            $promotion = $promotions->first();
+            $promotion->promotionable_id = $product1->id;
+            $promotion->promotionable_type = get_class($product1);
+            $promotion->save();
+        }
     }
 }

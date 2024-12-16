@@ -59,7 +59,11 @@ public function categories()
     return $this->morphToMany(Category::class, 'categorizable');
 }
 
-
+  // Relación polimórfica de evento
+  public function comments()
+  {
+      return $this->morphMany(Comment::class, 'commentable');
+  }
 }
 
 

@@ -35,7 +35,7 @@ class Product extends Model
         return $this->belongsToMany(Promotion::class, 'promotion_product');
     }
 
-    
+
     // Relación polimórfica: un producto puede pertenecer a diferentes modelos
     public function categorizable()
     {
@@ -47,7 +47,16 @@ class Product extends Model
     {
         return $this->morphTo();
     }
+// Relación polimórfica de producto
+public function comments()
+{
+    return $this->morphMany(Comment::class, 'commentable');
+}
 
+public function reservations()
+{
+    return $this->morphMany(Reservation::class, 'reservable');
+}
     // Accesores y mutadores si lo necesitas
     // Ejemplo de un accesor para obtener el precio con formato
     public function getPriceAttribute($value)

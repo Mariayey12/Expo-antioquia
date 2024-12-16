@@ -14,4 +14,9 @@ class Comment extends Model
     {
         return $this->morphToMany(User::class, 'userable');
     }
+    // Relación polimórfica inversa
+    public function commentable()
+    {
+        return $this->morphTo();
+    }
 }

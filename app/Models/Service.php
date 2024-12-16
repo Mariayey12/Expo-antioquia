@@ -61,7 +61,16 @@ class Service extends Model
         return $this->morphMany(Provider::class, 'serviceable');
     }
 
+// Relación polimórfica de servicio
+public function comments()
+{
+    return $this->morphMany(Comment::class, 'commentable');
+}
 
+public function reservations()
+{
+    return $this->morphMany(Reservation::class, 'reservable');
+}
 }
 
 

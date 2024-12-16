@@ -59,6 +59,11 @@ public function categories()
     {
         return $this->morphToMany(Promotion::class, 'promocionable');
     }
-    
+    // Relación polimórfica de gastronomía
+    public function comments()
+    {
+        return $this->morphMany(Comment::class, 'commentable');
+    }
+
 }
 

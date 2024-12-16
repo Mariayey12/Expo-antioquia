@@ -1,5 +1,6 @@
 <?php
 
+
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
@@ -13,9 +14,11 @@ use App\Models\Blog;
 use App\Models\User;
 use App\Models\Booking;
 use App\Models\Reservation;
+use App\Models\Gastronomy;
+use App\Models\Event;
 use Faker\Factory as Faker;
 
-class ProviderSeeder extends Seeder
+class ProvidersTableSeeder extends Seeder
 {
     public function run()
     {
@@ -103,9 +106,26 @@ class ProviderSeeder extends Seeder
                 'booking_date' => $faker->dateTimeBetween('-1 month', 'now'),
                 'details' => 'Reserva previa del usuario.',
             ]);
+
+            // Crear registros de gastronomía
+            Gastronomy::create([
+                'provider_id' => $provider->id,
+                'name' => $providerData['name'] . ' Gastronomy',
+                'description' => 'Disfruta de los mejores platillos en ' . $providerData['name'],
+                'specialties' => 'Comida local y gourmet',
+            ]);
+
+            // Crear eventos
+            Event::create([
+                'provider_id' => $provider->id,
+                'title' => 'Evento especial en ' . $providerData['name'],
+                'description' => 'Únete a nuestro evento exclusivo en ' . $providerData['name'] . '.',
+                'event_date' => $faker->dateTimeBetween('now', '+1 month'),
+                'location' => $providerData['location'],
+            ]);
         }
 
-        $this->command->info('Proveedores insertados exitosamente.');
+        $this->command->info('Proveedores, gastronomía y eventos insertados exitosamente.');
     }
 
     /**
@@ -165,8 +185,6 @@ class ProviderSeeder extends Seeder
         return $products[$category] ?? [];
         $this->command->info('Proveedores insertados exitosamente.\n');
     }
-
-
 }
 
 
