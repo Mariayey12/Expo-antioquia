@@ -21,6 +21,8 @@ class Product extends Model
         'stock',
         'userable_id',  // Si estás usando morphs, estos deberían estar aquí.
         'userable_type',
+        'categorizable_id',
+        'categorizable_type'
         // Otros campos si es necesario
     ];
     /**
