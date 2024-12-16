@@ -28,6 +28,11 @@ class Provider extends Model
         return $this->morphOne(User::class, 'userable');
     }
 
+ // Relación con categorías
+ public function categories()
+ {
+     return $this->hasMany(Category::class);
+ }
     /**
      * Relación Polimórfica con los Servicios.
      * Un proveedor puede ofrecer muchos servicios a través de una relación polimórfica.
@@ -50,10 +55,7 @@ class Provider extends Model
      * Relación con categorías.
      * Un proveedor puede tener muchas categorías asociadas.
      */
-    public function categories()
-    {
-        return $this->hasMany(Category::class);
-    }
+    
 
     /**
      * Relación con lugares.
