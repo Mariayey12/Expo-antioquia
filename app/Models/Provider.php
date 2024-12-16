@@ -27,6 +27,7 @@ class Provider extends Model
     {
         return $this->morphOne(User::class, 'userable');
     }
+    
 
  // Relación con categorías
  public function categories()
@@ -55,7 +56,7 @@ class Provider extends Model
      * Relación con categorías.
      * Un proveedor puede tener muchas categorías asociadas.
      */
-    
+
 
     /**
      * Relación con lugares.

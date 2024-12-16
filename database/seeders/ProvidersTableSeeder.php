@@ -1,19 +1,15 @@
 <?php
 
-
 namespace Database\Seeders;
-
 use Illuminate\Database\Seeder;
 use App\Models\Provider;
-use App\Models\Service;
-use App\Models\Product;
+use App\Models\User;
 use App\Models\Category;
 use App\Models\Place;
 use App\Models\Anuncio;
 use App\Models\Blog;
-use App\Models\User;
-use App\Models\Booking;
 use App\Models\Reservation;
+use App\Models\Booking;
 use App\Models\Gastronomy;
 use App\Models\Event;
 use Faker\Factory as Faker;
@@ -59,6 +55,14 @@ class ProvidersTableSeeder extends Seeder
                 'website' => $faker->url,
                 'company_name' => $faker->company,
                 'contact_person' => $faker->name,
+            ]);
+            if (!$randomUser->name) {
+                $randomUser->name = 'Nombre aleatorio'; // Asignar un valor por defecto si el name está vacío
+                $randomUser->save();
+            }
+
+            // Asociar al proveedor con un usuario aleatorio (relación polimórfica)
+            $provider->user()->create([
                 'userable_type' => get_class($randomUser),
                 'userable_id' => $randomUser->id,
             ]);
@@ -128,7 +132,7 @@ class ProvidersTableSeeder extends Seeder
         $this->command->info('Proveedores, gastronomía y eventos insertados exitosamente.');
     }
 
-    /**
+/**
      * Crear servicios y productos para un proveedor basado en su categoría.
      *
      * @param Provider $provider
@@ -186,8 +190,5 @@ class ProvidersTableSeeder extends Seeder
         $this->command->info('Proveedores insertados exitosamente.\n');
     }
 }
-
-
-
 
 
