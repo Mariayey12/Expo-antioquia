@@ -1,5 +1,7 @@
 <?php
+
 namespace Database\Seeders;
+
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
@@ -74,6 +76,7 @@ class UsersTableSeeder extends Seeder
 
         // Generar usuarios adicionales de manera aleatoria con la fábrica
         User::factory()->count(10)->create();
+
         $this->command->info('Usuarios insertados exitosamente.\n');
     }
 }
