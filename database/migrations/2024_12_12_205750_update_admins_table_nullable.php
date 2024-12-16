@@ -25,7 +25,7 @@ return new class extends Migration
     {
         Schema::table('admins', function (Blueprint $table) {
             // Vuelve a hacer que las columnas no acepten valores nulos
-            $table->string('userable_type')->nullable(false)->change();
+            $table->string('userable_type');
             $table->unsignedBigInteger('userable_id')->nullable(false)->change();
         });
     }
