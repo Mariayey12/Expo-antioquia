@@ -13,10 +13,14 @@ class CreateProvidersTable extends Migration
             $table->string('email')->unique();
             $table->string('phone');
             $table->string('address');
+            $table->text('description')->nullable(); // Descripción
+            $table->string('profile_picture')->nullable(); // Imagen de perfil o logo
+            $table->string('website')->nullable(); // Sitio web
             $table->string('company_name')->nullable();
             $table->string('contact_person'); // Agregado según tu referencia en el seeder
             $table->timestamps();
         });
+
     }
 
     public function down()
