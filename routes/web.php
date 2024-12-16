@@ -17,6 +17,7 @@ use App\Http\Controllers\TestimonialController;
 use App\Http\Controllers\ReviewsCalificationController;
 use App\Http\Controllers\MediaGalleryController;
 use App\Http\Controllers\ChatController;
+use App\Http\Controllers\ProductController;
 
 Route::middleware(['web'])->group(function () {
 
@@ -84,5 +85,11 @@ Route::middleware(['web'])->group(function () {
     Route::middleware(['auth:sanctum', 'check.provider'])->get('/provider-area', function () {
         return response()->json(['message' => 'Área exclusiva para proveedores']);
     });
+
+    Route::get('/products', [ProductController::class, 'index']); // Listar productos
+    Route::get('/products/{id}', [ProductController::class, 'show']); // Ver un producto específico con reseñas
+    Route::post('/products/{id}/reviews', [ProductController::class, 'addReview']); // Agregar una reseña a un producto
+
+
 
 });

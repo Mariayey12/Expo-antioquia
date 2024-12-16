@@ -1,22 +1,9 @@
 <?php
 
-
-
-/*
-|---------------------------------------------------------------------------
-| API Routes
-|---------------------------------------------------------------------------
-|
-| Aquí es donde puedes registrar las rutas API para tu aplicación. Estas
-| rutas se cargan a través del RouteServiceProvider y todas ellas se
-| asignarán al grupo de middleware "api". ¡Haz algo genial!
-|
-*/
-
-
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\{
+    AuthController,
     PlaceController,
     UserController,
     AdminController,
@@ -39,7 +26,7 @@ use App\Http\Controllers\{
     ShoppingCartController
 };
 
-// Autenticación
+// Rutas de autenticación
 Route::post('login', [AuthController::class, 'login']);
 Route::post('logout', [AuthController::class, 'logout'])->middleware('auth:sanctum');
 Route::post('register', [AuthController::class, 'register']);
@@ -55,6 +42,10 @@ Route::apiResource('events', EventController::class);
 Route::apiResource('products', ProductController::class);
 Route::apiResource('favorites', FavoriteController::class);
 
+// Endpoints específicos de productos
+Route::get('/products/{id}', [ProductController::class, 'show']); // Producto específico con reseñas
+Route::post('/products/{id}/reviews', [ProductController::class, 'addReview']); // Crear reseña
+
 // Rutas protegidas
 Route::middleware('auth:sanctum')->group(function () {
     Route::apiResource('reservations', ReservationController::class);
@@ -66,22 +57,14 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::apiResource('shopping-carts', ShoppingCartController::class);
     Route::get('/user', fn (Request $request) => $request->user());
 });
-// Ruta protegida para obtener datos del usuario autenticado
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
 
-// Ruta protegida con autorización específica para el dashboard (solo administradores)
-Route::middleware(['auth:sanctum', 'can:access-dashboard'])->get('/dashboard', function () {
-    return response()->json(['message' => 'Bienvenido al Dashboard']);
-});
-// Administradores
+// Rutas para administradores
 Route::middleware(['auth:sanctum', 'can:access-dashboard'])->group(function () {
     Route::apiResource('admins', AdminController::class);
     Route::get('/dashboard', fn () => response()->json(['message' => 'Bienvenido al Dashboard']));
 });
 
-// Proveedores
+// Rutas para proveedores
 Route::middleware(['auth:sanctum', 'check.provider'])->group(function () {
     Route::apiResource('providers', ProviderController::class);
     Route::get('/provider-area', fn () => response()->json(['message' => 'Área exclusiva para proveedores']));
