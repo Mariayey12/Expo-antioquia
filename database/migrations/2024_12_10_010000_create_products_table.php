@@ -22,7 +22,6 @@ public function up()
         $table->text('description');
         $table->decimal('price', 8, 2);
         $table->morphs('categorizable'); // Esto agrega los campos 'categorizable_id' y 'categorizable_type'
-        $table->morphs('userable'); // Agrega los campos 'userable_id' y 'userable_type'
         $table->integer('stock');
          // Relación polimórfica
          $table->nullableMorphs('serviceable'); // Esta línea agrega las columnas `serviceable_id` y `serviceable_type`
