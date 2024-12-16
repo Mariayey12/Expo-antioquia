@@ -1,47 +1,41 @@
 <?php
 
+
 namespace Database\Factories;
 
 use App\Models\Product;
-use App\Models\Provider; // Asegúrate de importar el modelo Provider
-use App\Models\Category; // Asegúrate de importar el modelo Category
+use App\Models\Promotion;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class ProductFactory extends Factory
 {
-    /**
-     * El nombre del modelo relacionado.
-     *
-     * @var string
-     */
     protected $model = Product::class;
 
-    /**
-     * Define el estado predeterminado del modelo.
-     *
-     * @return array<string, mixed>
-     */
-    public function definition(): array
+    public function definition()
     {
-        // Obtener una categoría y un proveedor aleatorios
-        $category = Category::inRandomOrder()->first();
-        $provider = Provider::inRandomOrder()->first();
-
         return [
-            'name' => $this->faker->word, // Nombre del producto (una palabra aleatoria)
-            'description' => $this->faker->paragraph, // Descripción del producto (un párrafo aleatorio)
-            'price' => $this->faker->randomFloat(2, 5, 1000), // Precio del producto, con 2 decimales y en un rango de 5 a 1000
-            'stock' => $this->faker->numberBetween(1, 100), // Stock disponible del producto (número aleatorio entre 1 y 100)
-            'created_at' => now(), // Fecha de creación del producto (hora actual)
-            'updated_at' => now(), // Fecha de actualización del producto (hora actual)
-
-            // Asignar la relación polimórfica con una categoría o proveedor aleatorio
-            'userable_id' => $provider->id, // Relacionar con un proveedor aleatorio
-            'userable_type' => Provider::class, // Tipo del modelo relacionado (Provider)
-
-            // También podemos asociar una categoría si lo necesitas
-            'categorizable_id' => $category->id, // Relacionar con una categoría aleatoria
-            'categorizable_type' => Category::class, // Tipo del modelo relacionado (Category)
+            'name' => $this->faker->word,
+            'description' => $this->faker->sentence,
+            'price' => $this->faker->randomFloat(2, 10, 500),
+            'stock' => $this->faker->numberBetween(1, 100),
+            'categorizable_id' => $this->faker->randomNumber(),
+            'categorizable_type' => 'App\Models\Category', // Puedes cambiarlo según la relación
+            'userable_id' => $this->faker->randomNumber(),
+            'userable_type' => 'App\Models\User', // Puedes cambiarlo según el tipo de usuario
         ];
     }
+
+    // Método para asociar promociones
+    public function withPromotions($promotions = null)
+    {
+        return $this->afterCreating(function (Product $product) use ($promotions) {
+            if (!$promotions) {
+                $promotions = Promotion::inRandomOrder()->take(2)->pluck('id');
+            }
+
+            $product->promotions()->sync($promotions);
+        });
+    }
 }
+
+

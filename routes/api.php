@@ -24,8 +24,9 @@ use App\Http\Controllers\{
     ClientController,
     FavoriteController,
     ShoppingCartController,
-    PasswordResetTokenController
-    
+    PasswordResetTokenController,
+    BookingController
+
 };
 
 // Rutas de autenticación
@@ -86,3 +87,7 @@ Route::get('products/{id}', [ProductController::class, 'show']);
 Route::post('products', [ProductController::class, 'store']);
 Route::put('products/{id}', [ProductController::class, 'update']);
 Route::delete('products/{id}', [ProductController::class, 'destroy']);
+
+
+
+Route::post('/bookings', [BookingController::class, 'store']);

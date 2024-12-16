@@ -61,5 +61,7 @@ public function events()
         return $this->morphedByMany(Product::class, 'categorizable');
     }
 
+    
+
 }
 

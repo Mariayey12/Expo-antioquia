@@ -1,5 +1,6 @@
 <?php
 
+
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -9,50 +10,54 @@ class Product extends Model
 {
     use HasFactory;
 
-    /**
-     * Los atributos que se pueden asignar de manera masiva.
-     *
-     * @var array<int, string>
-     */
+    // Definir los campos que son asignables masivamente
     protected $fillable = [
         'name',
         'description',
         'price',
         'stock',
-        'userable_id',  // Si estás usando morphs, estos deberían estar aquí.
-        'userable_type',
         'categorizable_id',
-        'categorizable_type'
-        // Otros campos si es necesario
+        'categorizable_type',
+        'userable_id',
+        'userable_type'
     ];
-    /**
-     * Relación polimórfica con ReviewCalification (comentarios o calificaciones).
-     */
-    public function reviews()
+
+    //Relación polimórfica con ReviewCalification (comentarios o calificaciones).
+
+   public function reviews()
+   {
+       return $this->morphMany(ReviewCalification::class, 'reviewable');
+   }
+
+    // Relación muchos a muchos con promociones
+    public function promotions()
     {
-        return $this->morphMany(ReviewCalification::class, 'reviewable');
+        return $this->belongsToMany(Promotion::class, 'promotion_product');
     }
 
-    /**
-     * Relación polimórfica con categorías.
-     */
+    // Relación polimórfica: un producto puede pertenecer a diferentes modelos
     public function categorizable()
     {
         return $this->morphTo();
     }
 
-    /**
-     * Relación polimórfica con proveedores (o cualquier otro modelo que uses).
-     */
+    // Relación polimórfica: un producto puede ser asignado a un usuario
     public function userable()
     {
         return $this->morphTo();
     }
-     /**
-     * Relación muchos a muchos con Promotion.
-     */
-    public function promotions()
+
+    // Accesores y mutadores si lo necesitas
+    // Ejemplo de un accesor para obtener el precio con formato
+    public function getPriceAttribute($value)
     {
-        return $this->belongsToMany(Promotion::class, 'promotion_product');
+        return number_format($value, 2);
+    }
+
+    // Método para actualizar el stock
+    public function updateStock($quantity)
+    {
+        $this->stock -= $quantity;
+        $this->save();
     }
 }

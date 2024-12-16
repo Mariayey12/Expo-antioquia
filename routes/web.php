@@ -20,6 +20,7 @@ use App\Http\Controllers\ChatController;
 use App\Http\Controllers\ProductController;
 use Illuminate\Http\Request;
 use App\Http\Controllers\PasswordResetTokenController;
+use App\Http\Controllers\BookingController;
 
 Route::middleware(['web'])->group(function () {
 
@@ -103,3 +104,6 @@ Route::prefix('password-reset')->group(function () {
     Route::get('tokens/{email}', [PasswordResetTokenController::class, 'show']); // Obtener el token
     Route::delete('tokens/{email}', [PasswordResetTokenController::class, 'destroy']); // Eliminar el token
 });
+
+
+Route::post('/bookings', [BookingController::class, 'store']);

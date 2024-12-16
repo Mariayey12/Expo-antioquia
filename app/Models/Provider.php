@@ -40,6 +40,7 @@ class Provider extends Model
         return $this->morphOne(User::class, 'userable');
     }
 
+    
     /**
      * Relación polimórfica con el modelo Service (serviceable).
      *
