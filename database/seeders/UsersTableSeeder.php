@@ -1,7 +1,6 @@
 <?php
 
-namespace Database\Seeders;
-
+use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
 use App\Models\User;
@@ -66,9 +65,11 @@ class UsersTableSeeder extends Seeder
             ],
         ];
 
-        // Insertar los usuarios manuales
+        // Insertar los usuarios manualmente, verificando si ya existen
         foreach ($users as $userData) {
-            User::create($userData);
+            if (!User::where('email', $userData['email'])->exists()) {
+                User::create($userData);
+            }
         }
 
         // Generar usuarios adicionales de manera aleatoria con la fábrica
