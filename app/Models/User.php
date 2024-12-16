@@ -106,6 +106,11 @@ public function passwordResets()
       {
           return $this->hasOne(Client::class);
       }
+      public function passwordResetTokens()
+{
+    return $this->hasMany(PasswordResetToken::class, 'email', 'email');
+}
+
     /**
      * Evento para cifrar contraseñas antes de guardar un usuario.
      */

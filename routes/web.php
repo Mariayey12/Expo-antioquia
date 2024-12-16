@@ -19,6 +19,7 @@ use App\Http\Controllers\MediaGalleryController;
 use App\Http\Controllers\ChatController;
 use App\Http\Controllers\ProductController;
 use Illuminate\Http\Request;
+use App\Http\Controllers\PasswordResetTokenController;
 
 Route::middleware(['web'])->group(function () {
 
@@ -92,4 +93,11 @@ Route::middleware(['web'])->group(function () {
     Route::get('/products/{id}', [ProductController::class, 'show']); // Ver un producto específico con reseñas
     Route::post('/products/{id}/reviews', [ProductController::class, 'addReview']); // Agregar una reseña a un producto
 
+});
+
+
+Route::prefix('password-reset')->group(function () {
+    Route::post('tokens', [PasswordResetTokenController::class, 'store']); // Crear un nuevo token
+    Route::get('tokens/{email}', [PasswordResetTokenController::class, 'show']); // Obtener el token
+    Route::delete('tokens/{email}', [PasswordResetTokenController::class, 'destroy']); // Eliminar el token
 });

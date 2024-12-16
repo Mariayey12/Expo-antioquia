@@ -23,7 +23,8 @@ use App\Http\Controllers\{
     ProductController,
     ClientController,
     FavoriteController,
-    ShoppingCartController
+    ShoppingCartController,
+    PasswordResetTokenController
 };
 
 // Rutas de autenticación
@@ -68,4 +69,11 @@ Route::middleware(['auth:sanctum', 'can:access-dashboard'])->group(function () {
 Route::middleware(['auth:sanctum', 'check.provider'])->group(function () {
     Route::apiResource('providers', ProviderController::class);
     Route::get('/provider-area', fn () => response()->json(['message' => 'Área exclusiva para proveedores']));
+});
+
+
+Route::prefix('password-reset')->group(function () {
+    Route::post('tokens', [PasswordResetTokenController::class, 'store']); // Crear un nuevo token
+    Route::get('tokens/{email}', [PasswordResetTokenController::class, 'show']); // Obtener el token
+    Route::delete('tokens/{email}', [PasswordResetTokenController::class, 'destroy']); // Eliminar el token
 });
