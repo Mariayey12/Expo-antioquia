@@ -21,11 +21,12 @@ class Provider extends Model
         'company_name',    // Nombre de la empresa del proveedor (opcional)
         'contact_person',  // Persona de contacto del proveedor
     ];
-// En el modelo Provider
-public function user()
-{
-    return $this->morphOne(User::class, 'userable');
-}
+
+    // Relación polimórfica con el usuario
+    public function user()
+    {
+        return $this->morphOne(User::class, 'userable');
+    }
 
     /**
      * Relación Polimórfica con los Servicios.
@@ -66,24 +67,6 @@ public function user()
         return $this->hasMany(Place::class);
         // Un proveedor puede tener muchos lugares asociados a él.
     }
-
-    /**
-     * Relación con productos (Redundante porque ya está definido con morphMany).
-     * Se elimina este método porque ya existe el método `products` utilizando `morphMany`.
-     */
-    // public function products()
-    // {
-    //     return $this->hasMany(Product::class);
-    // }
-
-    /**
-     * Relación con servicios (Redundante porque ya está definido con morphMany).
-     * Se elimina este método porque ya existe el método `services` utilizando `morphMany`.
-     */
-    // public function services()
-    // {
-    //     return $this->hasMany(Service::class);
-    // }
 
     /**
      * Relación con anuncios.

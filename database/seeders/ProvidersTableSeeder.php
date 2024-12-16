@@ -4,137 +4,142 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use App\Models\Provider;
-use App\Models\User;
 use App\Models\Service;
-
-class ProvidersTableSeeder extends Seeder
-{
-    public function run()
-    {
-
-            Provider::factory(10)->create(); // Crear 10 proveedores ficticios
-        // Crear un proveedor con datos específicos
-        $provider = Provider::create([
-            'name' => 'Proveedor Test',
-            'email' => 'testprovider@example.com',
-            'phone' => '1234567890',
-            'address' => '123 Main St',
-            'company_name' => 'Proveedor S.A.',
-            'contact_person' => 'Juan Pérez', // Cambiado a un nombre significativo
-        ]);
-
-        // Crear un usuario asociado al proveedor (relación polimórfica)
-        $user = User::create([
-            'name' => 'Proveedor User',
-            'email' => 'proveedoruser@example.com',
-            'password' => bcrypt('password123'),
-            'userable_type' => Provider::class, // Usar el nombre de la clase como string
-            'userable_id' => $provider->id, // Usar el ID del proveedor creado
-        ]);
-
-        // Crear servicios asociados al proveedor (relación polimórfica)
-        $service1 = Service::create([
-            'name' => 'Consultoría',
-            'description' => 'Servicios de consultoría en tecnologías.',
-        ]);
-
-        $service2 = Service::create([
-            'name' => 'Soporte Técnico',
-            'description' => 'Soporte técnico para equipos informáticos.',
-        ]);
-
-        // Asociar los servicios al proveedor usando la relación polimórfica
-        $provider->services()->saveMany([$service1, $service2]);
-
-        // Crear más proveedores con datos aleatorios y asociar servicios
-        Provider::factory()
-            ->count(8)
-            ->create()
-            ->each(function ($provider) {
-                // Crear servicios aleatorios para cada proveedor
-                $services = Service::factory()->count(2)->create();
-                $provider->services()->saveMany($services);
-            });
-            $this->command->info('Proveedores insertados exitosamente.\n');
-    }
-}
-namespace Database\Seeders;
-
-use Illuminate\Database\Seeder;
 use App\Models\Product;
-use App\Models\Promotion;
 use App\Models\Category;
-use App\Models\Provider;
+use App\Models\Place;
+use App\Models\Anuncio;
+use App\Models\Blog;
+use App\Models\User;
+use App\Models\Booking; // Añadido
+use App\Models\Reservation; // Añadido
+use Faker\Factory as Faker;
 
-class ProductsTableSeeder extends Seeder
+class ProviderSeeder extends Seeder
 {
     public function run()
     {
-        // Crear categorías de ejemplo
-        $category1 = Category::create(['name' => 'Electronics']);
-        $category2 = Category::create(['name' => 'Home Appliances']);
-        $category3 = Category::create(['name' => 'Furniture']);
+        $faker = Faker::create();
 
-        // Crear proveedores de ejemplo
-        $provider1 = Provider::create(['name' => 'Tech Corp']);
-        $provider2 = Provider::create(['name' => 'Home Essentials']);
-        $provider3 = Provider::create(['name' => 'FurniCo']);
+        // Usuarios de ejemplo (puedes generar más según tus necesidades)
+        $users = User::factory()->count(5)->create(); // Generar 5 usuarios aleatorios
 
-        // Crear productos con datos completos, incluyendo la categoría y proveedor
-        $product1 = Product::create([
-            'name' => 'Smartphone',
-            'description' => 'Latest model with advanced features.',
-            'price' => 299.99,
-            'stock' => 50,
-            'categorizable_id' => $category1->id,
-            'categorizable_type' => 'App\Models\Category',
-            'userable_id' => $provider1->id,
-            'userable_type' => 'App\Models\Provider',
-        ]);
+        $providers = [
+            [
+                'name' => 'Hotel El Paraíso',
+                'category' => 'Hoteles',
+                'location' => 'Antioquia, Colombia',
+                'contact' => 'info@paraiso.com',
+                'description' => 'Hotel de lujo con vistas espectaculares y servicios exclusivos.',
+            ],
+            [
+                'name' => 'Restaurante La Hacienda',
+                'category' => 'Restaurantes',
+                'location' => 'Medellín, Colombia',
+                'contact' => 'contacto@lahacienda.com',
+                'description' => 'Restaurante tradicional con especialidades locales y menú gourmet.',
+            ],
+            // Más proveedores aquí...
+        ];
 
-        $product2 = Product::create([
-            'name' => 'Blender',
-            'description' => 'Powerful blender for everyday use.',
-            'price' => 79.99,
-            'stock' => 30,
-            'categorizable_id' => $category2->id,
-            'categorizable_type' => 'App\Models\Category',
-            'userable_id' => $provider2->id,
-            'userable_type' => 'App\Models\Provider',
-        ]);
+        foreach ($providers as $providerData) {
+            // Seleccionar un usuario aleatorio para la relación polimórfica
+            $randomUser = $users->random();
 
-        $product3 = Product::create([
-            'name' => 'Sofa',
-            'description' => 'Comfortable sofa for your living room.',
-            'price' => 499.99,
-            'stock' => 10,
-            'categorizable_id' => $category3->id,
-            'categorizable_type' => 'App\Models\Category',
-            'userable_id' => $provider3->id,
-            'userable_type' => 'App\Models\Provider',
-        ]);
+            // Crear el proveedor con la relación polimórfica establecida
+            $provider = Provider::create([
+                'name' => $providerData['name'],
+                'email' => $faker->unique()->safeEmail,
+                'phone' => $faker->phoneNumber,
+                'address' => $faker->address,
+                'description' => $providerData['description'],
+                'profile_picture' => $faker->imageUrl(200, 200),
+                'website' => $faker->url,
+                'company_name' => $faker->company,
+                'contact_person' => $faker->name,
+                'userable_type' => get_class($randomUser), // Modelo del usuario relacionado
+                'userable_id' => $randomUser->id, // ID del usuario relacionado
+            ]);
 
-        // Crear promociones de ejemplo
-        $promotion1 = Promotion::create([
-            'name' => 'Black Friday Deal',
-            'description' => 'Massive discounts for Black Friday!',
-            'discount' => 30.00,
-            'start_date' => now(),
-            'end_date' => now()->addMonth(1),
-        ]);
+            // Relacionar con categorías, servicios y productos
+            $category = Category::firstOrCreate(['name' => $providerData['category']]);
+            $provider->categories()->attach($category);
 
-        $promotion2 = Promotion::create([
-            'name' => 'Winter Sale',
-            'description' => 'Save up to 20% on selected products.',
-            'discount' => 20.00,
-            'start_date' => now()->addMonth(1),
-            'end_date' => now()->addMonth(2),
-        ]);
+            $this->createServicesAndProducts($provider, $providerData['category']);
 
-        // Relacionando productos con promociones
-        $product1->promotions()->attach($promotion1->id);
-        $product2->promotions()->attach([$promotion1->id, $promotion2->id]);
-        $product3->promotions()->attach($promotion2->id);
+            // Relacionar con lugares, anuncios y blogs
+            Place::create([
+                'provider_id' => $provider->id,
+                'name' => $providerData['name'] . ' Place',
+                'description' => $providerData['description'],
+            ]);
+
+            Anuncio::create([
+                'provider_id' => $provider->id,
+                'title' => 'Oferta especial en ' . $providerData['name'],
+                'content' => 'Aprovecha nuestras promociones exclusivas para este mes.',
+                'active' => true,
+            ]);
+
+            Blog::create([
+                'provider_id' => $provider->id,
+                'title' => 'Conoce más sobre ' . $providerData['name'],
+                'content' => 'En este blog hablamos de las experiencias únicas que puedes vivir en ' . $providerData['name'] . '.',
+            ]);
+
+            // Relacionar con reservas y bookings
+            Reservation::create([
+                'provider_id' => $provider->id,
+                'user_id' => $randomUser->id,
+                'notes' => 'Primera reserva de ejemplo.',
+                'quantity' => 1,
+                'status' => 'pendiente',
+                'reservation_date' => $faker->dateTimeBetween('now', '+1 month'),
+            ]);
+
+            Booking::create([
+                'provider_id' => $provider->id,
+                'user_id' => $randomUser->id,
+                'booking_date' => $faker->dateTimeBetween('-1 month', 'now'),
+                'details' => 'Reserva previa del usuario.',
+            ]);
+        }
+    }
+
+    /**
+     * Crear servicios y productos para un proveedor basado en su categoría.
+     *
+     * @param Provider $provider
+     * @param string $category
+     */
+    private function createServicesAndProducts($provider, $category)
+    {
+        $services = $this->getServicesByCategory($category);
+        foreach ($services as $serviceName) {
+            Service::create([
+                'provider_id' => $provider->id,
+                'name' => $serviceName,
+            ]);
+        }
+
+        $products = $this->getProductsByCategory($category);
+        foreach ($products as $productName) {
+            Product::create([
+                'provider_id' => $provider->id,
+                'name' => $productName,
+            ]);
+        }
+
+        return $products[$category] ?? [];
         $this->command->info('Proveedores insertados exitosamente.\n');
     }
+
+    private function getServicesByCategory($category) { /* Tu lógica actual */ }
+    private function getProductsByCategory($category) { /* Tu lógica actual */ }
 }
+
+
+
+
+
+
