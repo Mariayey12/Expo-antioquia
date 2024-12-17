@@ -1,124 +1,107 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\UserController;
-use App\Http\Controllers\PlaceController;
-use App\Http\Controllers\AdminController;
-use App\Http\Controllers\ProviderController;
-use App\Http\Controllers\CategoryController;
-use App\Http\Controllers\CommerceController;
-use App\Http\Controllers\ServiceController;
-use App\Http\Controllers\GastronomyController;
-use App\Http\Controllers\EventController;
-use App\Http\Controllers\PromotionController;
-use App\Http\Controllers\ReservationController;
-use App\Http\Controllers\CommentController;
-use App\Http\Controllers\TestimonialController;
-use App\Http\Controllers\ReviewsCalificationController;
-use App\Http\Controllers\MediaGalleryController;
-use App\Http\Controllers\ChatController;
-use App\Http\Controllers\ProductController;
-use App\Http\Controllers\PasswordResetTokenController;
-use App\Http\Controllers\BookingController;
-use App\Http\Controllers\BlogController; // Asegúrate de importar el controlador BlogController
-use App\Http\Controllers\AdController; // Asegúrate de importar el controlador AdController
+use Inertia\Inertia;
+use Illuminate\Http\Request;
+use App\Http\Controllers\{
+    UserController,
+    PlaceController,
+    AdminController,
+    ProviderController,
+    CategoryController,
+    CommerceController,
+    ServiceController,
+    GastronomyController,
+    EventController,
+    PromotionController,
+    ReservationController,
+    CommentController,
+    TestimonialController,
+    ReviewsCalificationController,
+    MediaGalleryController,
+    ChatController,
+    ProductController,
+    PasswordResetTokenController,
+    BookingController,
+    BlogController,
+    AdController,
+    CultureController,
+    CraftController,
+    SportController,
+    NewsController,
+    DepartmentController,
+    MunicipalityController
+};
 
+// ** Rutas públicas (sin autenticación) **
 Route::middleware(['web'])->group(function () {
+    // Página principal
+    Route::get('/', fn () => Inertia::render('Home'));
 
-    // Rutas públicas para usuarios
+    // Página de lugares
+    Route::get('/places', fn () => Inertia::render('Places'));
+
+    // Recursos públicos
     Route::resource('users', UserController::class);
-
-    // Rutas para administradores
-    Route::middleware(['auth:sanctum', 'can:access-dashboard'])->resource('admins', AdminController::class);
-
-    // Rutas para proveedores
-    Route::middleware(['auth:sanctum', 'check.provider'])->resource('providers', ProviderController::class);
-
-    // Rutas para lugares
     Route::resource('places', PlaceController::class);
-
-    // Rutas para servicios
     Route::resource('services', ServiceController::class);
-
-    // Rutas para comercios
     Route::resource('commerces', CommerceController::class);
-
-    // Rutas para gastronomía
     Route::resource('gastronomies', GastronomyController::class);
-
-    // Rutas para eventos
     Route::resource('events', EventController::class);
-
-    // Rutas para promociones
+    Route::resource('blogs', BlogController::class);
+    Route::resource('ads', AdController::class);
+    Route::resource('cultures', CultureController::class);
+    Route::resource('crafts', CraftController::class);
+    Route::resource('sports', SportController::class);
+    Route::resource('news', NewsController::class);
+    Route::resource('departments', DepartmentController::class);
+    Route::resource('municipalities', MunicipalityController::class);
     Route::resource('promotions', PromotionController::class);
+    Route::resource('products', ProductController::class);
 
-    // Rutas para reservas
-    Route::middleware('auth:sanctum')->resource('reservations', ReservationController::class);
+    // Reviews para productos
+    Route::post('products/{id}/reviews', [ProductController::class, 'addReview']);
 
-    // Rutas para comentarios
-    Route::middleware('auth:sanctum')->resource('comments', CommentController::class);
+    // Crear reservas
+    Route::post('bookings', [BookingController::class, 'store']);
 
-    // Rutas para testimonios
-    Route::middleware('auth:sanctum')->resource('testimonials', TestimonialController::class);
-
-    // Rutas para calificaciones y reseñas
-    Route::middleware('auth:sanctum')->resource('reviews-califications', ReviewsCalificationController::class);
-
-    // Rutas para galería multimedia
-    Route::middleware('auth:sanctum')->resource('media_gallery', MediaGalleryController::class);
-
-    // Rutas para mensajes de chat
-    Route::middleware('auth:sanctum')->resource('chat_messages', ChatController::class);
-
-    // Rutas para productos
-    Route::get('/products', [ProductController::class, 'index']);
-    Route::get('/products/{id}', [ProductController::class, 'show']);
-    Route::post('/products/{id}/reviews', [ProductController::class, 'addReview']);
-    Route::post('products', [ProductController::class, 'store']);
-    Route::put('products/{id}', [ProductController::class, 'update']);
-    Route::delete('products/{id}', [ProductController::class, 'destroy']);
-
-    // Rutas para el blog
-    Route::resource('blogs', BlogController::class); // Ruta para los blogs
-
-    // Rutas para los anuncios
-    Route::resource('ads', AdController::class); // Ruta para los anuncios
-
-    // Ruta principal de la aplicación
-    Route::get('/', function () {
-        return view('welcome');
-    });
-
-    // Ruta para obtener los datos del usuario autenticado
-    Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-        return $request->user();
-    });
-
-    // Ruta para el dashboard (solo administradores)
-    Route::middleware(['auth:sanctum', 'can:access-dashboard'])->get('/dashboard', function () {
-        return response()->json(['message' => 'Bienvenido al Dashboard']);
-    });
-
-    // Ruta para el área de proveedores
-    Route::middleware(['auth:sanctum', 'check.provider'])->get('/provider-area', function () {
-        return response()->json(['message' => 'Área exclusiva para proveedores']);
-
-
+    // Rutas para restablecimiento de contraseñas
+    Route::prefix('password-reset')->group(function () {
+        Route::post('tokens', [PasswordResetTokenController::class, 'store']);
+        Route::get('tokens/{email}', [PasswordResetTokenController::class, 'show']);
+        Route::delete('tokens/{email}', [PasswordResetTokenController::class, 'destroy']);
     });
 });
- // Operaciones específicas para proveedores
- Route::post('providers/{provider}/add-service', [ProviderController::class, 'addService']);
- Route::post('providers/{provider}/add-product', [ProviderController::class, 'addProduct']);
- Route::post('providers/{provider}/add-category', [ProviderController::class, 'addCategory']);
- Route::get('providers/{provider}/reservations', [ProviderController::class, 'reservations']);
- Route::get('providers/{provider}/ads', [ProviderController::class, 'ads']);
- Route::post('providers/search', [ProviderController::class, 'search']);
-// Rutas para restablecer la contraseña
-Route::prefix('password-reset')->group(function () {
-    Route::post('tokens', [PasswordResetTokenController::class, 'store']);
-    Route::get('tokens/{email}', [PasswordResetTokenController::class, 'show']);
-    Route::delete('tokens/{email}', [PasswordResetTokenController::class, 'destroy']);
+
+// ** Rutas protegidas (requieren autenticación) **
+Route::middleware('auth:sanctum')->group(function () {
+    // Rutas generales para usuarios autenticados
+    Route::get('/user', fn (Request $request) => $request->user());
+    Route::resource('reservations', ReservationController::class);
+    Route::resource('comments', CommentController::class);
+    Route::resource('testimonials', TestimonialController::class);
+    Route::resource('reviews-califications', ReviewsCalificationController::class);
+    Route::resource('media_gallery', MediaGalleryController::class);
+    Route::resource('chat_messages', ChatController::class);
+
+    // Operaciones específicas para proveedores
+    Route::prefix('providers')->group(function () {
+        Route::post('{provider}/add-service', [ProviderController::class, 'addService']);
+        Route::post('{provider}/add-product', [ProviderController::class, 'addProduct']);
+        Route::post('{provider}/add-category', [ProviderController::class, 'addCategory']);
+        Route::get('{provider}/reservations', [ProviderController::class, 'reservations']);
+        Route::get('{provider}/ads', [ProviderController::class, 'ads']);
+        Route::post('search', [ProviderController::class, 'search']);
+    });
+
+    // Área de proveedores
+    Route::get('/provider-area', fn () => response()->json(['message' => 'Área exclusiva para proveedores']));
 });
 
-// Rutas para la creación de reservas
-Route::post('/bookings', [BookingController::class, 'store']);
+// ** Rutas específicas para administradores (dashboard) **
+Route::middleware(['auth:sanctum', 'can:access-dashboard'])->prefix('admin')->group(function () {
+    Route::resource('admins', AdminController::class);
+    Route::resource('categories', CategoryController::class);
+    Route::resource('places', PlaceController::class)->names('admin.places');
+    Route::get('/dashboard', fn () => Inertia::render('Dashboard'));
+});

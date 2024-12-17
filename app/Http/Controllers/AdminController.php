@@ -5,8 +5,14 @@ namespace App\Http\Controllers;
 use App\Models\Admin;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Inertia\Inertia;
 
 class AdminController extends Controller
+
+
+
+
+
 {
     // Mostrar todos los administradores
     public function index()
@@ -103,5 +109,10 @@ class AdminController extends Controller
         } catch (\Exception $e) {
             return response()->json(['error' => 'Error al eliminar el administrador: ' . $e->getMessage()], 500);
         }
+    }
+
+    public function renderVuePage()
+    {
+        return Inertia::render('PageName');  // Reemplaza 'PageName' con el nombre de tu componente de Vue
     }
 }

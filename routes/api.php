@@ -36,30 +36,37 @@ use App\Http\Controllers\{
     MunicipalityController
 };
 
-// Rutas de autenticación
+// ** Rutas públicas **
 Route::post('login', [AuthController::class, 'login']);
-Route::post('logout', [AuthController::class, 'logout'])->middleware('auth:sanctum');
 Route::post('register', [AuthController::class, 'register']);
 
-// Rutas públicas
+// Recursos públicos
 Route::apiResource('users', UserController::class);
-Route::apiResource('places', PlaceController::class);
+Route::apiResource('places', PlaceController::class)->names([
+    'index' => 'places.public.index',
+    'show' => 'places.public.show'
+]);
 Route::apiResource('categories', CategoryController::class);
 Route::apiResource('commerces', CommerceController::class);
 Route::apiResource('services', ServiceController::class);
 Route::apiResource('gastronomies', GastronomyController::class);
 Route::apiResource('events', EventController::class);
+Route::apiResource('blogs', BlogController::class);
+Route::apiResource('ads', AdController::class);
+Route::apiResource('cultures', CultureController::class);
+Route::apiResource('crafts', CraftController::class);
+Route::apiResource('sports', SportController::class);
+Route::apiResource('news', NewsController::class);
+Route::apiResource('departments', DepartmentController::class);
+Route::apiResource('municipalities', MunicipalityController::class);
+
+// Productos
 Route::apiResource('products', ProductController::class);
-Route::apiResource('favorites', FavoriteController::class);
-Route::apiResource('blogs', BlogController::class); // Rutas de Blog
-Route::apiResource('ads', AdController::class); // Rutas de Anuncios
+Route::post('products/{id}/reviews', [ProductController::class, 'addReview']);
 
-// Endpoints específicos de productos
-Route::get('products/{id}', [ProductController::class, 'show']); // Producto específico con reseñas
-Route::post('products/{id}/reviews', [ProductController::class, 'addReview']); // Crear reseña
-
-// Rutas protegidas
+// ** Rutas protegidas por autenticación **
 Route::middleware('auth:sanctum')->group(function () {
+    Route::post('logout', [AuthController::class, 'logout']);
     Route::apiResource('reservations', ReservationController::class);
     Route::apiResource('comments', CommentController::class);
     Route::apiResource('testimonials', TestimonialController::class);
@@ -70,45 +77,34 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/user', fn (Request $request) => $request->user());
 });
 
-// Rutas para administradores
+// ** Rutas específicas de administración **
 Route::middleware(['auth:sanctum', 'can:access-dashboard'])->group(function () {
-    Route::apiResource('admins', AdminController::class);
-    Route::get('/dashboard', fn () => response()->json(['message' => 'Bienvenido al Dashboard']));
+    Route::prefix('admin')->group(function () {
+        Route::apiResource('places', PlaceController::class)->names('admin.places');
+        Route::apiResource('admins', AdminController::class);
+        Route::get('/dashboard', fn () => response()->json(['message' => 'Bienvenido al Dashboard']));
+    });
 });
 
-// Rutas para proveedores
+// ** Rutas específicas de proveedores **
 Route::middleware(['auth:sanctum', 'check.provider'])->group(function () {
-    Route::apiResource('providers', ProviderController::class);
-    Route::get('/provider-area', fn () => response()->json(['message' => 'Área exclusiva para proveedores']));
-    // Operaciones específicas para proveedores
-    Route::post('providers/{provider}/add-service', [ProviderController::class, 'addService']);
-    Route::post('providers/{provider}/add-product', [ProviderController::class, 'addProduct']);
-    Route::post('providers/{provider}/add-category', [ProviderController::class, 'addCategory']);
-    Route::get('providers/{provider}/reservations', [ProviderController::class, 'reservations']);
-    Route::get('providers/{provider}/ads', [ProviderController::class, 'ads']);
-    Route::post('providers/search', [ProviderController::class, 'search']);
+    Route::prefix('providers')->group(function () {
+        Route::apiResource('/', ProviderController::class)->names('providers');
+        Route::post('{provider}/add-service', [ProviderController::class, 'addService']);
+        Route::post('{provider}/add-product', [ProviderController::class, 'addProduct']);
+        Route::post('{provider}/add-category', [ProviderController::class, 'addCategory']);
+        Route::get('{provider}/reservations', [ProviderController::class, 'reservations']);
+        Route::get('{provider}/ads', [ProviderController::class, 'ads']);
+        Route::post('search', [ProviderController::class, 'search']);
+    });
 });
 
-// Rutas para recuperación de contraseñas
+// ** Rutas de recuperación de contraseñas **
 Route::prefix('password-reset')->group(function () {
-    Route::post('tokens', [PasswordResetTokenController::class, 'store']); // Crear un nuevo token
-    Route::get('tokens/{email}', [PasswordResetTokenController::class, 'show']); // Obtener el token
-    Route::delete('tokens/{email}', [PasswordResetTokenController::class, 'destroy']); // Eliminar el token
+    Route::post('tokens', [PasswordResetTokenController::class, 'store']);
+    Route::get('tokens/{email}', [PasswordResetTokenController::class, 'show']);
+    Route::delete('tokens/{email}', [PasswordResetTokenController::class, 'destroy']);
 });
 
-// Rutas de reservas y productos
-Route::post('/bookings', [BookingController::class, 'store']); // Crear una nueva reserva
-
-// Manejo de productos, estas rutas ya están agrupadas
-Route::apiResource('products', ProductController::class);
-Route::get('products/{id}', [ProductController::class, 'show']);
-Route::post('products', [ProductController::class, 'store']);
-Route::put('products/{id}', [ProductController::class, 'update']);
-Route::delete('products/{id}', [ProductController::class, 'destroy']);
-// Estas rutas permiten gestionar las operaciones CRUD (crear, leer, actualizar y eliminar) para culturas, artesanías, deportes, noticias, departamentos y municipios utilizando los controladores correspondientes.
-Route::resource('cultures', CultureController::class);
-Route::resource('crafts', CraftController::class);
-Route::resource('sports', SportController::class);
-Route::resource('news', NewsController::class);
-Route::resource('departments', DepartmentController::class);
-Route::resource('municipalities', MunicipalityController::class);
+// ** Rutas de reservas **
+Route::post('/bookings', [BookingController::class, 'store']);
