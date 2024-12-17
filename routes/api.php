@@ -41,10 +41,16 @@ Route::post('login', [AuthController::class, 'login']);
 Route::post('register', [AuthController::class, 'register']);
 
 // Recursos públicos
-Route::apiResource('users', UserController::class);
+Route::apiResource('users', UserController::class)->names([
+    'index' => 'public.users.index',
+    'show' => 'public.users.show',
+    'store' => 'public.users.store',
+    'update' => 'public.users.update',
+    'destroy' => 'public.users.destroy',
+]);
 Route::apiResource('places', PlaceController::class)->names([
-    'index' => 'places.public.index',
-    'show' => 'places.public.show'
+    'index' => 'public.places.index',
+    'show' => 'public.places.show',
 ]);
 Route::apiResource('categories', CategoryController::class);
 Route::apiResource('commerces', CommerceController::class);
@@ -80,7 +86,13 @@ Route::middleware('auth:sanctum')->group(function () {
 // ** Rutas específicas de administración **
 Route::middleware(['auth:sanctum', 'can:access-dashboard'])->group(function () {
     Route::prefix('admin')->group(function () {
-        Route::apiResource('places', PlaceController::class)->names('admin.places');
+        Route::apiResource('places', PlaceController::class)->names([
+            'index' => 'admin.places.index',
+            'show' => 'admin.places.show',
+            'store' => 'admin.places.store',
+            'update' => 'admin.places.update',
+            'destroy' => 'admin.places.destroy',
+        ]);
         Route::apiResource('admins', AdminController::class);
         Route::get('/dashboard', fn () => response()->json(['message' => 'Bienvenido al Dashboard']));
     });
@@ -89,7 +101,13 @@ Route::middleware(['auth:sanctum', 'can:access-dashboard'])->group(function () {
 // ** Rutas específicas de proveedores **
 Route::middleware(['auth:sanctum', 'check.provider'])->group(function () {
     Route::prefix('providers')->group(function () {
-        Route::apiResource('/', ProviderController::class)->names('providers');
+        Route::apiResource('/', ProviderController::class)->names([
+            'index' => 'providers.index',
+            'show' => 'providers.show',
+            'store' => 'providers.store',
+            'update' => 'providers.update',
+            'destroy' => 'providers.destroy',
+        ]);
         Route::post('{provider}/add-service', [ProviderController::class, 'addService']);
         Route::post('{provider}/add-product', [ProviderController::class, 'addProduct']);
         Route::post('{provider}/add-category', [ProviderController::class, 'addCategory']);
@@ -108,3 +126,4 @@ Route::prefix('password-reset')->group(function () {
 
 // ** Rutas de reservas **
 Route::post('/bookings', [BookingController::class, 'store']);
+
