@@ -38,19 +38,23 @@ use App\Http\Controllers\{
 
 // ** Rutas públicas **
 Route::post('login', [AuthController::class, 'login']);
+Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
 Route::post('register', [AuthController::class, 'register']);
 
 // Recursos públicos
 Route::apiResource('users', UserController::class)->names([
-    'index' => 'public.users.index',
-    'show' => 'public.users.show',
-    'store' => 'public.users.store',
-    'update' => 'public.users.update',
-    'destroy' => 'public.users.destroy',
+    'index' => 'users.public.index',
+    'show' => 'users.public.show',
+    'store' => 'users.public.store',
+    'update' => 'users.public.update',
+    'destroy' => 'users.public.destroy',
 ]);
 Route::apiResource('places', PlaceController::class)->names([
-    'index' => 'public.places.index',
-    'show' => 'public.places.show',
+    'index' => 'places.public.index',
+    'show' => 'places.public.show',
+    'store' => 'places.public.store',
+    'update' => 'places.public.update',
+    'destroy' => 'places.public.destroy',
 ]);
 Route::apiResource('categories', CategoryController::class);
 Route::apiResource('commerces', CommerceController::class);
@@ -86,13 +90,14 @@ Route::middleware('auth:sanctum')->group(function () {
 // ** Rutas específicas de administración **
 Route::middleware(['auth:sanctum', 'can:access-dashboard'])->group(function () {
     Route::prefix('admin')->group(function () {
-        Route::apiResource('places', PlaceController::class)->names([
-            'index' => 'admin.places.index',
-            'show' => 'admin.places.show',
-            'store' => 'admin.places.store',
-            'update' => 'admin.places.update',
-            'destroy' => 'admin.places.destroy',
+        Route::apiResource('users', UserController::class)->names([
+            'index' => 'admin.users.index',
+            'show' => 'admin.users.show',
+            'store' => 'admin.users.store',
+            'update' => 'admin.users.update',
+            'destroy' => 'admin.users.destroy',
         ]);
+        Route::apiResource('places', PlaceController::class)->names('admin.places');
         Route::apiResource('admins', AdminController::class);
         Route::get('/dashboard', fn () => response()->json(['message' => 'Bienvenido al Dashboard']));
     });
@@ -101,13 +106,7 @@ Route::middleware(['auth:sanctum', 'can:access-dashboard'])->group(function () {
 // ** Rutas específicas de proveedores **
 Route::middleware(['auth:sanctum', 'check.provider'])->group(function () {
     Route::prefix('providers')->group(function () {
-        Route::apiResource('/', ProviderController::class)->names([
-            'index' => 'providers.index',
-            'show' => 'providers.show',
-            'store' => 'providers.store',
-            'update' => 'providers.update',
-            'destroy' => 'providers.destroy',
-        ]);
+        Route::apiResource('/', ProviderController::class)->names('providers');
         Route::post('{provider}/add-service', [ProviderController::class, 'addService']);
         Route::post('{provider}/add-product', [ProviderController::class, 'addProduct']);
         Route::post('{provider}/add-category', [ProviderController::class, 'addCategory']);
@@ -126,4 +125,6 @@ Route::prefix('password-reset')->group(function () {
 
 // ** Rutas de reservas **
 Route::post('/bookings', [BookingController::class, 'store']);
+
+
 

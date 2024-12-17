@@ -11,3 +11,4 @@
         @inertia <!-- Esto renderiza la aplicación Vue a través de Inertia.js -->
     </body>
 </html>
+
