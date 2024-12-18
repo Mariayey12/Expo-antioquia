@@ -1,33 +1,39 @@
+/**
+ * First we will load all of this project's JavaScript dependencies which
+ * includes Vue and other libraries. It is a great starting point when
+ * building robust, powerful web applications using Vue and Laravel.
+ */
 
-import { createApp, h } from 'vue';
-import { createInertiaApp } from '@inertiajs/inertia-vue3';
-import axios from 'axios';
+import './bootstrap';
+import { createApp } from 'vue';
 
-// Configuración de Axios
-axios.defaults.baseURL = 'https://expo-antioquia-79bc482a1286.herokuapp.com'; // URL de tu API
-axios.defaults.headers.common['Authorization'] = `Bearer ${localStorage.getItem('token')}`; // Configuración del token
+/**
+ * Next, we will create a fresh Vue application instance. You may then begin
+ * registering components with the application instance so they are ready
+ * to use in your application's views. An example is included for you.
+ */
 
-// Configurar manejo global de errores
-axios.interceptors.response.use(
-    response => response, // Si la respuesta es exitosa, la retornamos directamente
-    error => {
-        // Manejar errores de manera centralizada
-        if (error.response) {
-            console.error('Error en la respuesta:', error.response);
-        } else if (error.request) {
-            console.error('No se recibió respuesta:', error.request);
-        } else {
-            console.error('Error en la configuración de la solicitud:', error.message);
-        }
-        return Promise.reject(error); // Rechazamos la promesa para que el error se maneje donde se haga la solicitud
-    }
-);
+const app = createApp({});
 
-createInertiaApp({
-    resolve: name => require(`./Pages/${name}.vue`), // Rutas de tus componentes Vue
-    setup({ el, App, props, plugin }) {
-        createApp({ render: () => h(App, props) })
-            .use(plugin)
-            .mount(el);
-    },
-});
+import ExampleComponent from './components/ExampleComponent.vue';
+app.component('example-component', ExampleComponent);
+
+/**
+ * The following block of code may be used to automatically register your
+ * Vue components. It will recursively scan this directory for the Vue
+ * components and automatically register them with their "basename".
+ *
+ * Eg. ./components/ExampleComponent.vue -> <example-component></example-component>
+ */
+
+// Object.entries(import.meta.glob('./**/*.vue', { eager: true })).forEach(([path, definition]) => {
+//     app.component(path.split('/').pop().replace(/\.\w+$/, ''), definition.default);
+// });
+
+/**
+ * Finally, we will attach the application instance to a HTML element with
+ * an "id" attribute of "app". This element is included with the "auth"
+ * scaffolding. Otherwise, you will need to add an element yourself.
+ */
+
+app.mount('#app');

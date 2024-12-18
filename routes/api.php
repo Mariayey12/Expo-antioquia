@@ -2,6 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use Inertia\Inertia;
 use App\Http\Controllers\{
     AuthController,
     PlaceController,
@@ -38,7 +39,12 @@ use App\Http\Controllers\{
 
 // ** Rutas públicas **
 Route::post('login', [AuthController::class, 'login']);
-Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
+// Ruta para la vista de inicio de sesión con Inertia.js
+Route::get('/login', function () {
+    return Inertia::render('Auth/Login'); // Renderiza el componente Vue Login.vue
+})->name('login');
+
+
 Route::post('register', [AuthController::class, 'register']);
 
 // Recursos públicos
