@@ -1,39 +1,35 @@
-/**
- * First we will load all of this project's JavaScript dependencies which
- * includes Vue and other libraries. It is a great starting point when
- * building robust, powerful web applications using Vue and Laravel.
- */
+import './bootstrap';  // Carga las dependencias globales
+import { createApp } from 'vue';  // Crea una instancia de Vue
+import { createRouter, createWebHistory } from 'vue-router';  // Importa Vue Router
+import axios from './axios';  // Asegúrate de importar axios
 
-import './bootstrap';
-import { createApp } from 'vue';
+// Importa el componente principal de la aplicación
+import App from './components/App.vue';  // Componente principal
+import Home from './pages/Home.vue';  // Página principal
 
-/**
- * Next, we will create a fresh Vue application instance. You may then begin
- * registering components with the application instance so they are ready
- * to use in your application's views. An example is included for you.
- */
+// Configuración de rutas
+const routes = [
+  {
+    path: '/',        // Ruta principal
+    name: 'home',
+    component: Home,  // Muestra el componente Home
+  },
+];
 
-const app = createApp({});
+// Crea el router con el historial del navegador
+const router = createRouter({
+  history: createWebHistory(),  // Usa el historial del navegador
+  routes,                      // Usa las rutas definidas
+});
 
-import ExampleComponent from './components/ExampleComponent.vue';
-app.component('example-component', ExampleComponent);
+// Crea la aplicación Vue
+const app = createApp(App);  // Usamos App.vue como el componente raíz
 
-/**
- * The following block of code may be used to automatically register your
- * Vue components. It will recursively scan this directory for the Vue
- * components and automatically register them with their "basename".
- *
- * Eg. ./components/ExampleComponent.vue -> <example-component></example-component>
- */
+// Usa el router en la aplicación
+app.use(router);
 
-// Object.entries(import.meta.glob('./**/*.vue', { eager: true })).forEach(([path, definition]) => {
-//     app.component(path.split('/').pop().replace(/\.\w+$/, ''), definition.default);
-// });
-
-/**
- * Finally, we will attach the application instance to a HTML element with
- * an "id" attribute of "app". This element is included with the "auth"
- * scaffolding. Otherwise, you will need to add an element yourself.
- */
-
+// Monta la aplicación en el contenedor con id 'app'
 app.mount('#app');
+
+
+

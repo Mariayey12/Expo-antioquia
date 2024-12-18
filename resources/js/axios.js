@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-// Establecer la URL base directamente con tu API
+// Establecer la URL base de tu API
 axios.defaults.baseURL = 'https://expo-antioquia-79bc482a1286.herokuapp.com/api';
 
 // Configurar el token si existe
@@ -11,8 +11,9 @@ if (token) {
 
 // Configurar un interceptor de respuesta para manejar errores globales
 axios.interceptors.response.use(
-    response => response, // Retorna la respuesta si es exitosa
+    response => response,
     error => {
+        // Manejo de errores de respuesta
         if (error.response) {
             console.error('Error en la respuesta del servidor:', error.response);
         } else if (error.request) {
@@ -20,7 +21,7 @@ axios.interceptors.response.use(
         } else {
             console.error('Error al configurar la solicitud:', error.message);
         }
-        return Promise.reject(error); // Rechaza la promesa para manejar errores localmente
+        return Promise.reject(error);  // Rechaza la promesa para manejar errores localmente
     }
 );
 

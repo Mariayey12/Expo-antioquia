@@ -3,7 +3,8 @@
     "type": "module",
     "scripts": {
         "dev": "vite",
-        "build": "vite build"
+        "build": "vite build",
+        "serve": "vite preview"
     },
     "devDependencies": {
         "@nuxt/types": "^2.18.1",
@@ -18,18 +19,20 @@
         "laravel-vite-plugin": "^1.1.1",
         "postcss": "^8.4.49",
         "sass": "^1.56.1",
-        "tailwindcss": "^3.4.16",
+        "tailwindcss": "^3.4.17",
         "typescript": "^5.7.2",
         "vite": "^5.4.11",
-        "vue": "^3.2.37"
+        "vue": "^3.5.13",
+        "vue-tsc": "^2.1.10"
     },
     "dependencies": {
         "@inertiajs/inertia": "^0.11.1",
         "@inertiajs/inertia-vue3": "^0.6.0",
-        "@inertiajs/progress": "^0.2.7",
+        "@inertiajs/progress": "^0.1.2",
         "@inertiajs/vue3": "^2.0.0",
+        "@vue/tsconfig": "^0.7.0",
         "nuxt": "^3.14.1592",
-        "vue": "^3.5.13",
+        "using": "^1.0.0-alpha-1",
         "vue-router": "^4.5.0",
         "ziggy": "^2.4.0"
     }

@@ -1,4 +1,3 @@
-<!-- resources/views/auth/login.blade.php -->
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -25,16 +24,5 @@
         @if ($errors->any())
             <div>
                 <ul>
-                    @foreach ($errors->all() as $error)
-                        <li>{{ $error }}</li>
-                    @endforeach
-                </ul>
-            </div>
-        @endif
+                    @foreach ($errors
 
-        <button type="submit">Iniciar sesión</button>
-    </form>
-
-    <a href="{{ route('register') }}">¿No tienes una cuenta? Regístrate aquí</a>
-</body>
-</html>
