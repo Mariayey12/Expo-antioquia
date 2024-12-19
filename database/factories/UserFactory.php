@@ -2,38 +2,43 @@
 
 namespace Database\Factories;
 
+use App\Models\User;
+use App\Models\Admin;  // Asegúrate de importar el modelo relacionado
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 
-/**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\User>
- */
 class UserFactory extends Factory
 {
-    /**
-     * The current password being used by the factory.
-     */
-    protected static ?string $password;
+    protected $model = User::class;
 
     /**
-     * Define the model's default state.
-     *
-     * @return array<string, mixed>
+     * Define el estado predeterminado del modelo.
      */
     public function definition(): array
     {
+        // Obtener el primer admin para usarlo en la relación polimórfica
+        $admin = Admin::first() ?? Admin::factory()->create(); // Crea uno si no existe
+
         return [
-            'name' => fake()->name(),
-            'email' => fake()->unique()->safeEmail(),
+            'name' => $this->faker->name(),
+            'email' => $this->faker->unique()->safeEmail(),
             'email_verified_at' => now(),
-            'password' => static::$password ??= Hash::make('password'),
+            'password' => Hash::make('password'),
+            'phone' => $this->faker->optional()->phoneNumber(),
+            'address' => $this->faker->optional()->address(),
+            'profile_picture' => $this->faker->optional()->imageUrl(100, 100, 'people', true, 'Perfil'),
+            'role' => $this->faker->randomElement(['administrador', 'usuario', 'proveedor']),
+            'userable_type' => Admin::class, // Usar el nombre de la clase del modelo relacionado
+            'userable_id' => $admin->id, // Establecer el ID del modelo relacionado
+           
+
             'remember_token' => Str::random(10),
         ];
     }
 
     /**
-     * Indicate that the model's email address should be unverified.
+     * Estado para usuarios no verificados.
      */
     public function unverified(): static
     {
@@ -42,3 +47,4 @@ class UserFactory extends Factory
         ]);
     }
 }
+
