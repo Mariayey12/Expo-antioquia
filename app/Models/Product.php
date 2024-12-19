@@ -28,7 +28,16 @@ class Product extends Model
    {
        return $this->morphMany(ReviewCalification::class, 'reviewable');
    }
-
+// En el modelo Product
+public function productable()
+{
+    return $this->morphTo();
+}
+// En el modelo Product
+public function places()
+{
+    return $this->morphedByMany(Place::class, 'productable');
+}
     // Relación muchos a muchos con promociones
     public function promotions()
     {

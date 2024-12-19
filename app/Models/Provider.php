@@ -50,13 +50,6 @@ class Provider extends Model
      * Un proveedor puede ofrecer muchos productos, también a través de una relación polimórfica.
      */
 
-    public function provider()
-{
-    return $this->belongsTo(Provider::class);
-}
-
-
-
 public function products()
 {
     return $this->morphMany(Product::class, 'productable');

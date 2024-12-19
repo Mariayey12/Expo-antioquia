@@ -44,14 +44,16 @@ class Event extends Model
     {
         return $this->morphMany(Review::class, 'reviewable');
     }
-    // Modelo Place
-public function events()
+// En el modelo Event
+public function products()
 {
-    return $this->morphMany(Event::class, 'eventable');
+    return $this->morphToMany(Product::class, 'productable');
 }
 
-
-
+public function events()
+{
+    return $this->morphedByMany(Event::class, 'productable');
+}
 // App\Models\Event.php
 
 public function categories()

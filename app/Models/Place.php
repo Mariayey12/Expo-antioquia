@@ -87,7 +87,16 @@ class Place extends Model
     {
         return $this->morphToMany(Service::class, 'serviceable');
     }
-
+// En el modelo Place
+public function provider()
+{
+    return $this->belongsTo(Provider::class);
+}
+// En el modelo Place
+public function products()
+{
+    return $this->morphMany(Product::class, 'productable');
+}
 
     /**
      * Relación polimórfica inversa para comercios.
