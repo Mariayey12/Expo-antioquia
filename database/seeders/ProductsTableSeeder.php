@@ -1,5 +1,6 @@
 <?php
 
+
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
@@ -8,7 +9,7 @@ use App\Models\Category;
 use App\Models\Provider;
 use App\Models\Promotion;
 
-class ProductSeeder extends Seeder
+class ProductsTableSeeder extends Seeder
 {
     public function run()
     {
@@ -29,11 +30,9 @@ class ProductSeeder extends Seeder
             'price' => 350000,
             'stock' => 8,
             'categorizable_id' => $categoryHotel->id,
-            'categorizable_type' => get_class($categoryHotel),
+            'categorizable_type' => Category::class,
             'userable_id' => $providerHotel->id,
-            'userable_type' => get_class($providerHotel),
-            'created_at' => now(),
-            'updated_at' => now(),
+            'userable_type' => Provider::class,
         ]);
 
         $product2 = Product::create([
@@ -42,20 +41,20 @@ class ProductSeeder extends Seeder
             'price' => 95000,
             'stock' => 25,
             'categorizable_id' => $categoryRestaurant->id,
-            'categorizable_type' => get_class($categoryRestaurant),
+            'categorizable_type' => Category::class,
             'userable_id' => $providerRestaurant->id,
-            'userable_type' => get_class($providerRestaurant),
-            'created_at' => now(),
-            'updated_at' => now(),
+            'userable_type' => Provider::class,
         ]);
 
-        // Si ya tienes promociones cargadas en la base de datos
+        // Asociar promociones si existen
         $promotions = Promotion::all();
         if ($promotions->isNotEmpty()) {
             $promotion = $promotions->first();
             $promotion->promotionable_id = $product1->id;
-            $promotion->promotionable_type = get_class($product1);
+            $promotion->promotionable_type = Product::class;
             $promotion->save();
         }
     }
 }
+
+

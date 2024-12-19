@@ -84,6 +84,7 @@ public function products()
         return $this->hasManyThrough(Reservation::class, Place::class);
     }
 
+
     /**
      * Relación con bookings.
      * Un proveedor puede tener muchas reservas (bookings).

@@ -44,7 +44,6 @@ public function places()
         return $this->belongsToMany(Promotion::class, 'promotion_product');
     }
 
-
     // Relación polimórfica: un producto puede pertenecer a diferentes modelos
     public function categorizable()
     {
