@@ -1,6 +1,6 @@
-    <?php
+<?php
 
-    namespace Database\Seeders;
+namespace Database\Seeders;
     use Illuminate\Database\Seeder;
     use App\Models\Provider;
     use App\Models\User;
@@ -13,6 +13,7 @@
     use App\Models\Gastronomy;
     use App\Models\Event;
     use Faker\Factory as Faker;
+    use Illuminate\Support\Str; // Importación de la clase Str
 
     class ProvidersTableSeeder extends Seeder
     {
@@ -214,5 +215,3 @@
             $this->command->info('Proveedores insertados exitosamente.\n');
         }
     }
-
-
