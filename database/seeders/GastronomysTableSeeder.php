@@ -79,7 +79,7 @@ class GastronomysTableSeeder extends Seeder
         }
 
         // Crear 10 entradas adicionales con la fábrica
-        Gastronomy::factory(10)->create();
+        Gastronomy::factory(100)->create();
         $this->command->info("Gastronomías insertadas exitosamente.");
     }
 }
