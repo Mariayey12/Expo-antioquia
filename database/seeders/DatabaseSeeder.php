@@ -13,17 +13,45 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // Llama a los seeders de las tablas específicas
+        // Llama a los seeders de las tablas específicas en el orden adecuado
         $this->call([
-            AdsTableSeeder::class,
-            PlacesTableSeeder::class,
-            HotelsTableSeeder::class,
-            RestaurantsTableSeeder::class,
-            TouristPlacesTableSeeder::class,
-            RelaxationPlacesTableSeeder::class,
-            CommentsTableSeeder::class,
-            UsersTableSeeder::class,
-            ReservationsTableSeeder::class,
+            // Seeders para usuarios y roles
+            AdminsTableSeeder::class,          // Administradores
+            UsersTableSeeder::class,           // Usuarios
+            ProvidersTableSeeder::class,       // Proveedores
+            ClientsTableSeeder::class,         // Clientes
+
+            // Seeders para entidades principales
+            //CategoriesTableSeeder::class,      // Categorías para lugares y servicios
+            PlacesTableSeeder::class,          // Lugares (depende de categorías)
+            GastronomysTableSeeder::class,     // Gastronomía
+            EventsTableSeeder::class,          // Eventos
+            ProductsTableSeeder::class,        // Productos
+            BlogsTableSeeder::class,           // Blogs
+            AdsTableSeeder::class,             // Anuncios publicitarios
+
+            // Seeders para datos relacionados o tablas pivote
+            ReservationsTableSeeder::class,    // Reservas de lugares
+            CommentsTableSeeder::class,        // Comentarios
+            TestimonialsTableSeeder::class,    // Testimonios
+            FavoritesTableSeeder::class,       // Favoritos (usuarios y lugares)
+            ReviewCalificationsTableSeeder::class, // Calificaciones y reseñas
+            ShoppingCartsTableSeeder::class,   // Carritos de compras
+
+            // Seeders adicionales
+            PromotionsTableSeeder::class,      // Promociones
+            MediaGallerysTableSeeder::class,   // Galerías de medios
+            ChatMessagesTableSeeder::class,    // Mensajes de chat
+
+            // Seeders recientemente creados
+            CulturesTableSeeder::class,              // Culturas
+            CraftsTableSeeder::class,                // Artesanías
+            SportsTableSeeder::class,                // Deportes
+            NewsTableSeeder::class,                 // Actualidad
+            DepartmentsTableSeeder::class,           // Departamentos
+            MunicipalitysTablaSeeder::class,         // Municipios
         ]);
     }
 }
+
+

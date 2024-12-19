@@ -9,31 +9,14 @@ class Comment extends Model
 {
     use HasFactory;
 
-    protected $table = 'comments';
 
-    protected $fillable = [
-        'user_id',
-        'service_id',
-        'contenido',
-        'calificacion',
-    ];
-
-    /**
-     * Relación con el modelo User.
-     * Un comentario pertenece a un usuario.
-     */
-    public function user()
+    public function users()
     {
-        return $this->belongsTo(User::class, 'user_id');
+        return $this->morphToMany(User::class, 'userable');
     }
-
-    /**
-     * Relación con el modelo Service.
-     * Un comentario pertenece a un servicio.
-     */
-    public function service()
+    // Relación polimórfica inversa
+    public function commentable()
     {
-        return $this->belongsTo(Service::class, 'service_id');
+        return $this->morphTo();
     }
 }
-

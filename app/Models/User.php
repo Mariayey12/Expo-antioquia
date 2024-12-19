@@ -11,19 +11,27 @@ class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
 
+    protected $table = 'users';
+
     /**
-     * The attributes that are mass assignable.
+     * Atributos asignables en masa.
      *
      * @var array<int, string>
-     */ protected $table = 'users';
+     */
     protected $fillable = [
         'name',
         'email',
         'password',
+        'phone',
+        'address',
+        'profile_picture',
+        'role',
+        'userable_type',
+        'userable_id',
     ];
 
     /**
-     * The attributes that should be hidden for serialization.
+     * Atributos ocultos en serializaciones.
      *
      * @var array<int, string>
      */
@@ -33,30 +41,97 @@ class User extends Authenticatable
     ];
 
     /**
-     * The attributes that should be cast.
+     * Atributos que deben ser casteados.
      *
      * @var array<string, string>
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
-        'password' => 'hashed',
     ];
 
     /**
-     * Relación con el modelo Comentario.
-     * Un usuario puede tener muchos comentarios.
+     * Relación polimórfica uno a uno con el modelo userable (roles específicos).
      */
-    public function comentarios()
+    public function userable()
     {
-        return $this->hasMany(Comment::class, 'user_id');
+        return $this->morphTo();
+    }
+    public function user()
+    {
+        return $this->morphOne(User::class, 'userable');
     }
 
     /**
-     * Relación con el modelo Reserva.
-     * Un usuario puede tener muchas reservas.
+     * Relación polimórfica muchos a muchos con comentarios.
+     */
+    public function comentarios()
+    {
+        return $this->morphedByMany(Comment::class, 'userable');
+    }
+
+    /**
+     * Relación polimórfica muchos a muchos con reservas.
      */
     public function reservas()
     {
-        return $this->hasMany(Reservation::class, 'user_id');
+        return $this->morphedByMany(Reservation::class, 'userable');
+    }
+
+    /**
+     * Relación polimórfica muchos a muchos con lugares.
+     */
+    public function places()
+    {
+        return $this->morphedByMany(Place::class, 'userable');
+    }
+
+    /**
+     * Relación polimórfica muchos a muchos con servicios.
+     */
+    public function services()
+    {
+        return $this->morphedByMany(Service::class, 'userable');
+    }
+// User.php
+public function passwordResets()
+{
+    return $this->hasMany(PasswordResetToken::class, 'email', 'email');
+}
+/**
+
+     * Get the clientable relationship.
+     */
+    public function clientable()
+    {
+        return $this->morphOne(Client::class, 'clientable');
+    }
+      // Relación con Client (Uno a Uno)
+      public function client()
+      {
+          return $this->hasOne(Client::class);
+      }
+      public function passwordResetTokens()
+{
+    return $this->hasMany(PasswordResetToken::class, 'email', 'email');
+}
+
+    /**
+     * Evento para cifrar contraseñas antes de guardar un usuario.
+     */
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::creating(function ($user) {
+            if ($user->password) {
+                $user->password = bcrypt($user->password);
+            }
+        });
+
+        static::updating(function ($user) {
+            if ($user->isDirty('password')) {
+                $user->password = bcrypt($user->password);
+            }
+        });
     }
 }

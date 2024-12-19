@@ -10,31 +10,39 @@ return new class extends Migration
      * Run the migrations.
      */
     public function up(): void
-    
-    
     {
         Schema::create('services', function (Blueprint $table) {
-            $table->id();
-            $table->string('name'); // Nombre del servicio
-            $table->text('description')->nullable(); // Descripción del servicio
-            $table->decimal('cost', 10, 2)->nullable(); // Costo del servicio
-            $table->string('duration')->nullable(); // Duración del servicio
-            $table->string('category')->nullable(); // Categoría del servicio
-            $table->string('image_url')->nullable(); // URL de una imagen del servicio
-            $table->string('provider_name')->nullable(); // Nombre del proveedor del servicio
-            $table->string('location')->nullable(); // Ubicación donde se ofrece el servicio
-            $table->boolean('is_available')->default(true); // Estado de disponibilidad del servicio
-            $table->date('available_from')->nullable(); // Fecha desde la cual está disponible
-            $table->date('available_until')->nullable(); // Fecha hasta la cual está disponible
-            $table->string('contact_info')->nullable(); // Información de contacto para más detalles
-            $table->string('google_maps')->nullable(); // URL de Google Maps
-            $table->string('video_url')->nullable(); // URL del video
-            $table->timestamps();
+            $table->id(); // ID del servicio
+            $table->string('name'); // Nombre del servicio (obligatorio)
+            $table->text('description')->nullable(); // Descripción del servicio (opcional)
+            $table->decimal('cost', 10, 2)->nullable(); // Costo del servicio (opcional)
+            $table->string('duration')->nullable(); // Duración del servicio (opcional)
+            $table->string('image_url')->nullable(); // URL de una imagen del servicio (opcional)
+            $table->string('video_url')->nullable(); // URL de un video relacionado con el servicio (opcional)
+            $table->string('google_maps')->nullable(); // URL de Google Maps (opcional)
+            $table->string('provider_name')->nullable(); // Nombre del proveedor (opcional)
+            $table->string('location')->nullable(); // Ubicación (opcional)
+            $table->boolean('is_available')->default(true); // Disponibilidad (obligatorio)
+            $table->dateTime('available_from')->nullable(); // Disponible desde (opcional)
+            $table->dateTime('available_until')->nullable(); // Disponible hasta (opcional)
+            $table->string('contact_info')->nullable(); // Información de contacto (opcional)
+            $table->enum('status', ['active', 'inactive', 'maintenance'])->default('active'); // Estado (obligatorio)
+            $table->integer('reviews_count')->default(0); // Número de reseñas (opcional)
+            $table->decimal('average_rating', 2, 1)->default(0); // Calificación promedio (opcional)
+
+            $table->timestamps(); // Timestamps: created_at y updated_at
+
+
+            // Relación polimórfica
+            $table->nullableMorphs('serviceable'); // Esta línea agrega las columnas `serviceable_id` y `serviceable_type`
+            $table->nullableMorphs('userable'); // Esto crea automáticamente userable_type y userable_id
+
+
+
+
+
         });
-    
     }
-
-
 
     /**
      * Reverse the migrations.

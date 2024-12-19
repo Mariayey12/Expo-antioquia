@@ -2,32 +2,75 @@
 
 namespace App\Models;
 
+
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Service extends Model
 {
     use HasFactory;
- protected $table = 'services';
+
     protected $fillable = [
         'name',
         'description',
         'cost',
         'duration',
-        'category',
         'image_url',
+        'video_url',
+        'google_maps',
         'provider_name',
         'location',
         'is_available',
         'available_from',
         'available_until',
         'contact_info',
-        'comerce_id', // Agregamos la clave foránea
+        'status',
+        'reviews_count',
+        'average_rating',
     ];
 
-    // Relación con Comerce (pertenece a un comercio)
-    public function comerce()
+    protected $casts = [
+        'cost' => 'decimal:2',
+        'is_available' => 'boolean',
+        'available_from' => 'datetime',
+        'available_until' => 'datetime',
+        'average_rating' => 'float',
+        'reviews_count' => 'integer',
+    ];
+
+    /**
+     * Relación polimórfica.
+     */
+    public function serviceable()
     {
-        return $this->belongsTo(Comerce::class);
+        return $this->morphTo();
     }
+
+
+    public function categories()
+    {
+        return $this->morphToMany(Category::class, 'categorizable');
+    }
+    public function commerces()
+    {
+        return $this->morphedByMany(Commerce::class, 'serviceable');
+    }
+    // Relación polimórfica inversa
+    public function providers()
+    {
+        return $this->morphMany(Provider::class, 'serviceable');
+    }
+
+// Relación polimórfica de servicio
+public function comments()
+{
+    return $this->morphMany(Comment::class, 'commentable');
 }
+
+public function reservations()
+{
+    return $this->morphMany(Reservation::class, 'reservable');
+}
+}
+
+
