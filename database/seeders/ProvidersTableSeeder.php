@@ -5,6 +5,8 @@ namespace Database\Seeders;
     use App\Models\Provider;
     use App\Models\User;
     use App\Models\Category;
+    use App\Models\Service;
+    use App\Models\Product;
     use App\Models\Place;
     use App\Models\Anuncio;
     use App\Models\Blog;
@@ -217,4 +219,3 @@ namespace Database\Seeders;
     }
 
 
-    
