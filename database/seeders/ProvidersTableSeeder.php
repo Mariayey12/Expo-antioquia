@@ -56,16 +56,21 @@ class ProvidersTableSeeder extends Seeder
                 'company_name' => $faker->company,
                 'contact_person' => $faker->name,
             ]);
-            if (!$randomUser->name) {
-                $randomUser->name = 'Nombre aleatorio'; // Asignar un valor por defecto si el name está vacío
-                $randomUser->save();
-            }
+           // Seleccionar un usuario aleatorio para la relación polimórfica
+$randomUser = $users->random(); // Asegúrate de que $users contenga usuarios creados previamente
 
-            // Asociar al proveedor con un usuario aleatorio (relación polimórfica)
-            $provider->user()->create([
-                'userable_type' => get_class($randomUser),
-                'userable_id' => $randomUser->id,
-            ]);
+// Verificar que el usuario tenga los datos requeridos
+if (!$randomUser->name) {
+    $randomUser->name = 'Nombre predeterminado'; // Asignar un nombre si está vacío
+    $randomUser->save(); // Guardar los cambios
+}
+
+// Asociar al proveedor con un usuario aleatorio (relación polimórfica)
+$provider->user()->create([
+    'userable_type' => get_class($provider), // Tipo del modelo (en este caso, Provider)
+    'userable_id' => $provider->id,         // ID del proveedor
+]);
+
 
             // Relacionar categorías
             $category = Category::firstOrCreate(['name' => $providerData['category']]);

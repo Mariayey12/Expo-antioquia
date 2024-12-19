@@ -27,8 +27,8 @@ class Provider extends Model
     {
         return $this->morphOne(User::class, 'userable');
     }
-    
 
+    
  // Relación con categorías
  public function categories()
  {
