@@ -1,6 +1,5 @@
 <?php
 
-
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
@@ -9,7 +8,7 @@ use App\Models\Category;
 use App\Models\Provider;
 use App\Models\Promotion;
 
-class ProductsTableSeeder extends Seeder
+class ProducsTabletSeeder extends Seeder
 {
     public function run()
     {
@@ -18,10 +17,44 @@ class ProductsTableSeeder extends Seeder
         $categoryHotel = $categories->where('name', 'Alojamiento')->first();
         $categoryRestaurant = $categories->where('name', 'Gastronomía')->first();
 
+        // Crear categorías si no existen
+        if (!$categoryHotel) {
+            $categoryHotel = Category::create([
+                'name' => 'Alojamiento',
+                'description' => 'Categoría de alojamiento',
+            ]);
+        }
+
+        if (!$categoryRestaurant) {
+            $categoryRestaurant = Category::create([
+                'name' => 'Gastronomía',
+                'description' => 'Categoría de gastronomía',
+            ]);
+        }
+
         // Obtener proveedores existentes
         $providers = Provider::all();
         $providerHotel = $providers->first(); // Ajusta según el proveedor deseado
         $providerRestaurant = $providers->last(); // Ajusta según el proveedor deseado
+
+        // Crear proveedores si no existen
+        if (!$providerHotel) {
+            $providerHotel = Provider::create([
+                'name' => 'Hotel Antioquia',
+                'email' => 'hotel@antioquia.com',
+                'phone' => '1234567890',
+                'description' => 'Proveedor de servicios de alojamiento',
+            ]);
+        }
+
+        if (!$providerRestaurant) {
+            $providerRestaurant = Provider::create([
+                'name' => 'Restaurante Antioquia',
+                'email' => 'restaurante@antioquia.com',
+                'phone' => '0987654321',
+                'description' => 'Proveedor de servicios gastronómicos',
+            ]);
+        }
 
         // Crear productos asociados a categorías y proveedores
         $product1 = Product::create([
@@ -56,5 +89,3 @@ class ProductsTableSeeder extends Seeder
         }
     }
 }
-
-
