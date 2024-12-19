@@ -215,3 +215,6 @@ namespace Database\Seeders;
             $this->command->info('Proveedores insertados exitosamente.\n');
         }
     }
+
+
+    

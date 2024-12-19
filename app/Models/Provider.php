@@ -28,11 +28,11 @@ class Provider extends Model
         return $this->morphOne(User::class, 'userable');
     }
 
-    
+
  // Relación con categorías
  public function categories()
  {
-     return $this->hasMany(Category::class);
+     return $this->morphToMany(Category::class, 'categorizable');
  }
     /**
      * Relación Polimórfica con los Servicios.
